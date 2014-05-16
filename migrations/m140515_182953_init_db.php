@@ -23,7 +23,7 @@ class m140515_182953_init_db extends \yii\db\Migration
             'shop_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'name' => Schema::TYPE_STRING . '(255) NOT NULL',
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'sort' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 1',
+            'sort' => Schema::TYPE_INTEGER . ' NULL',
             'url' => Schema::TYPE_STRING . '(255) NOT NULL',
             'meta_title' => Schema::TYPE_STRING . '(255) NULL',
             'meta_description' => Schema::TYPE_STRING . '(255) NULL',
@@ -35,7 +35,7 @@ class m140515_182953_init_db extends \yii\db\Migration
             'shop_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'name' => Schema::TYPE_STRING . '(255) NOT NULL',
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'sort' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 1',
+            'sort' => Schema::TYPE_INTEGER . ' NULL',
             'url' => Schema::TYPE_STRING . '(255) NOT NULL',
             'meta_title' => Schema::TYPE_STRING . '(255) NULL',
             'meta_description' => Schema::TYPE_STRING . '(255) NULL',
@@ -47,13 +47,12 @@ class m140515_182953_init_db extends \yii\db\Migration
             'shop_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'parent_id' => Schema::TYPE_INTEGER . ' NULL',
             'name' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'sort' => Schema::TYPE_INTEGER . ' NOT NULL DEFAULT 1',
+            'sort' => Schema::TYPE_INTEGER . ' NULL',
             'url' => Schema::TYPE_STRING . '(255) NOT NULL',
             'meta_title' => Schema::TYPE_STRING . '(255) NULL',
             'meta_description' => Schema::TYPE_STRING . '(255) NULL',
             'meta_keywords' => Schema::TYPE_STRING . '(255) NULL',
         ], $tableOptions);
-
 
         $this->createTable('{{%product}}', [
             'id' => Schema::TYPE_PK,
@@ -70,7 +69,7 @@ class m140515_182953_init_db extends \yii\db\Migration
             'length' => Schema::TYPE_INTEGER . ' NULL',
             'width' => Schema::TYPE_INTEGER . ' NULL',
             'height' => Schema::TYPE_INTEGER . ' NULL',
-            'is_promotion' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0',
+            'is_promotion' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT FALSE',
             'url' => Schema::TYPE_STRING . '(255) NOT NULL',
             'meta_title' => Schema::TYPE_STRING . '(255) NULL',
             'meta_description' => Schema::TYPE_STRING . '(255) NULL',
@@ -89,10 +88,35 @@ class m140515_182953_init_db extends \yii\db\Migration
             'category_id' => Schema::TYPE_INTEGER . ' NULL',
         ], $tableOptions);
 
+        $this->addForeignKey('FK_line_to_shop', '{{%line}}', 'shop_id', '{{%shop}}', 'id');
+        $this->addForeignKey('FK_collection_to_shop', '{{%collection}}', 'shop_id', '{{%shop}}', 'id');
+        $this->addForeignKey('FK_category_to_shop', '{{%category}}', 'shop_id', '{{%shop}}', 'id');
+        $this->addForeignKey('FK_category_to_category', '{{%category}}', 'parent_id', '{{%category}}', 'id');
+        $this->addForeignKey('FK_product_to_shop', '{{%product}}', 'shop_id', '{{%shop}}', 'id');
+        $this->addForeignKey('FK_product_to_collection', '{{%product}}', 'collection_id', '{{%collection}}', 'id');
+        $this->addForeignKey('FK_product_to_category', '{{%product}}', 'category_id', '{{%category}}', 'id');
+
+        $this->addForeignKey('FK_line_product_to_line', '{{%line_product}}', 'line_id', '{{%line}}', 'id');
+        $this->addForeignKey('FK_line_product_to_product', '{{%line_product}}', 'product_id', '{{%product}}', 'id');
+        $this->addForeignKey('FK_line_category_to_line', '{{%line_category}}', 'line_id', '{{%line}}', 'id');
+        $this->addForeignKey('FK_line_category_to_category', '{{%line_category}}', 'category_id', '{{%category}}', 'id');
+//        $this->addForeignKey('', '{{%}}', '', '{{%}}', '');
     }
 
     public function safeDown()
     {
+        $this->dropForeignKey('FK_line_to_shop', '{{%line}}');
+        $this->dropForeignKey('FK_collection_to_shop', '{{%collection}}');
+        $this->dropForeignKey('FK_category_to_shop', '{{%category}}');
+        $this->dropForeignKey('FK_category_to_category', '{{%category}}');
+        $this->dropForeignKey('FK_product_to_shop', '{{%product}}');
+        $this->dropForeignKey('FK_product_to_collection', '{{%product}}');
+        $this->dropForeignKey('FK_product_to_category', '{{%product}}');
+        $this->dropForeignKey('FK_line_product_to_line', '{{%line_product}}');
+        $this->dropForeignKey('FK_line_product_to_product', '{{%line_product}}');
+        $this->dropForeignKey('FK_line_category_to_line', '{{%line_category}}');
+        $this->dropForeignKey('FK_line_category_to_category', '{{%line_category}}');
+
         $this->dropTable('{{%shop}}');
         $this->dropTable('{{%line}}');
         $this->dropTable('{{%collection}}');

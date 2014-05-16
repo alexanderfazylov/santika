@@ -7,12 +7,12 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var app\models\Line $model
+ * @var app\models\Collection $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
 
-<div class="line-form">
+<div class="collection-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
+    <!--    <?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>-->
 
     <?= $form->field($model, 'sort')->textInput() ?>
 

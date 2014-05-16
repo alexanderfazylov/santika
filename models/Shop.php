@@ -11,6 +11,11 @@ use Yii;
  * @property string $name
  * @property string $short_about
  * @property string $full_about
+ *
+ * @property Category[] $categories
+ * @property Collection[] $collections
+ * @property Line[] $lines
+ * @property Product[] $products
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -44,5 +49,37 @@ class Shop extends \yii\db\ActiveRecord
             'short_about' => Yii::t('app', 'Short About'),
             'full_about' => Yii::t('app', 'Full About'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategories()
+    {
+        return $this->hasMany(Category::className(), ['shop_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCollections()
+    {
+        return $this->hasMany(Collection::className(), ['shop_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLines()
+    {
+        return $this->hasMany(Line::className(), ['shop_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['shop_id' => 'id']);
     }
 }

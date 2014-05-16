@@ -8,6 +8,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'extensions' => require(__DIR__ . '/../vendor/yiisoft/extensions.php'),
+    'language' => 'ru-RU', // ← here!
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
@@ -51,6 +52,20 @@ $config = [
 
             ]
         ],
+
+        'i18n' => array(
+            'translations' => array(
+                'app*' => array(
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    //'basePath' => '@app/messages',
+                    //'sourceLanguage' => 'en_US',
+                    'fileMap' => array(
+                        'app' => 'app.php',
+                        'app/error' => 'error.php',
+                    ),
+                ),
+            ),
+        ),
     ],
     'params' => $params,
 ];
