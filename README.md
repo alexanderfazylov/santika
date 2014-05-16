@@ -10,7 +10,12 @@
 * on Windows, download and run [Composer-Setup.exe](https://getcomposer.org/Composer-Setup.exe).
 
 После того как склонился проект нужно установить зависимости используя composer:
-cd ./папка с исходниками
   ```
+  cd ./папка с исходниками
   composer update
+  ```
+Накатить миграции:
+  ```
+  cd ./папка с исходниками
+ ./yii migrate/up
   ```
