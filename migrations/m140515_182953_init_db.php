@@ -79,13 +79,13 @@ class m140515_182953_init_db extends \yii\db\Migration
         $this->createTable('{{%line_product}}', [
             'id' => Schema::TYPE_PK,
             'line_id' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'product_id' => Schema::TYPE_INTEGER . ' NULL',
+            'product_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
         $this->createTable('{{%line_category}}', [
             'id' => Schema::TYPE_PK,
             'line_id' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'category_id' => Schema::TYPE_INTEGER . ' NULL',
+            'category_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
 
         $this->addForeignKey('FK_line_to_shop', '{{%line}}', 'shop_id', '{{%shop}}', 'id');

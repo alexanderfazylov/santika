@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\LineCategory;
 use Yii;
 use app\models\Line;
 use app\models\search\LineSearch;
@@ -124,4 +125,15 @@ class LineController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionLinecategory()
+    {
+        $model = new LineCategory;
+
+        return $this->render('line_category', [
+            'model' => $model,
+            'shop_id' => 1,
+        ]);
+    }
+
 }

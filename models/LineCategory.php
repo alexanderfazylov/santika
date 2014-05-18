@@ -30,7 +30,7 @@ class LineCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['line_id'], 'required'],
+            [['line_id', 'category_id'], 'required'],
             [['line_id', 'category_id'], 'integer']
         ];
     }

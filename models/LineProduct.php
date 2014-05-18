@@ -30,7 +30,7 @@ class LineProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['line_id'], 'required'],
+            [['line_id', 'product_id'], 'required'],
             [['line_id', 'product_id'], 'integer']
         ];
     }
