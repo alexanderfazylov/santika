@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
      * @TODO добавиьт проверку по shop_id и paranet_id != id
      */
     ?>
-    <?= $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name'), ['prompt' => 'Выберите родительскую категорию']) ?>
 
     <?= $form->field($model, 'sort')->textInput() ?>
 

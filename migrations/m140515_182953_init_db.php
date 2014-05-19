@@ -100,6 +100,9 @@ class m140515_182953_init_db extends \yii\db\Migration
         $this->addForeignKey('FK_line_product_to_product', '{{%line_product}}', 'product_id', '{{%product}}', 'id');
         $this->addForeignKey('FK_line_category_to_line', '{{%line_category}}', 'line_id', '{{%line}}', 'id');
         $this->addForeignKey('FK_line_category_to_category', '{{%line_category}}', 'category_id', '{{%category}}', 'id');
+
+        $this->createIndex('UNIQ_line_product', '{{%line_product}}', ['line_id', 'product_id'], true);
+        $this->createIndex('UNIQ_line_category', '{{%line_category}}', ['line_id', 'category_id'], true);
 //        $this->addForeignKey('', '{{%}}', '', '{{%}}', '');
     }
 
@@ -116,6 +119,9 @@ class m140515_182953_init_db extends \yii\db\Migration
         $this->dropForeignKey('FK_line_product_to_product', '{{%line_product}}');
         $this->dropForeignKey('FK_line_category_to_line', '{{%line_category}}');
         $this->dropForeignKey('FK_line_category_to_category', '{{%line_category}}');
+
+        $this->dropIndex('UNIQ_line_product', '{{%line_product}}');
+        $this->dropIndex('UNIQ_line_category', '{{%line_category}}');
 
         $this->dropTable('{{%shop}}');
         $this->dropTable('{{%line}}');

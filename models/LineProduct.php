@@ -31,7 +31,8 @@ class LineProduct extends \yii\db\ActiveRecord
     {
         return [
             [['line_id', 'product_id'], 'required'],
-            [['line_id', 'product_id'], 'integer']
+            [['line_id', 'product_id'], 'integer'],
+            [['line_id', 'product_id'], 'unique', 'targetAttribute' => ['line_id', 'product_id'], 'message' => 'The combination of Line ID and Product ID has already been taken.']
         ];
     }
 

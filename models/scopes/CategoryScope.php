@@ -11,7 +11,7 @@ namespace app\models\scopes;
 
 use yii\db\ActiveQuery;
 
-class LineScope extends ActiveQuery
+class CategoryScope extends ActiveQuery
 {
     /**
      * @param integer $shop_id

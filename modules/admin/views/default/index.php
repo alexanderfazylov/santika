@@ -10,3 +10,5 @@ use yii\helpers\Url;
 <?= Html::a('Коллекции', Url::to('/admin/collection')); ?>
 <br/>
 <?= Html::a('Категории', Url::to('/admin/category')); ?>
+<br/>
+<?= Html::a('Линия Категория', Url::to('/admin/linecategory')); ?>

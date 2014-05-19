@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\models\scopes\CategoryScope;
 use Yii;
+use yii\db\Query;
 use yii\helpers\Inflector;
 
 /**
@@ -72,6 +74,15 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     * @return CategoryScope
+     */
+    public static function find()
+    {
+        return new CategoryScope(get_called_class());
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParent()
@@ -109,5 +120,21 @@ class Category extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @param $shop_id
+     * @param $line_category_id
+     * @return Category[]
+     */
+    public static function withOutLine($shop_id, $line_category_id)
+    {
+        $query_for_id = (new Query)->select('category_id')->from('line_category');
+        if (!empty($line_category_id)) {
+            $query_for_id->andWhere(['not in', 'id', $line_category_id]);
+        }
+        $query = Category::find();
+        $query->andWhere(['not in', 'id', $query_for_id]);
+        return $query->byShop($shop_id)->all();
     }
 }

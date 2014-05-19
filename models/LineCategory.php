@@ -16,6 +16,9 @@ use Yii;
  */
 class LineCategory extends \yii\db\ActiveRecord
 {
+    public $line_name;
+    public $category_name;
+
     /**
      * @inheritdoc
      */
@@ -31,7 +34,8 @@ class LineCategory extends \yii\db\ActiveRecord
     {
         return [
             [['line_id', 'category_id'], 'required'],
-            [['line_id', 'category_id'], 'integer']
+            [['line_id', 'category_id'], 'integer'],
+            [['line_id', 'category_id'], 'unique', 'targetAttribute' => ['line_id', 'category_id'], 'message' => 'The combination of Line ID and Category ID has already been taken.']
         ];
     }
 
@@ -44,6 +48,8 @@ class LineCategory extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'line_id' => Yii::t('app', 'Line ID'),
             'category_id' => Yii::t('app', 'Category ID'),
+            'category.name' => Yii::t('app', 'category.name ID'),
+            'line.name' => Yii::t('app', 'line.name ID'),
         ];
     }
 
@@ -61,5 +67,20 @@ class LineCategory extends \yii\db\ActiveRecord
     public function getLine()
     {
         return $this->hasOne(Line::className(), ['id' => 'line_id']);
+    }
+
+    /**
+     * Возвращает массив из id категорий, которые есть в бд
+     * @return array
+     * NOT USED
+     */
+    public static function allCategoryIds()
+    {
+        $array = self::find()->select('category_id')->asArray()->all();
+        $result = [];
+        foreach ($array as $a) {
+            $result[] = $a['category_id'];
+        }
+        return $result;
     }
 }
