@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "761138b75bdafd22a88fd878caa86ae5",
+    "hash": "3414e8ea737202ac98d4f7d2dc7bc598",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -169,12 +169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e9b99d475cdc635d6e1435b5101500b84e0ef615"
+                "reference": "3dd1531d81c90d6d1cf04962032f868d315ab21c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e9b99d475cdc635d6e1435b5101500b84e0ef615",
-                "reference": "e9b99d475cdc635d6e1435b5101500b84e0ef615",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/3dd1531d81c90d6d1cf04962032f868d315ab21c",
+                "reference": "3dd1531d81c90d6d1cf04962032f868d315ab21c",
                 "shasum": ""
             },
             "type": "library",
@@ -209,7 +209,49 @@
                 "responsive",
                 "web"
             ],
-            "time": "2014-05-19 07:47:06"
+            "time": "2014-05-19 12:07:40"
+        },
+        {
+            "name": "yiidoc/yii2-chosen",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiidoc/yii2-chosen.git",
+                "reference": "b586dd7bdb786f9bb08b56797fb11a5478c931d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiidoc/yii2-chosen/zipball/b586dd7bdb786f9bb08b56797fb11a5478c931d3",
+                "reference": "b586dd7bdb786f9bb08b56797fb11a5478c931d3",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii\\chosen\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nghia Nguyen",
+                    "email": "yiidevelop@gmail.com",
+                    "homepage": "http://yiidev.com"
+                }
+            ],
+            "description": "The Gii extension for the Yii framework",
+            "keywords": [
+                "code generator",
+                "gii",
+                "yii"
+            ],
+            "time": "2014-02-25 03:51:12"
         },
         {
             "name": "yiisoft/jquery",
@@ -266,12 +308,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "8df4be26774d24b045e762e1a21aa6b0541b5da2"
+                "reference": "5074403eb971ae4851ba2590a76d62292532a441"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/8df4be26774d24b045e762e1a21aa6b0541b5da2",
-                "reference": "8df4be26774d24b045e762e1a21aa6b0541b5da2",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5074403eb971ae4851ba2590a76d62292532a441",
+                "reference": "5074403eb971ae4851ba2590a76d62292532a441",
                 "shasum": ""
             },
             "require": {
@@ -336,7 +378,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-05-19 15:29:34"
+            "time": "2014-05-20 15:39:37"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -598,12 +640,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "3bdd568316589ed6065711c98580a4844ec6d55a"
+                "reference": "fd6425e688620b4896f0beb330700220c890fc99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/3bdd568316589ed6065711c98580a4844ec6d55a",
-                "reference": "3bdd568316589ed6065711c98580a4844ec6d55a",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/fd6425e688620b4896f0beb330700220c890fc99",
+                "reference": "fd6425e688620b4896f0beb330700220c890fc99",
                 "shasum": ""
             },
             "require": {
@@ -635,7 +677,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2014-05-14 23:44:20"
+            "time": "2014-05-20 13:35:12"
         }
     ],
     "aliases": [],

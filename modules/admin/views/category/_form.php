@@ -1,7 +1,10 @@
 <?php
 
 use app\models\Category;
+use app\models\Line;
+use app\models\LineCategory;
 use app\models\Shop;
+use yii\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -14,8 +17,21 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="category-form">
+    <?php $lines_array = ArrayHelper::map(Line::find()->byShop($model->shop_id)->all(), 'id', 'name'); ?>
+    <?php $selected_lines = ArrayHelper::map(LineCategory::find()->andWhere(['category_id' => $model->id])->all(), 'id', 'line_id'); ?>
 
     <?php $form = ActiveForm::begin(); ?>
+    Выберите линии:
+    <?php
+    echo Chosen::widget(
+        [
+            'name' => 'Category[line_ids]',
+            'multiple' => true,
+            'value' => $selected_lines,
+            'items' => $lines_array
+        ]
+    );
+    ?>
 
     <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
 

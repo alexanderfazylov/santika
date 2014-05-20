@@ -11,4 +11,8 @@ use yii\helpers\Url;
 <br/>
 <?= Html::a('Категории', Url::to('/admin/category')); ?>
 <br/>
+<?= Html::a('Товары', Url::to('/admin/product')); ?>
+<br/>
 <?= Html::a('Линия Категория', Url::to('/admin/linecategory')); ?>
+<br/>
+<?= Html::a('Линия Продукт', Url::to('/admin/lineproduct')); ?>

@@ -136,7 +136,7 @@ class LineCategoryController extends Controller
         $result = ['status' => 'error'];
         if (isset($_POST['shop_id']) && isset($_POST['line_id'])) {
 
-            $categories_array = ArrayHelper::map(Category::withOutLine($_POST['shop_id'], $_POST['line_id']), 'id', 'name');
+            $categories_array = Category::withOutLine($_POST['shop_id'], $_POST['line_category_id']);
             $result = ['status' => 'success', 'categories' => $categories_array];
         }
         Yii::$app->response->format = 'json';
