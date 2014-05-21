@@ -16,7 +16,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'shop_id', 'parent_id', 'sort'], 'integer'],
-            [['name', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'safe'],
+            [['name', 'url', 'meta_title', 'meta_description', 'meta_keywords', 'parent_name'], 'safe'],
         ];
     }
 
@@ -29,10 +29,18 @@ class CategorySearch extends Category
     public function search($params)
     {
         $query = Category::find();
-
+        $query->joinWith('parent');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['parent_name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['parent.name' => SORT_ASC],
+            'desc' => ['parent.name' => SORT_DESC],
+        ];
+
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
@@ -49,7 +57,8 @@ class CategorySearch extends Category
             ->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'meta_title', $this->meta_title])
             ->andFilterWhere(['like', 'meta_description', $this->meta_description])
-            ->andFilterWhere(['like', 'meta_keywords', $this->meta_keywords]);
+            ->andFilterWhere(['like', 'meta_keywords', $this->meta_keywords])
+            ->andFilterWhere(['like', 'parent.name', $this->parent_name]);
 
         return $dataProvider;
     }

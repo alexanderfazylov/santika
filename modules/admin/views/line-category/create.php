@@ -8,10 +8,8 @@ use yii\helpers\Html;
  * @var app\models\LineCategory $model
  */
 
-$this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Line Category',
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Line Categories'), 'url' => ['index']];
+$this->title ='Создание связи линия-категория';
+$this->params['breadcrumbs'][] = ['label' => 'Связь линия-категория', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="line-category-create">

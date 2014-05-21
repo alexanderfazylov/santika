@@ -32,7 +32,7 @@ class LineProduct extends \yii\db\ActiveRecord
         return [
             [['line_id', 'product_id'], 'required'],
             [['line_id', 'product_id'], 'integer'],
-            [['line_id', 'product_id'], 'unique', 'targetAttribute' => ['line_id', 'product_id'], 'message' => 'The combination of Line ID and Product ID has already been taken.']
+            [['line_id', 'product_id'], 'unique', 'targetAttribute' => ['line_id', 'product_id'], 'message' => 'Комбинация линия - товар уже существует.']
         ];
     }
 
@@ -43,8 +43,15 @@ class LineProduct extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'line_id' => Yii::t('app', 'Line ID'),
-            'product_id' => Yii::t('app', 'Product ID'),
+            'line_id' => Yii::t('app', 'Линия'),
+            'product_id' => Yii::t('app', 'Товар'),
+            /**
+             * @TODO разобраться с атрибутами по связи
+             */
+            'product.name' => Yii::t('app', 'Товар'),
+            'product_name' => Yii::t('app', 'Товар'),
+            'line.name' => Yii::t('app', 'Линия'),
+            'line_name' => Yii::t('app', 'Линия'),
         ];
     }
 

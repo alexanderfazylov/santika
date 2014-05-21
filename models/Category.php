@@ -30,7 +30,7 @@ use yii\helpers\Inflector;
 class Category extends \yii\db\ActiveRecord
 {
     public $line_ids = [];
-
+    public $parent_name;
     /**
      * @inheritdoc
      */
@@ -60,9 +60,12 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
-            'parent_id' => 'Родительская категория',//Yii::t('app', 'Parent ID'),
-            'name' => 'Название',//Yii::t('app', 'Name'),
-            'sort' => 'Сортировка',//Yii::t('app', 'Sort'),
+            'shop.name' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'parent_id' => 'Родительская категория', //Yii::t('app', 'Parent ID'),
+            'parent.name' => 'Родительская категория', //Yii::t('app', 'Parent ID'),
+            'parent_name' => 'Родительская категория', //Yii::t('app', 'Parent ID'),
+            'name' => 'Название', //Yii::t('app', 'Name'),
+            'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
@@ -105,7 +108,8 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getParent()
     {
-        return $this->hasOne(Category::className(), ['id' => 'parent_id']);
+        return $this->hasOne(Category::className(), ['id' => 'parent_id'])->
+            from(self::tableName() . ' AS parent');
     }
 
     /**
@@ -145,6 +149,7 @@ class Category extends \yii\db\ActiveRecord
      * @param $shop_id
      * @param $line_category_id
      * @return Category[]
+     * @deprecated
      */
     public static function withOutLine($shop_id, $line_category_id)
     {
@@ -165,7 +170,7 @@ class Category extends \yii\db\ActiveRecord
      * @throws \yii\base\Exception
      * @return Category[]
      */
-    public static function byLineIds($shop_id, $line_ids)
+    public static function byLineIds($shop_id, $line_ids, $skip_id = false)
     {
         $query_for_category_id = (new Query)->select('category_id')->from('line_category');
         if (is_array($line_ids)) {
@@ -178,6 +183,9 @@ class Category extends \yii\db\ActiveRecord
         $query = Category::find();
         $query->select = ['id', 'name'];
         $query->andWhere(['in', 'id', $query_for_category_id]);
+        if ($skip_id) {
+            $query->andWhere('id != :skip_id', [':skip_id' => $skip_id]);
+        }
         return $query->byShop($shop_id)->all();
     }
 

@@ -23,10 +23,7 @@ use yii\widgets\ActiveForm;
     $lines_array = ArrayHelper::map(Line::find()->byShop($model->shop_id)->all(), 'id', 'name');
     $collection_array = ArrayHelper::map(Collection::find()->byShop($model->shop_id)->all(), 'id', 'name');
     $selected_lines = ArrayHelper::map(LineProduct::find()->andWhere(['product_id' => $model->id])->all(), 'id', 'line_id');
-    /**
-     * @TODO добавить проверку, что у товар прикреплен к линии?
-     */
-    $category_array = ArrayHelper::map(Category::byProductId($model->shop_id, $model->id), 'id', 'name');
+    $category_array = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines), 'id', 'name');
     ?>
     <?php ?>
 
@@ -57,15 +54,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'collection_id')->dropDownList($collection_array) ?>
+    <?= $form->field($model, 'collection_id')->dropDownList($collection_array, ['prompt' => 'Выберите коллекцию']) ?>
 
-    <?= $form->field($model, 'category_id')->dropDownList($category_array) ?>
+    <?= $form->field($model, 'category_id')->dropDownList($category_array, ['prompt' => 'Выберите категорию']) ?>
 
-    <?= $form->field($model, 'manual_id')->textInput() ?>
-
-    <?= $form->field($model, 'coat_id')->textInput() ?>
-
-    <?= $form->field($model, 'drawing_id')->textInput() ?>
+    <!--    --><?php //= $form->field($model, 'manual_id')->textInput() ?>
+    <!---->
+    <!--    --><?php //= $form->field($model, 'coat_id')->textInput() ?>
+    <!---->
+    <!--    --><?php //= $form->field($model, 'drawing_id')->textInput() ?>
 
     <?= $form->field($model, 'length')->textInput() ?>
 

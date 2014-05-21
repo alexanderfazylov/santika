@@ -9,7 +9,7 @@ use yii\grid\GridView;
  * @var app\models\search\LineCategorySearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Line Categories');
+$this->title ='Связь линия-категория';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="line-category-index">
@@ -19,9 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=
-        Html::a(Yii::t('app', 'Create {modelClass}', [
-            'modelClass' => 'Line Category',
-        ]), ['create'], ['class' => 'btn btn-success']) ?>
+        Html::a('Создать связь линия-категория', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?=
@@ -38,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'category_name',
-                'value' => 'category.name'
+                'value' => 'category.name',
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -54,6 +54,7 @@ class Line extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'shop.name' => 'Салон',
             'name' => 'Название', //Yii::t('app', 'Name'),
             'description' => 'Описание', //Yii::t('app', 'Description'),
             'sort' => 'Сортировка', //Yii::t('app', 'Sort'),

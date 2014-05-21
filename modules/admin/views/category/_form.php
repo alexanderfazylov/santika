@@ -19,17 +19,23 @@ use yii\widgets\ActiveForm;
 <div class="category-form">
     <?php $lines_array = ArrayHelper::map(Line::find()->byShop($model->shop_id)->all(), 'id', 'name'); ?>
     <?php $selected_lines = ArrayHelper::map(LineCategory::find()->andWhere(['category_id' => $model->id])->all(), 'id', 'line_id'); ?>
+    <?php $parent_categories = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines, $model->id), 'id', 'name'); ?>
 
     <?php $form = ActiveForm::begin(); ?>
     Выберите линии:
     <?php
     echo Chosen::widget(
         [
+            'id' => 'category-line_ids',
             'name' => 'Category[line_ids]',
             'multiple' => true,
             'value' => $selected_lines,
             'items' => $lines_array,
-            'options' => ['class' => 'form-control', 'data-placeholder' => false]
+            'options' => [
+                'class' => 'form-control',
+                'data-placeholder' => false,
+                'skip_id' => $model->id
+            ]
         ]
     );
     ?>
@@ -45,7 +51,7 @@ use yii\widgets\ActiveForm;
      * @TODO добавиьт проверку по shop_id и paranet_id != id
      */
     ?>
-    <?= $form->field($model, 'parent_id')->dropDownList(ArrayHelper::map(Category::find()->all(), 'id', 'name'), ['prompt' => 'Выберите родительскую категорию']) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList($parent_categories, ['prompt' => 'Выберите родительскую категорию']) ?>
 
     <?= $form->field($model, 'sort')->textInput() ?>
 

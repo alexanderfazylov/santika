@@ -72,7 +72,9 @@ class LineProductController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $shop_id = 1;
             return $this->render('create', [
+                'shop_id' => $shop_id,
                 'model' => $model,
             ]);
         }
@@ -91,7 +93,9 @@ class LineProductController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $shop_id = 1;
             return $this->render('update', [
+                'shop_id' => $shop_id,
                 'model' => $model,
             ]);
         }

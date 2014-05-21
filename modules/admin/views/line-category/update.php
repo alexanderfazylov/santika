@@ -8,7 +8,7 @@ use yii\helpers\Html;
  */
 
 $this->title = 'Редактирование '. $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Line Categories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Связь линия-категория', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>

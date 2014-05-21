@@ -135,8 +135,8 @@ class CategoryController extends Controller
         Yii::$app->response->format = 'json';
         $result = ['status' => 'error'];
         if (isset($_POST['shop_id']) && isset($_POST['line_ids'])) {
-
-            $categories_array = Category::byLineIds($_POST['shop_id'], $_POST['line_ids']);
+            $skip_id = isset($_POST['skip_id']) ? $_POST['skip_id'] : false;
+            $categories_array = Category::byLineIds($_POST['shop_id'], $_POST['line_ids'], $skip_id);
             $result = ['status' => 'success', 'categories' => $categories_array];
         }
         return $result;

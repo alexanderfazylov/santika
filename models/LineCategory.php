@@ -35,7 +35,7 @@ class LineCategory extends \yii\db\ActiveRecord
         return [
             [['line_id', 'category_id'], 'required'],
             [['line_id', 'category_id'], 'integer'],
-            [['line_id', 'category_id'], 'unique', 'targetAttribute' => ['line_id', 'category_id'], 'message' => 'The combination of Line ID and Category ID has already been taken.']
+            [['line_id', 'category_id'], 'unique', 'targetAttribute' => ['line_id', 'category_id'], 'message' => 'Комбинация линия - категория уже существует.']
         ];
     }
 
@@ -46,10 +46,15 @@ class LineCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'line_id' => Yii::t('app', 'Line ID'),
-            'category_id' => Yii::t('app', 'Category ID'),
-            'category.name' => Yii::t('app', 'category.name ID'),
-            'line.name' => Yii::t('app', 'line.name ID'),
+            'line_id' => Yii::t('app', 'Линия'),
+            'category_id' => Yii::t('app', 'Категория'),
+            /**
+             * @TODO разобраться с атрибутами по связи
+             */
+            'category.name' => Yii::t('app', 'Категория'),
+            'category_name' => Yii::t('app', 'Категория'),
+            'line.name' => Yii::t('app', 'Линия'),
+            'line_name' => Yii::t('app', 'Линия'),
         ];
     }
 

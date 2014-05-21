@@ -1,18 +1,19 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\Menu;
 
 ?>
-Доступные действия:
-<br/>
-<?= Html::a('Линии', Url::to('/admin/line')); ?>
-<br/>
-<?= Html::a('Коллекции', Url::to('/admin/collection')); ?>
-<br/>
-<?= Html::a('Категории', Url::to('/admin/category')); ?>
-<br/>
-<?= Html::a('Товары', Url::to('/admin/product')); ?>
-<br/>
-<?= Html::a('Линия Категория', Url::to('/admin/line-category')); ?>
-<br/>
-<?= Html::a('Линия Продукт', Url::to('/admin/line-product')); ?>
+Доступные разделы:
+
+<?php
+echo Menu::widget([
+'items' => [
+['label' => 'Линии', 'url' => ['/admin/line']],
+['label' => 'Коллекции', 'url' => ['/admin/collection']],
+['label' => 'Категории', 'url' => ['/admin/category']],
+['label' => 'Товары', 'url' => ['/admin/product']],
+['label' => 'Линия Категория', 'url' => ['/admin/line-category']],
+['label' => 'Линия Продукт', 'url' => ['/admin/line-product']],
+]
+]);

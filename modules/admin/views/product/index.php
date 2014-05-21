@@ -28,10 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            [
-                'attribute' => 'shop_name',
-                'value' => 'shop.name'
-            ],
+            'article',
+//            [
+//                'attribute' => 'shop_name',
+//                'value' => 'shop.name'
+//            ],
             [
                 'attribute' => 'collection_name',
                 'value' => 'collection.name'
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             // 'coat_id',
             // 'drawing_id',
-            // 'article',
+
             // 'series',
             // 'name',
             // 'description',

@@ -20,13 +20,12 @@ use yii\widgets\ActiveForm;
 
     <?php $shops_array = ArrayHelper::map(Shop::find()->all(), 'id', 'name'); ?>
     <?php $lines_array = ArrayHelper::map(Line::find()->byShop($shop_id)->all(), 'id', 'name'); ?>
-    <?php $categories_array = ArrayHelper::map(Category::withOutLine($shop_id, $model->id), 'id', 'name'); ?>
-
+    <?php $categories_array = ArrayHelper::map(Category::find()->byShop($shop_id)->all(), 'id', 'name'); ?>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= Html::dropDownList('shop_id', $shop_id, $shops_array, ['id' => 'linecategory-shop_id']) ?>
     <?= $form->field($model, 'line_id')->dropDownList($lines_array, ['promt' => 'Выберите линию', 'line_category_id' => $model->id]); ?>
-    <?= $form->field($model, 'category_id')->dropDownList($categories_array); ?>
+    <?= $form->field($model, 'category_id')->dropDownList($categories_array, ['promt' => 'Выберите категорию']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
