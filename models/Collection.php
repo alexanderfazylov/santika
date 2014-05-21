@@ -51,10 +51,10 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'shop_id' => Yii::t('app', 'Shop ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'sort' => Yii::t('app', 'Sort'),
+            'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'name' => 'Название', //Yii::t('app', 'Name'),
+            'description' => 'Описание', //Yii::t('app', 'Description'),
+            'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),

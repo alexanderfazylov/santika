@@ -7,12 +7,10 @@ use yii\helpers\Html;
  * @var app\models\Line $model
  */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-  'modelClass' => 'Line',
-]) . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Lines'), 'url' => ['index']];
+$this->title = 'Редактирование ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Линии', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="line-update">
 

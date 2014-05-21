@@ -59,10 +59,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'shop_id' => Yii::t('app', 'Shop ID'),
-            'parent_id' => Yii::t('app', 'Parent ID'),
-            'name' => Yii::t('app', 'Name'),
-            'sort' => Yii::t('app', 'Sort'),
+            'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'parent_id' => 'Родительская категория',//Yii::t('app', 'Parent ID'),
+            'name' => 'Название',//Yii::t('app', 'Name'),
+            'sort' => 'Сортировка',//Yii::t('app', 'Sort'),
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
@@ -141,6 +141,7 @@ class Category extends \yii\db\ActiveRecord
     }
 
     /**
+     * Возвращает категории которые не прикреплены к линии или которые находятся в текущей связи линия-категория
      * @param $shop_id
      * @param $line_category_id
      * @return Category[]
@@ -163,9 +164,8 @@ class Category extends \yii\db\ActiveRecord
      * @param array|Query $line_ids
      * @throws \yii\base\Exception
      * @return Category[]
-     * @TODO название функции
      */
-    public static function forProduct($shop_id, $line_ids)
+    public static function byLineIds($shop_id, $line_ids)
     {
         $query_for_category_id = (new Query)->select('category_id')->from('line_category');
         if (is_array($line_ids)) {
@@ -173,7 +173,7 @@ class Category extends \yii\db\ActiveRecord
         } elseif ($line_ids instanceof Query) {
             $query_for_category_id->where(['in', 'line_id', $line_ids]);
         } else {
-            throw new Exception('Не верный формпт $line_ids');
+            return [];
         }
         $query = Category::find();
         $query->select = ['id', 'name'];
@@ -186,12 +186,11 @@ class Category extends \yii\db\ActiveRecord
      * @param $shop_id
      * @param $product_id
      * @return Category[]
-     * @TODO название функции
      */
-    public static function forProductByProduct($shop_id, $product_id)
+    public static function byProductId($shop_id, $product_id)
     {
         $query_for_line_id = (new Query)->select('line_id')->from('line_product')->where(['product_id' => $product_id]);
-        return self::forProduct($shop_id, $query_for_line_id);
+        return self::byLineIds($shop_id, $query_for_line_id);
 
     }
 }

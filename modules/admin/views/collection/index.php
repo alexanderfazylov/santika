@@ -9,7 +9,7 @@ use yii\grid\GridView;
  * @var app\models\search\CollectionSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Collections');
+$this->title = 'Коллекции';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="collection-index">
@@ -18,9 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-  'modelClass' => 'Collection',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать коллекцию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

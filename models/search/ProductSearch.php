@@ -20,7 +20,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'shop_id', 'collection_id', 'category_id', 'manual_id', 'coat_id', 'drawing_id', 'length', 'width', 'height', 'is_promotion'], 'integer'],
-            [['article', 'series', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords', 'shop_name', 'category_name', 'collection_name',], 'safe'],
+            [['article', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords', 'shop_name', 'category_name', 'collection_name',], 'safe'],
         ];
     }
 
@@ -74,7 +74,6 @@ class ProductSearch extends Product
         ]);
 
         $query->andFilterWhere(['like', 'article', $this->article])
-            ->andFilterWhere(['like', 'series', $this->series])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'url', $this->url])

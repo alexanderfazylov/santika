@@ -9,7 +9,7 @@ use yii\grid\GridView;
  * @var app\models\search\LineSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Lines');
+$this->title = 'Линии';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="line-index">
@@ -18,23 +18,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-  'modelClass' => 'Line',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать линию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'shop_id',
+//            'shop_id',
             'name',
             'description',
-            'sort',
-            // 'url:url',
+//            'sort',
+            'url',
             // 'meta_title',
             // 'meta_description',
             // 'meta_keywords',

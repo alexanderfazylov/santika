@@ -16,7 +16,6 @@ use yii\helpers\Inflector;
  * @property integer $coat_id
  * @property integer $drawing_id
  * @property string $article
- * @property string $series
  * @property string $name
  * @property string $description
  * @property integer $length
@@ -51,9 +50,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shop_id', 'article', 'series', 'name', 'description', 'url'], 'required'],
+            [['shop_id', 'article', 'name', 'description', 'url'], 'required'],
             [['shop_id', 'collection_id', 'category_id', 'manual_id', 'coat_id', 'drawing_id', 'length', 'width', 'height', 'is_promotion'], 'integer'],
-            [['article', 'series', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [['article', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
             [['line_ids'], 'safe']
         ];
     }
@@ -65,20 +64,19 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'shop_id' => Yii::t('app', 'Shop ID'),
-            'collection_id' => Yii::t('app', 'Collection ID'),
-            'category_id' => Yii::t('app', 'Category ID'),
+            'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'collection_id' => 'Коллекция', // Yii::t('app', 'Collection ID'),
+            'category_id' => 'Категория', //Yii::t('app', 'Category ID'),
             'manual_id' => Yii::t('app', 'Manual ID'),
             'coat_id' => Yii::t('app', 'Coat ID'),
             'drawing_id' => Yii::t('app', 'Drawing ID'),
-            'article' => Yii::t('app', 'Article'),
-            'series' => Yii::t('app', 'Series'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
-            'length' => Yii::t('app', 'Length'),
-            'width' => Yii::t('app', 'Width'),
-            'height' => Yii::t('app', 'Height'),
-            'is_promotion' => Yii::t('app', 'Is Promotion'),
+            'article' => 'Артикул', //Yii::t('app', 'Article'),
+            'name' => 'Наименование', //Yii::t('app', 'Name'),
+            'description' => 'Описание', //Yii::t('app', 'Description'),
+            'length' => 'Длина', // Yii::t('app', 'Length'),
+            'width' => 'Ширина', // Yii::t('app', 'Width'),
+            'height' => 'Высота', // Yii::t('app', 'Height'),
+            'is_promotion' => '', //Yii::t('app', 'Is Promotion'),
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
@@ -102,8 +100,9 @@ class Product extends \yii\db\ActiveRecord
             $lp = new LineProduct();
             $lp->product_id = $this->id;
             $lp->line_id = $line_id;
-            if(!$lp->save()){
-                var_dump($lp->getErrors());exit();
+            if (!$lp->save()) {
+                var_dump($lp->getErrors());
+                exit();
             }
         }
     }

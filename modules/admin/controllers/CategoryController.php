@@ -129,4 +129,16 @@ class CategoryController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionByLineIds()
+    {
+        Yii::$app->response->format = 'json';
+        $result = ['status' => 'error'];
+        if (isset($_POST['shop_id']) && isset($_POST['line_ids'])) {
+
+            $categories_array = Category::byLineIds($_POST['shop_id'], $_POST['line_ids']);
+            $result = ['status' => 'success', 'categories' => $categories_array];
+        }
+        return $result;
+    }
 }

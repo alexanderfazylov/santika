@@ -134,7 +134,7 @@ class LineCategoryController extends Controller
     public function actionCategoryWithoutLine()
     {
         $result = ['status' => 'error'];
-        if (isset($_POST['shop_id']) && isset($_POST['line_id'])) {
+        if (isset($_POST['shop_id']) && isset($_POST['line_category_id'])) {
 
             $categories_array = Category::withOutLine($_POST['shop_id'], $_POST['line_category_id']);
             $result = ['status' => 'success', 'categories' => $categories_array];

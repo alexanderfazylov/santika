@@ -57,13 +57,21 @@ $config = [
             'translations' => array(
                 'app*' => array(
                     'class' => 'yii\i18n\PhpMessageSource',
-                    //'basePath' => '@app/messages',
+//                    'basePath' => '@app/messages',
                     //'sourceLanguage' => 'en_US',
                     'fileMap' => array(
                         'app' => 'app.php',
-                        'app/error' => 'error.php',
                     ),
                 ),
+//                'yii*' => array(
+//                    'class' => 'yii\i18n\PhpMessageSource',
+//                    //'basePath' => '@app/messages',
+//                    //'sourceLanguage' => 'en_US',
+//                    'fileMap' => array(
+//                        'yii' => 'yii.php',
+//                        'yii/error' => 'yii.php',
+//                    ),
+//                ),
             ),
         ),
     ],

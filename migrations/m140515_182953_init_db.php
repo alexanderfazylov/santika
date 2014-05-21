@@ -63,7 +63,6 @@ class m140515_182953_init_db extends \yii\db\Migration
             'coat_id' => Schema::TYPE_INTEGER . ' NULL',
             'drawing_id' => Schema::TYPE_INTEGER . ' NULL',
             'article' => Schema::TYPE_STRING . '(255) NOT NULL',
-            'series' => Schema::TYPE_STRING . '(255) NOT NULL',
             'name' => Schema::TYPE_STRING . '(255) NOT NULL',
             'description' => Schema::TYPE_STRING . '(255) NOT NULL',
             'length' => Schema::TYPE_INTEGER . ' NULL',

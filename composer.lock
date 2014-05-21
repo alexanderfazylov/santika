@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3414e8ea737202ac98d4f7d2dc7bc598",
+    "hash": "2f8de98ae19abc78a4630b3897634659",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -308,12 +308,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "5074403eb971ae4851ba2590a76d62292532a441"
+                "reference": "bc85b5891a8b9950cdfe7f845e2d57383041a5d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5074403eb971ae4851ba2590a76d62292532a441",
-                "reference": "5074403eb971ae4851ba2590a76d62292532a441",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/bc85b5891a8b9950cdfe7f845e2d57383041a5d4",
+                "reference": "bc85b5891a8b9950cdfe7f845e2d57383041a5d4",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +378,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-05-20 15:39:37"
+            "time": "2014-05-21 07:42:40"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -680,11 +680,17 @@
             "time": "2014-05-20 13:35:12"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

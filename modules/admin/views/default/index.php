@@ -13,6 +13,6 @@ use yii\helpers\Url;
 <br/>
 <?= Html::a('Товары', Url::to('/admin/product')); ?>
 <br/>
-<?= Html::a('Линия Категория', Url::to('/admin/linecategory')); ?>
+<?= Html::a('Линия Категория', Url::to('/admin/line-category')); ?>
 <br/>
-<?= Html::a('Линия Продукт', Url::to('/admin/lineproduct')); ?>
+<?= Html::a('Линия Продукт', Url::to('/admin/line-product')); ?>

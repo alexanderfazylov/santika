@@ -33,8 +33,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'article') ?>
 
-    <?php // echo $form->field($model, 'series') ?>
-
     <?php // echo $form->field($model, 'name') ?>
 
     <?php // echo $form->field($model, 'description') ?>
