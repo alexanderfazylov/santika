@@ -73,6 +73,42 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_promotion')->checkbox() ?>
 
+    <?=
+    $form->field($model, 'cover_id')
+        ->hiddenInput()
+        ->widget(FileUpload::className(),
+            [
+                'model' => $model,
+                'attribute' => 'cover_tmp',
+                'name' => 'aaaa',
+                'url' => ['/admin/default/file-upload'],
+                'options' => [
+                    'accept' => 'image/*',
+//                    'name' => 'files'
+                ],
+                'clientOptions' => [
+                    'maxFileSize' => 2000000
+                ]
+            ]) ?>
+
+    <!--    <span class="btn btn-success fileinput-button">-->
+    <!--        <i class="glyphicon glyphicon-plus"></i>-->
+    <!--        <span>Выбрать файл</span>-->
+    <!--        --><?php //=
+    //        FileUpload::widget([
+    //            'id' => 'aaaaaaaaa',
+    //            'model' => $model,
+    //            'attribute' => 'cover_tmp',
+    //            'name' => 'aaaa',
+    //            'url' => ['/admin/default/file-upload'],
+    //            'options' => ['accept' => 'image/*'],
+    //            'clientOptions' => [
+    //                'maxFileSize' => 2000000
+    //            ]
+    //        ]);
+    ?>
+    <!--    </span>-->
+
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'meta_description')->textInput(['maxlength' => 255]) ?>
@@ -86,19 +122,3 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
-
-<span class="btn btn-success fileinput-button">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add files...</span>
-    <?=
-    FileUpload::widget([
-        'id' => 'aaaaaaaaa',
-        'name' => 'files',
-        'url' => ['/admin/default/file-upload'],
-        'options' => ['accept' => 'image/*'],
-        'clientOptions' => [
-            'maxFileSize' => 2000000,
-        ]
-    ]);?>
-
-</span>

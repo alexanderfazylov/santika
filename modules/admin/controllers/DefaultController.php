@@ -3,7 +3,10 @@
 namespace app\modules\admin\controllers;
 
 use app\components\UploadHandler;
+use app\models\Upload;
 use yii\web\Controller;
+use Yii;
+use yii\web\UploadedFile;
 
 class DefaultController extends Controller
 {
@@ -14,14 +17,12 @@ class DefaultController extends Controller
 
     public function actionFileUpload()
     {
-        $upload_dir = '/tmp/santika';
-        if (!file_exists($upload_dir) && !is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777);
-        }
-
         $options = [
-            'upload_dir' => $upload_dir
+            'upload_dir' => Upload::getTmpUploadsPath(),
         ];
-        $upload_handler = new UploadHandler();
+
+        $uploaded_file = UploadedFile::getInstanceByName('Product[cover_id]');
+        $upload_handler = new UploadHandler($options, false);
+        $upload_handler->handle_file_upload();
     }
 }
