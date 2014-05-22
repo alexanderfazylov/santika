@@ -5,6 +5,7 @@ use app\models\Collection;
 use app\models\Line;
 use app\models\LineProduct;
 use app\models\Shop;
+use dosamigos\fileupload\FileUpload;
 use yii\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -85,3 +86,19 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+    <?=
+    FileUpload::widget([
+        'id' => 'aaaaaaaaa',
+        'name' => 'files',
+        'url' => ['/admin/default/file-upload'],
+        'options' => ['accept' => 'image/*'],
+        'clientOptions' => [
+            'maxFileSize' => 2000000,
+        ]
+    ]);?>
+
+</span>

@@ -3,8 +3,95 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2f8de98ae19abc78a4630b3897634659",
+    "hash": "960ce83f6e2214dd23b11b14f06130be",
     "packages": [
+        {
+            "name": "2amigos/yii2-file-upload-widget",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-file-upload-widget.git",
+                "reference": "73fcbbef07177e72466e54592e44e70e234ac165"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-file-upload-widget/zipball/73fcbbef07177e72466e54592e44e70e234ac165",
+                "reference": "73fcbbef07177e72466e54592e44e70e234ac165",
+                "shasum": ""
+            },
+            "require": {
+                "2amigos/yii2-gallery-widget": "0.1.*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\fileupload\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "BlueImp jQuery File Upload Widget for Yii2.",
+            "keywords": [
+                "extension",
+                "upload",
+                "widget",
+                "yii"
+            ],
+            "time": "2014-04-25 15:32:59"
+        },
+        {
+            "name": "2amigos/yii2-gallery-widget",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-gallery-widget.git",
+                "reference": "9a9808c26df93e5a07cdde88b27b55b3c27a9a51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/9a9808c26df93e5a07cdde88b27b55b3c27a9a51",
+                "reference": "9a9808c26df93e5a07cdde88b27b55b3c27a9a51",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\gallery\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Antonio Ramirez",
+                    "email": "ramirez.cobos@gmail.com",
+                    "homepage": "http://2amigos.us"
+                }
+            ],
+            "description": "BlueImp Gallery Widget for Yii2.",
+            "keywords": [
+                "extension",
+                "gallery",
+                "widget",
+                "yii"
+            ],
+            "time": "2014-04-07 22:24:40"
+        },
         {
             "name": "cebe/markdown",
             "version": "0.9.x-dev",
@@ -308,12 +395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "bc85b5891a8b9950cdfe7f845e2d57383041a5d4"
+                "reference": "c5104fed4aa13544e69ecc3dd883c5eba6e1c181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/bc85b5891a8b9950cdfe7f845e2d57383041a5d4",
-                "reference": "bc85b5891a8b9950cdfe7f845e2d57383041a5d4",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c5104fed4aa13544e69ecc3dd883c5eba6e1c181",
+                "reference": "c5104fed4aa13544e69ecc3dd883c5eba6e1c181",
                 "shasum": ""
             },
             "require": {
@@ -378,7 +465,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-05-21 07:42:40"
+            "time": "2014-05-21 23:43:41"
         },
         {
             "name": "yiisoft/yii2-bootstrap",

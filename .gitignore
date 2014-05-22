@@ -1,6 +1,6 @@
 #config files
 config/db.php
-
+uploads/*
 # phpstorm project files
 .idea
 
