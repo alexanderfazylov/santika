@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "upload".
@@ -28,7 +30,7 @@ class Upload extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'path', 'ext'], 'required'],
+            [['name', 'path'], 'required'],
             [['name', 'path', 'ext'], 'string', 'max' => 255]
         ];
     }
@@ -88,5 +90,22 @@ class Upload extends \yii\db\ActiveRecord
         return $path . $name;
     }
 
+    /**
+     * Возвращает ссылку на файл
+     * @return string
+     */
+    public function getFileLink()
+    {
+        return Html::a($this->name, $this->getFileUrl());
+    }
+
+    /**
+     * Возвращает url на файл
+     * @return string
+     */
+    public function getFileUrl()
+    {
+        return Url::to(['/admin/default/file-download', 'file' => $this->path]);
+    }
 
 }

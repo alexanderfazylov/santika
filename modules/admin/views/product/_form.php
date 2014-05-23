@@ -6,9 +6,11 @@ use app\models\Line;
 use app\models\LineProduct;
 use app\models\Shop;
 use dosamigos\fileupload\FileUpload;
+use dosamigos\fileupload\FileUploadUI;
 use yii\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /**
@@ -59,11 +61,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id')->dropDownList($category_array, ['prompt' => 'Выберите категорию']) ?>
 
-    <!--    --><?php //= $form->field($model, 'manual_id')->textInput() ?>
-    <!---->
     <!--    --><?php //= $form->field($model, 'coat_id')->textInput() ?>
-    <!---->
-    <!--    --><?php //= $form->field($model, 'drawing_id')->textInput() ?>
 
     <?= $form->field($model, 'length')->textInput() ?>
 
@@ -73,41 +71,116 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'is_promotion')->checkbox() ?>
 
-    <?=
-    $form->field($model, 'cover_id')
-        ->hiddenInput()
-        ->widget(FileUpload::className(),
-            [
-                'model' => $model,
-                'attribute' => 'cover_tmp',
-                'name' => 'aaaa',
-                'url' => ['/admin/default/file-upload'],
-                'options' => [
-                    'accept' => 'image/*',
-//                    'name' => 'files'
-                ],
-                'clientOptions' => [
-                    'maxFileSize' => 2000000
-                ]
-            ]) ?>
-
-    <!--    <span class="btn btn-success fileinput-button">-->
-    <!--        <i class="glyphicon glyphicon-plus"></i>-->
-    <!--        <span>Выбрать файл</span>-->
-    <!--        --><?php //=
-    //        FileUpload::widget([
-    //            'id' => 'aaaaaaaaa',
-    //            'model' => $model,
-    //            'attribute' => 'cover_tmp',
-    //            'name' => 'aaaa',
-    //            'url' => ['/admin/default/file-upload'],
-    //            'options' => ['accept' => 'image/*'],
-    //            'clientOptions' => [
-    //                'maxFileSize' => 2000000
-    //            ]
-    //        ]);
+    <?php
+    /**
+     * @TODO придумать что нить с загрузкой файлов
+     */
     ?>
-    <!--    </span>-->
+
+    <?php
+    $filed = $form->field($model, 'photo_id');
+    echo $filed->begin();
+    echo Html::activeLabel($model, 'photo_id', ['class' => 'control-label']);
+    echo Html::activeHiddenInput($model, 'photo_id');
+    echo Html::activeHiddenInput($model, 'photo_tmp');
+    echo !empty($model->photo) ? '<br/>' . $model->photo->fileLink : "";
+    ?>
+    <br/>
+    <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Выбрать файл</span>
+        <?php
+        echo FileUpload::widget([
+            'name' => 'files',
+            'url' => ['/admin/default/file-upload'],
+            'options' => [
+                'accept' => 'image/*',
+                'related_input' => '#product-photo_tmp',
+                'name' => 'files',
+            ],
+            'clientOptions' => [
+                'formData' => [],
+                'done' => new JsExpression('function (e, data){
+                    var related_input = $(this).attr("related_input");
+                    var related = $(related_input);
+                    related.val(data.result.files[0].name);
+                }')
+            ]
+        ]);
+        echo $filed->end();
+        ?>
+    </span>
+
+
+    <?php
+    $filed = $form->field($model, 'manual_id');
+    echo $filed->begin();
+    echo Html::activeLabel($model, 'manual_id', ['class' => 'control-label']);
+    echo Html::activeHiddenInput($model, 'manual_id');
+    echo Html::activeHiddenInput($model, 'manual_tmp');
+    echo !empty($model->manual) ? '<br/>' . $model->manual->fileLink : "";
+    ?>
+    <br/>
+    <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Выбрать файл</span>
+        <?php
+        echo FileUpload::widget([
+            'name' => 'files',
+            'url' => ['/admin/default/file-upload'],
+            'options' => [
+                'accept' => 'image/*',
+                'related_input' => '#product-manual_tmp',
+                'name' => 'files',
+            ],
+            'clientOptions' => [
+                'formData' => [],
+                'done' => new JsExpression('function (e, data){
+                    var related_input = $(this).attr("related_input");
+                    var related = $(related_input);
+                    related.val(data.result.files[0].name);
+                }')
+            ]
+        ]);
+        echo $filed->end();
+        ?>
+    </span>
+
+
+    <?php
+    $filed = $form->field($model, 'drawing_id');
+    echo $filed->begin();
+    echo Html::activeLabel($model, 'drawing_id', ['class' => 'control-label']);
+    echo Html::activeHiddenInput($model, 'drawing_id');
+    echo Html::activeHiddenInput($model, 'drawing_tmp');
+    echo !empty($model->drawing) ? '<br/>' . $model->drawing->fileLink : "";
+    ?>
+    <br/>
+    <span class="btn btn-success fileinput-button">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>Выбрать файл</span>
+        <?php
+        echo FileUpload::widget([
+            'name' => 'files',
+            'url' => ['/admin/default/file-upload'],
+            'options' => [
+                'accept' => 'image/*',
+                'related_input' => '#product-drawing_tmp',
+                'name' => 'files',
+            ],
+            'clientOptions' => [
+                'formData' => [],
+                'done' => new JsExpression('function (e, data){
+                    var related_input = $(this).attr("related_input");
+                    var related = $(related_input);
+                    related.val(data.result.files[0].name);
+                }')
+            ]
+        ]);
+        echo $filed->end();
+        ?>
+    </span>
+
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

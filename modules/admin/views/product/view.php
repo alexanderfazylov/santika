@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?=
+        Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
@@ -27,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -38,6 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'coat_id',
 //            'drawing_id',
             'article',
+            'photo.fileLink:raw',
+            'manual.fileLink:raw',
+            'drawing.fileLink:raw',
             'name',
             'description',
             'length',

@@ -451,12 +451,29 @@ class UploadHandler
         return $name;
     }
 
+    protected function full_pathinfo($path_file)
+    {
+        $path_file = strtr($path_file, array('\\' => '/'));
+
+        preg_match("~[^/]+$~", $path_file, $file);
+        preg_match("~([^/]+)[.$]+(.*)~", $path_file, $file_ext);
+        preg_match("~(.*)[/$]+~", $path_file, $dirname);
+
+        return array(
+            'dirname' => (isset($dirname[1])) ? $dirname[1] : false,
+            'basename' => $file[0],
+            'extension' => (isset($file_ext[2])) ? $file_ext[2] : false,
+            'filename' => (isset($file_ext[1])) ? $file_ext[1] : $file[0]);
+    }
+
     protected function trim_file_name($file_path, $name, $size, $type, $error,
                                       $index, $content_range) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
-        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+        $path_info = $this->full_pathinfo(stripslashes($name));
+        $base_name = $path_info['basename'];
+        $name = trim($base_name, ".\x00..\x20");
         // Use a timestamp for empty filenames:
         if (!$name) {
             $name = str_replace('.', '-', microtime(true));

@@ -15,14 +15,37 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
+    /*
+     * @TODO перенести в другой контроллер
+     */
     public function actionFileUpload()
     {
         $options = [
             'upload_dir' => Upload::getTmpUploadsPath(),
+            'param_name' => 'files',
+            'upload_url' => '/admin/default/tmp-file-download?file=',
         ];
 
-        $uploaded_file = UploadedFile::getInstanceByName('Product[cover_id]');
         $upload_handler = new UploadHandler($options, false);
-        $upload_handler->handle_file_upload();
+        $result = $upload_handler->post(false);
+
+        Yii::$app->response->format = 'json';
+        return $result;
+    }
+
+    public function actionTmpFileDownload($file)
+    {
+        $path = addslashes(Upload::getTmpUploadsPath() . $file);
+        $imginfo = getimagesize($path);
+        header("Content-type: {$imginfo['mime']}");
+        readfile($path);
+    }
+
+    public function actionFileDownload($file)
+    {
+        $path = addslashes(Upload::getUploadsPath() . $file);
+        $imginfo = getimagesize($path);
+        header("Content-type: {$imginfo['mime']}");
+        readfile($path);
     }
 }
