@@ -20,13 +20,13 @@ class m140522_183731_create_uploads extends \yii\db\Migration
         ], $tableOptions);
 
         $this->addColumn('{{%product}}', 'photo_id', Schema::TYPE_INTEGER . ' NULL');
-        $this->dropColumn('{{%product}}', 'series');
+//        $this->dropColumn('{{%product}}', 'series');
     }
 
     public function safeDown()
     {
         $this->dropTable('{{%upload}}');
         $this->dropColumn('{{%product}}', 'photo_id');
-        $this->addColumn('{{%product}}', 'series', Schema::TYPE_INTEGER . ' NULL');
+//        $this->addColumn('{{%product}}', 'series', Schema::TYPE_INTEGER . ' NULL');
     }
 }
