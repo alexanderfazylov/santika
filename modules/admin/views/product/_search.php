@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'manual_id') ?>
 
-    <?php // echo $form->field($model, 'coat_id') ?>
+    <?php // echo $form->field($model, 'color_id') ?>
 
     <?php // echo $form->field($model, 'drawing_id') ?>
 

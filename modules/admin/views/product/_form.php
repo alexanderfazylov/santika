@@ -2,6 +2,7 @@
 
 use app\models\Category;
 use app\models\Collection;
+use app\models\Color;
 use app\models\Line;
 use app\models\LineProduct;
 use app\models\Shop;
@@ -27,29 +28,23 @@ use yii\widgets\ActiveForm;
     $collection_array = ArrayHelper::map(Collection::find()->byShop($model->shop_id)->all(), 'id', 'name');
     $selected_lines = ArrayHelper::map(LineProduct::find()->andWhere(['product_id' => $model->id])->all(), 'id', 'line_id');
     $category_array = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines), 'id', 'name');
+    $colors_array = ArrayHelper::map(Color::find()->all(), 'id', 'name');
     ?>
     <?php ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
-    Выберите линии:
-    <?=
-    Chosen::widget(
-        [
-            'name' => 'Product[line_ids]',
-            'multiple' => true,
-            'value' => $selected_lines,
-            'items' => $lines_array,
-            'options' => [
-                'id' => 'product-line_ids',
-                'class' => 'form-control',
-                'data-placeholder' => false
-            ]
-        ]
-    );
-    ?>
-
     <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+
+    <?=
+    $form->field($model, 'line_ids')->widget(Chosen::className(), [
+        'multiple' => true,
+        'items' => $lines_array,
+        'options' => [
+            'class' => 'form-control',
+            'data-placeholder' => 'Выберите линии',
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'article')->textInput(['maxlength' => 255]) ?>
 
@@ -61,7 +56,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id')->dropDownList($category_array, ['prompt' => 'Выберите категорию']) ?>
 
-    <!--    --><?php //= $form->field($model, 'coat_id')->textInput() ?>
+   <?= $form->field($model, 'color_id')->dropDownList($colors_array, ['prompt' => 'Выберите покрытие'])  ?>
 
     <?= $form->field($model, 'length')->textInput() ?>
 
@@ -76,111 +71,29 @@ use yii\widgets\ActiveForm;
      * @TODO придумать что нить с загрузкой файлов
      */
     ?>
+    <?php
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'photo',
+    ]);
+    ?>
 
     <?php
-    $filed = $form->field($model, 'photo_id');
-    echo $filed->begin();
-    echo Html::activeLabel($model, 'photo_id', ['class' => 'control-label']);
-    echo Html::activeHiddenInput($model, 'photo_id');
-    echo Html::activeHiddenInput($model, 'photo_tmp');
-    echo !empty($model->photo) ? '<br/>' . $model->photo->fileLink : "";
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'manual',
+    ]);
     ?>
-    <br/>
-    <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>Выбрать файл</span>
-        <?php
-        echo FileUpload::widget([
-            'name' => 'files',
-            'url' => ['/admin/default/file-upload'],
-            'options' => [
-                'accept' => 'image/*',
-                'related_input' => '#product-photo_tmp',
-                'name' => 'files',
-            ],
-            'clientOptions' => [
-                'formData' => [],
-                'done' => new JsExpression('function (e, data){
-                    var related_input = $(this).attr("related_input");
-                    var related = $(related_input);
-                    related.val(data.result.files[0].name);
-                }')
-            ]
-        ]);
-        echo $filed->end();
-        ?>
-    </span>
-
 
     <?php
-    $filed = $form->field($model, 'manual_id');
-    echo $filed->begin();
-    echo Html::activeLabel($model, 'manual_id', ['class' => 'control-label']);
-    echo Html::activeHiddenInput($model, 'manual_id');
-    echo Html::activeHiddenInput($model, 'manual_tmp');
-    echo !empty($model->manual) ? '<br/>' . $model->manual->fileLink : "";
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'drawing',
+    ]);
     ?>
-    <br/>
-    <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>Выбрать файл</span>
-        <?php
-        echo FileUpload::widget([
-            'name' => 'files',
-            'url' => ['/admin/default/file-upload'],
-            'options' => [
-                'accept' => 'image/*',
-                'related_input' => '#product-manual_tmp',
-                'name' => 'files',
-            ],
-            'clientOptions' => [
-                'formData' => [],
-                'done' => new JsExpression('function (e, data){
-                    var related_input = $(this).attr("related_input");
-                    var related = $(related_input);
-                    related.val(data.result.files[0].name);
-                }')
-            ]
-        ]);
-        echo $filed->end();
-        ?>
-    </span>
-
-
-    <?php
-    $filed = $form->field($model, 'drawing_id');
-    echo $filed->begin();
-    echo Html::activeLabel($model, 'drawing_id', ['class' => 'control-label']);
-    echo Html::activeHiddenInput($model, 'drawing_id');
-    echo Html::activeHiddenInput($model, 'drawing_tmp');
-    echo !empty($model->drawing) ? '<br/>' . $model->drawing->fileLink : "";
-    ?>
-    <br/>
-    <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>Выбрать файл</span>
-        <?php
-        echo FileUpload::widget([
-            'name' => 'files',
-            'url' => ['/admin/default/file-upload'],
-            'options' => [
-                'accept' => 'image/*',
-                'related_input' => '#product-drawing_tmp',
-                'name' => 'files',
-            ],
-            'clientOptions' => [
-                'formData' => [],
-                'done' => new JsExpression('function (e, data){
-                    var related_input = $(this).attr("related_input");
-                    var related = $(related_input);
-                    related.val(data.result.files[0].name);
-                }')
-            ]
-        ]);
-        echo $filed->end();
-        ?>
-    </span>
-
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

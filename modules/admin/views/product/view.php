@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'collection.name',
             'category.name',
 //            'manual_id',
-//            'coat_id',
+            'color.name',
 //            'drawing_id',
             'article',
             'photo.fileLink:raw',

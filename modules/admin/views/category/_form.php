@@ -22,25 +22,19 @@ use yii\widgets\ActiveForm;
     <?php $parent_categories = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines, $model->id), 'id', 'name'); ?>
 
     <?php $form = ActiveForm::begin(); ?>
-    Выберите линии:
-    <?php
-    echo Chosen::widget(
-        [
-            'id' => 'category-line_ids',
-            'name' => 'Category[line_ids]',
-            'multiple' => true,
-            'value' => $selected_lines,
-            'items' => $lines_array,
-            'options' => [
-                'class' => 'form-control',
-                'data-placeholder' => false,
-                'skip_id' => $model->id
-            ]
-        ]
-    );
-    ?>
 
     <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+
+    <?=
+    $form->field($model, 'line_ids')->widget(Chosen::className(), [
+        'multiple' => true,
+        'items' => $lines_array,
+        'options' => [
+            'class' => 'form-control',
+            'data-placeholder' => 'Выберите линии',
+            'skip_id' => $model->id
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 

@@ -82,3 +82,54 @@ $(document).on('change', '#category-line_ids', function () {
         }
     })
 });
+
+$(document).on('change', '.datepicker-with-alt', function (e) {
+    $('#toField').val(e.format('mm/dd/yyyy'));
+});
+
+
+/**
+ * Функционал стоимости товаров
+ */
+
+$(document).on('click', '.edit-product_price', function () {
+    $(this).parents('tr').addClass('tr-edit');
+});
+$(document).on('click', '.cancel-product_price', function () {
+    $(this).parents('tr').removeClass('tr-edit');
+});
+$(document).on('click', '.save-product_price', function () {
+    var $tr = $(this).parents('tr');
+    var price_id = $('#price_id').val();
+    var product_id = $tr.data('product_id');
+    var price_product_id = $tr.data('price_product-id');
+    var cost_eur = $tr.find('input[name="cost_eur"]').val();
+    $.ajax({
+        url: '/admin/price-product/save-ajax',
+        type: "POST",
+        dataType: "json",
+        data: {
+            price_id: price_id,
+            product_id: product_id,
+            price_product_id: price_product_id,
+            cost_eur: cost_eur
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                $tr.removeClass('tr-edit');
+                $tr.find('.cost_eur').text(cost_eur);
+                $tr.find('.cost_rub').text(data.cost_rub);
+            } else {
+                if (typeof data.message != "undefined") {
+                    alert(data.message);
+                }
+                if (typeof data.messages != "undefined") {
+                    $.each(data.messages, function (index, message) {
+                        alert(message);
+                    });
+                }
+            }
+        }
+
+    });
+});
