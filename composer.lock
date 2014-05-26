@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "62f13aaf80cc3f6cba86f8a972bbb28c",
+    "hash": "81c91f2a27a7c6b906c1ea50078fe90a",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-file-upload-widget.git",
-                "reference": "6c453840f8561f3451714f7a751eb09a25e51c20"
+                "reference": "3eb430c1cb17b3667ee4a21dcf3b7036345e27ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-file-upload-widget/zipball/6c453840f8561f3451714f7a751eb09a25e51c20",
-                "reference": "6c453840f8561f3451714f7a751eb09a25e51c20",
+                "url": "https://api.github.com/repos/2amigos/yii2-file-upload-widget/zipball/3eb430c1cb17b3667ee4a21dcf3b7036345e27ac",
+                "reference": "3eb430c1cb17b3667ee4a21dcf3b7036345e27ac",
                 "shasum": ""
             },
             "require": {
@@ -90,7 +90,7 @@
                 "widget",
                 "yii"
             ],
-            "time": "2014-05-22 16:37:41"
+            "time": "2014-05-26 08:17:16"
         },
         {
             "name": "2amigos/yii2-gallery-widget",
@@ -245,12 +245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "46d55baab96f943061de6712b38011db354eed78"
+                "reference": "59e424776e352f0adb325daecdb7f136757853fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/46d55baab96f943061de6712b38011db354eed78",
-                "reference": "46d55baab96f943061de6712b38011db354eed78",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/59e424776e352f0adb325daecdb7f136757853fe",
+                "reference": "59e424776e352f0adb325daecdb7f136757853fe",
                 "shasum": ""
             },
             "require": {
@@ -291,7 +291,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-05-08 08:35:11"
+            "time": "2014-05-25 14:34:15"
         },
         {
             "name": "twbs/bootstrap",
@@ -438,12 +438,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "3f0a66eb9e9c08bc392f5c58a023fa9d3a6abec0"
+                "reference": "5bfde3d628cb68d8307a06ccecdb63d3db25a2c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3f0a66eb9e9c08bc392f5c58a023fa9d3a6abec0",
-                "reference": "3f0a66eb9e9c08bc392f5c58a023fa9d3a6abec0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5bfde3d628cb68d8307a06ccecdb63d3db25a2c5",
+                "reference": "5bfde3d628cb68d8307a06ccecdb63d3db25a2c5",
                 "shasum": ""
             },
             "require": {
@@ -508,7 +508,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-05-25 08:21:23"
+            "time": "2014-05-25 20:29:31"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -810,11 +810,17 @@
             "time": "2014-05-23 14:58:21"
         }
     ],
-    "aliases": [],
+    "aliases": [
+
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": []
+    "platform-dev": [
+
+    ]
 }

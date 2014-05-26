@@ -28,11 +28,21 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
     <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
     <br/>
     <label>Прайс</label>
-    <?php echo Html::dropDownList('price_id', $price_id, ArrayHelper::map(Price::find()->all(), 'id', 'start_date'),
+    <?php $func = function ($array, $defaultValue) {
+        return $array->start_date . ' (' . $array->typeText . ')';
+    }?>
+    <?php $prices = ArrayHelper::map(Price::find()->all(), 'id', function ($array, $defaultValue) {
+        return $array->start_date . ' (' . $array->typeText . ')';
+    })?>
+
+    <?php echo Html::dropDownList('price_id', $price_id, $prices,
         [
             'id' => 'price_id',
+            'prompt' => 'Выберите из сипска',
             'onChange' => new JsExpression('
-    window.location = "/admin/price-product/product?price_id=" + $(this).val();
+            if($(this).val() != "") {
+                window.location = "/admin/price-product/product?price_id=" + $(this).val();
+            }
 ')
         ]) ?>
     <table id="price-product-table" class="table table-striped table-bordered">

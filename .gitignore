@@ -1,6 +1,7 @@
 #config files
 config/db.php
 uploads/*
+
 # phpstorm project files
 .idea
 
@@ -20,6 +21,10 @@ Thumbs.db
 
 # composer itself is not needed
 composer.phar
+# composer.lock should not be committed as we always want the latest versions
+/composer.lock
+# composer.lock in applications is ignored in dev repo, will be committed in checked out app repos
+/apps/*/composer.lock
 
 # Mac DS_Store Files
 .DS_Store

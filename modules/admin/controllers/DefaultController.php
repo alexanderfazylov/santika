@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $options = [
             'upload_dir' => Upload::getTmpUploadsPath(),
             'param_name' => 'files',
-            'upload_url' => '/admin/default/tmp-file-download?file=',
+            'upload_url' => '/admin/default/tmp-file-show?file=',
         ];
 
         $upload_handler = new UploadHandler($options, false);
@@ -32,7 +32,7 @@ class DefaultController extends Controller
         return $result;
     }
 
-    public function actionTmpFileDownload($file)
+    public function actionTmpFileShow($file)
     {
         $path = addslashes(Upload::getTmpUploadsPath() . $file);
         $imginfo = getimagesize($path);
@@ -40,7 +40,7 @@ class DefaultController extends Controller
         readfile($path);
     }
 
-    public function actionFileDownload($file)
+    public function actionFileShow($file)
     {
         $path = addslashes(Upload::getUploadsPath() . $file);
         $imginfo = getimagesize($path);

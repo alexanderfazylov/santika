@@ -125,18 +125,18 @@ class Upload extends \yii\db\ActiveRecord
      * Возвращает ссылку на файл
      * @return string
      */
-    public function getFileLink()
+    public function getFileShowLink()
     {
-        return Html::a($this->name, $this->getFileUrl());
+        return Html::a($this->name, $this->getFileShowUrl());
     }
 
     /**
      * Возвращает url на файл
      * @return string
      */
-    public function getFileUrl()
+    public function getFileShowUrl()
     {
-        return Url::to(['/admin/default/file-download', 'file' => $this->path]);
+        return Url::to(['/admin/default/file-show', 'file' => $this->path]);
     }
 
     /**

@@ -51,6 +51,12 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileLink : "";
 
                     var related_name = $(this).attr("related_name");
                     $(related_name).val(data.result.files[0].origin_name);
+
+                    $(this)
+                    .parents(".fileinput-button")
+                    .siblings(".file-show")
+//                    .attr("href", data.result.files[0].url)
+                    .text(data.result.files[0].origin_name);
                 }'),
                 'progress' => new JsExpression('function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -65,6 +71,7 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileLink : "";
         ?>
     </span>
 
+    <?php echo Html::tag('span', '', ['class' => 'file-show', 'target' => 'blank']) ?>
     <div class="progress">
         <div class="bar" style="width: 0%;"></div>
     </div>

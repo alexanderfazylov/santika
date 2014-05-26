@@ -137,25 +137,27 @@ class PriceProductController extends Controller
      */
     public function actionProduct($price_id)
     {
+        $shop_id = 1;
         $price = Price::findOne($price_id);
         if (empty($price)) {
-            throw new Exception('Указанный прайс не найден');
-        }
-        $shop_id = 1;
-        if ($price->type == Price::TYPE_PRODUCT) {
-            $products = Product::find()
-                ->byShop($shop_id)
-                ->with([
-                    'priceProduct' => function ($q) use ($price_id) {
-                            $q->andWhere(['price_id' => $price_id]);
-                        }
-                ])
-                ->all();
-        } else {
-            /**
-             * @TODO для товаров сделать другую вьюху
-             */
+//            throw new Exception('Указанный прайс не найден');
             $products = [];
+        } else {
+            if ($price->type == Price::TYPE_PRODUCT) {
+                $products = Product::find()
+                    ->byShop($shop_id)
+                    ->with([
+                        'priceProduct' => function ($q) use ($price_id) {
+                                $q->andWhere(['price_id' => $price_id]);
+                            }
+                    ])
+                    ->all();
+            } else {
+                /**
+                 * @TODO для товаров сделать другую вьюху
+                 */
+                $products = [];
+            }
         }
         return $this->render('product', [
             'products' => $products,
