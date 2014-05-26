@@ -28,7 +28,6 @@ class DefaultController extends Controller
 
         $upload_handler = new UploadHandler($options, false);
         $result = $upload_handler->post(false);
-
         Yii::$app->response->format = 'json';
         return $result;
     }

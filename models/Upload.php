@@ -16,6 +16,9 @@ use yii\helpers\Url;
  */
 class Upload extends \yii\db\ActiveRecord
 {
+    const TYPE_PRODUCT = 1;
+    const TYPE_COLOR = 2;
+
     /**
      * @inheritdoc
      */
@@ -76,18 +79,46 @@ class Upload extends \yii\db\ActiveRecord
     }
 
     /**
-     * папка для загрузки времнных файдов
+     * Папка + уникальное имя файла по его типу
+     * @param int $type
+     * @param $name
      * @return string
      */
-    public static function getUploadsPathByType($type = 1, $name)
+    public static function getUploadsPathByType($type = self::TYPE_PRODUCT, $name)
     {
         $upload_dir = self::getUploadsPath();
-        $path = 'product' . DIRECTORY_SEPARATOR;
+        $sub_dir = static::getDirByType($type);
+        $path = $sub_dir . DIRECTORY_SEPARATOR;
         $full_path = $upload_dir . $path;
         if (!file_exists($full_path) && !is_dir($full_path)) {
             mkdir($full_path, 0777);
         }
-        return $path . $name;
+        $path_info = static::fullPathInfo($name);
+        $file_name = $path_info['filename'];
+        $ext = $path_info['extension'];
+        while (is_file($full_path . $file_name . '.' . $ext)) {
+            $file_name .= rand(0, 9);
+        }
+        return $path . $file_name . '.' . $ext;
+    }
+
+    /**
+     * Возвращает название папки по типу
+     * @param int $type
+     * @return string
+     */
+    public static function getDirByType($type = 1)
+    {
+        $dir = '';
+        switch ($type) {
+            case static::TYPE_PRODUCT:
+                $dir = 'product';
+                break;
+            case static::TYPE_COLOR:
+                $dir = 'color';
+                break;
+        }
+        return $dir;
     }
 
     /**
@@ -108,4 +139,23 @@ class Upload extends \yii\db\ActiveRecord
         return Url::to(['/admin/default/file-download', 'file' => $this->path]);
     }
 
+    /**
+     * аналог pathinfo для utf8
+     * @param $path_file
+     * @return array
+     */
+    public static function fullPathInfo($path_file)
+    {
+        $path_file = strtr($path_file, array('\\' => '/'));
+
+        preg_match("~[^/]+$~", $path_file, $file);
+        preg_match("~([^/]+)[.$]+(.*)~", $path_file, $file_ext);
+        preg_match("~(.*)[/$]+~", $path_file, $dirname);
+
+        return array(
+            'dirname' => (isset($dirname[1])) ? $dirname[1] : false,
+            'basename' => $file[0],
+            'extension' => (isset($file_ext[2])) ? $file_ext[2] : false,
+            'filename' => (isset($file_ext[1])) ? $file_ext[1] : $file[0]);
+    }
 }

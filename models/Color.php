@@ -16,6 +16,7 @@ use Yii;
 class Color extends \yii\db\ActiveRecord
 {
     public $upload_tmp;
+    public $upload_name;
 
     /**
      * @inheritdoc
@@ -34,7 +35,7 @@ class Color extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['upload_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['upload_tmp'], 'safe']
+            [['upload_tmp', 'upload_name'], 'safe']
         ];
     }
 

@@ -89,11 +89,13 @@ class Category extends \yii\db\ActiveRecord
          * @TODO проверить работу, мб в других местах будут баги
          */
         LineCategory::deleteAll(['category_id' => $this->id]);
-        foreach ($this->line_ids as $line_id) {
-            $lc = new LineCategory();
-            $lc->category_id = $this->id;
-            $lc->line_id = $line_id;
-            $lc->save();
+        if (!empty($this->line_ids)) {
+            foreach ($this->line_ids as $line_id) {
+                $lc = new LineCategory();
+                $lc->category_id = $this->id;
+                $lc->line_id = $line_id;
+                $lc->save();
+            }
         }
     }
 
