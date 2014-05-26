@@ -50,7 +50,7 @@ class Color extends \yii\db\ActiveRecord
             'upload_id' => 'Изображение',
             'upload.name' => 'Изображение',
             'upload_name' => 'Изображение',
-            'upload.fileLink' => 'Изображение',
+            'upload.fileShowLink' => 'Изображение',
         ];
     }
 

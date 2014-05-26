@@ -27,7 +27,7 @@ echo Html::activeLabel($model, $attr_id, ['class' => 'control-label']);
 echo Html::activeHiddenInput($model, $attr_id);
 echo Html::activeHiddenInput($model, $attr_tmp);
 echo Html::activeHiddenInput($model, $attr_name);
-echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileLink : "";
+echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "";
 ?>
     <br/>
     <span class="btn btn-success fileinput-button">
