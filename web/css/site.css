@@ -89,12 +89,13 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
-
+/*прогресс бар загрузки файлов*/
 .bar {
     height: 18px;
     background: green;
 }
 
+/*редактирование стоимоости товаров НАЧАЛО*/
 #price-product-table .show-on-edit {
     display: none;
 }
@@ -106,3 +107,4 @@ a.desc:after {
 #price-product-table .tr-edit .hide-on-edit {
     display: none;
 }
+/*редактирование стоимоости товаров КОНЕЦ*/

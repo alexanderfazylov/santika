@@ -67,10 +67,7 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
             /** @var PriceProduct $price_product */
             $price_product = ($price_exist) ? $product->priceProduct[0] : null;
             ?>
-            <tr
-                data-product_id="<?php echo $product->id ?>"
-                data-price_product-id="<?php echo ($price_exist) ? $price_product->id : null ?>"
-                >
+            <tr data-product_id="<?php echo $product->id ?>">
                 <td>
                     <?php echo $product->name; ?>
                 </td>

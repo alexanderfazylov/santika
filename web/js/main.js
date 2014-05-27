@@ -89,20 +89,20 @@ $(document).on('change', '.datepicker-with-alt', function (e) {
 
 
 /**
- * Функционал стоимости товаров
+ * Функционал редактирования стоимости товаров НАЧАЛО
  */
-
 $(document).on('click', '.edit-product_price', function () {
     $(this).parents('tr').addClass('tr-edit');
 });
+
 $(document).on('click', '.cancel-product_price', function () {
     $(this).parents('tr').removeClass('tr-edit');
 });
+
 $(document).on('click', '.save-product_price', function () {
     var $tr = $(this).parents('tr');
     var price_id = $('#price_id').val();
     var product_id = $tr.data('product_id');
-    var price_product_id = $tr.data('price_product-id');
     var cost_eur = $tr.find('input[name="cost_eur"]').val();
     $.ajax({
         url: '/admin/price-product/save-ajax',
@@ -111,7 +111,6 @@ $(document).on('click', '.save-product_price', function () {
         data: {
             price_id: price_id,
             product_id: product_id,
-            price_product_id: price_product_id,
             cost_eur: cost_eur
         },
         success: function (data) {
@@ -133,3 +132,41 @@ $(document).on('click', '.save-product_price', function () {
 
     });
 });
+
+$(document).on('click', '.delete-product_price', function () {
+    var $tr = $(this).parents('tr');
+    var price_id = $('#price_id').val();
+    var product_id = $tr.data('product_id');
+    $.ajax({
+        url: '/admin/price-product/delete-ajax',
+        type: "POST",
+        dataType: "json",
+        data: {
+            price_id: price_id,
+            product_id: product_id
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                $tr.removeClass('tr-edit');
+                $tr.find('.cost_eur').text('0.00');
+                $tr.find('.cost_rub').text('0.00');
+                $tr.find('input[name="cost_eur"]').val('0.00');
+            } else {
+                if (typeof data.message != "undefined") {
+                    alert(data.message);
+                }
+                if (typeof data.messages != "undefined") {
+                    $.each(data.messages, function (index, message) {
+                        alert(message);
+                    });
+                }
+            }
+        }
+
+    });
+});
+
+
+/**
+ * Функционал редактирования стоимости товаров КОНЕЦ
+ */

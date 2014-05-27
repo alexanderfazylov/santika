@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Currency;
 use app\models\Price;
 use app\models\Product;
 use Yii;
@@ -169,23 +170,41 @@ class PriceProductController extends Controller
     public function actionSaveAjax()
     {
         Yii::$app->response->format = 'json';
-        if (isset($_POST['price_product_id'])) {
+
+        if (isset($_POST['price_id']) && isset($_POST['product_id']) && isset($_POST['cost_eur'])) {
             $model = PriceProduct::findOne(['price_id' => $_POST['price_id'], 'product_id' => $_POST['product_id']]);
+
             if (empty($model)) {
                 $model = new PriceProduct();
                 $model->price_id = $_POST['price_id'];
                 $model->product_id = $_POST['product_id'];
             }
+
             $model->cost_eur = $_POST['cost_eur'];
-            /**
-             * @TODO брать актуальное значение curs_eur
-             */
-            $model->cost_rub = $_POST['cost_eur'] * Yii::$app->params['curs_eur'];
+            $curs_eur = Currency::getEurValue();
+            $model->cost_rub = $_POST['cost_eur'] * $curs_eur;
+
             if ($model->save()) {
                 return ['status' => 'success', 'cost_rub' => $model->cost_rub];
             } else {
                 return ['status' => 'error', 'messages' => $model->getErrors()];
             }
+        }
+        return ['status' => 'error', 'message' => 'Не корректный запрос'];
+    }
+
+    public function actionDeleteAjax()
+    {
+        Yii::$app->response->format = 'json';
+
+        if (isset($_POST['price_id']) && isset($_POST['product_id'])) {
+            $model = PriceProduct::findOne(['price_id' => $_POST['price_id'], 'product_id' => $_POST['product_id']]);
+
+            if (!empty($model)) {
+                $model->delete();
+            }
+
+            return ['status' => 'success'];
         }
         return ['status' => 'error', 'message' => 'Не корректный запрос'];
     }
