@@ -1,0 +1,24 @@
+/*прогресс бар загрузки файлов*/
+.bar {
+    height: 18px;
+    background: green;
+}
+
+/**
+ * редактирование стоимоости товаров НАЧАЛО
+ */
+#price-product-table .show-on-edit {
+    display: none;
+}
+
+#price-product-table .tr-edit .show-on-edit {
+    display: block;
+}
+
+#price-product-table .tr-edit .hide-on-edit {
+    display: none;
+}
+
+/**
+ * редактирование стоимоости товаров КОНЕЦ
+ */

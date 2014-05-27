@@ -4,11 +4,11 @@ namespace app\modules\admin\controllers;
 
 use app\components\UploadHandler;
 use app\models\Upload;
-use yii\web\Controller;
+use app\modules\admin\components\AdminController;
 use Yii;
 use yii\web\UploadedFile;
 
-class DefaultController extends Controller
+class DefaultController extends AdminController
 {
     public function actionIndex()
     {
@@ -25,6 +25,9 @@ class DefaultController extends Controller
             'param_name' => 'files',
             'upload_url' => '/admin/default/tmp-file-show?file=',
         ];
+        /**
+         * @TODO сделать свой uploadHandler
+         */
 
         $upload_handler = new UploadHandler($options, false);
         $result = $upload_handler->post(false);
