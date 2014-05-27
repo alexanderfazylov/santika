@@ -24,6 +24,10 @@ class DefaultController extends AdminController
             'upload_dir' => Upload::getTmpUploadsPath(),
             'param_name' => 'files',
             'upload_url' => '/admin/default/tmp-file-show?file=',
+            /**
+             * @TODO удаление загруженного файла, мульти загрузка
+             *  'script_url' => '/admin/default/file-upload',
+             */
         ];
         /**
          * @TODO сделать свой uploadHandler

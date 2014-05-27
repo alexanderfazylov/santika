@@ -33,6 +33,7 @@ use yii\helpers\Inflector;
  * @property Category $category
  * @property Collection $collection
  * @property Shop $shop
+ * @property PhotoGallery[] $photoGalleries
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -155,7 +156,6 @@ class Product extends \yii\db\ActiveRecord
         }
     }
 
-
     public function afterFind()
     {
         /**
@@ -241,5 +241,13 @@ class Product extends \yii\db\ActiveRecord
     public function getPriceProduct()
     {
         return $this->hasMany(PriceProduct::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhotoGalleries()
+    {
+        return $this->hasMany(PhotoGallery::className(), ['object_id' => 'id']);
     }
 }

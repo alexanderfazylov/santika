@@ -2,6 +2,8 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\PhotoGallery;
+use app\modules\admin\assets\AdminAsset;
 use Yii;
 use app\models\Product;
 use app\models\search\ProductSearch;
@@ -118,5 +120,37 @@ class ProductController extends AdminController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPhotoGallery($id)
+    {
+        $model = Product::find()
+            ->with([
+                'photoGalleries' => function ($q) {
+                        $q->andWhere(['type' => PhotoGallery::TYPE_PRODUCT]);
+                    }
+            ])
+            ->andWhere(['id' => $id])
+            ->one();
+        return $this->render('photo_gallery', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionAddPhoto()
+    {
+        Yii::$app->response->format = 'json';
+        if (isset($_POST['product_id']) && isset($_POST['upload_tmp']) && isset($_POST['upload_name'])) {
+            $photo_gallery = new PhotoGallery();
+            $photo_gallery->object_id = $_POST['product_id'];
+            $photo_gallery->type = PhotoGallery::TYPE_PRODUCT;
+            $photo_gallery->sort = 1;
+            $photo_gallery->upload_tmp = $_POST['upload_tmp'];
+            $photo_gallery->upload_name = $_POST['upload_name'];
+            $photo_gallery->save();
+
+            return ['status' => 'success'];
+        }
+        return ['status' => 'error', 'message' => 'Не корректный запрос'];
     }
 }

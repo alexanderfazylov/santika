@@ -1,6 +1,51 @@
 /**
  * Created by KURT on 20.05.14.
  */
+
+/**
+ * Выводит сообщения об ошибках
+ * data.message - одна ошибка
+ * data.messages - массив ошибок
+ * @param data
+ */
+function alertMessages(data) {
+
+    if (typeof data.message != "undefined") {
+        alert(data.message);
+    }
+    if (typeof data.messages != "undefined") {
+        $.each(data.messages, function (index, message) {
+            alert(message);
+        });
+    }
+}
+
+/**
+ * Сохраняет фото товара из временной папки
+ * @param product_id
+ * @param upload_tmp
+ * @param upload_name
+ */
+function savePhoto(product_id, upload_tmp, upload_name) {
+    $.ajax({
+        url: '/admin/product/add-photo',
+        type: "POST",
+        dataType: "json",
+        data: {
+            product_id: product_id,
+            upload_tmp: upload_tmp,
+            upload_name: upload_name
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+
+            } else {
+                alertMessages(data);
+            }
+        }
+    });
+}
+
 /* редактоирование товара */
 $(document).on('change', '#product-line_ids', function () {
     var shop_id = $('#product-shop_id').val();
@@ -89,14 +134,7 @@ $(document).on('click', '.save-product_price', function () {
                 $tr.find('.cost_eur').text(cost_eur);
                 $tr.find('.cost_rub').text(data.cost_rub);
             } else {
-                if (typeof data.message != "undefined") {
-                    alert(data.message);
-                }
-                if (typeof data.messages != "undefined") {
-                    $.each(data.messages, function (index, message) {
-                        alert(message);
-                    });
-                }
+                alertMessages(data);
             }
         }
 
@@ -122,20 +160,12 @@ $(document).on('click', '.delete-product_price', function () {
                 $tr.find('.cost_rub').text('0.00');
                 $tr.find('input[name="cost_eur"]').val('0.00');
             } else {
-                if (typeof data.message != "undefined") {
-                    alert(data.message);
-                }
-                if (typeof data.messages != "undefined") {
-                    $.each(data.messages, function (index, message) {
-                        alert(message);
-                    });
-                }
+                alertMessages(data);
             }
         }
 
     });
 });
-
 
 /**
  * Функционал редактирования стоимости товаров КОНЕЦ
