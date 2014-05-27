@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'parent_name',
                 'value' => 'parent.name'
             ],
-            'sort',
+//            'sort',
             // 'url:url',
             // 'meta_title',
             // 'meta_description',

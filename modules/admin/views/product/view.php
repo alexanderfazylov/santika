@@ -49,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'width',
             'height',
             'is_promotion',
+            'canonical',
             'url',
             'meta_title',
             'meta_description',

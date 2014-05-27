@@ -60,8 +60,10 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['shop_id', 'article', 'name', 'description', 'url'], 'required'],
             [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion'], 'integer'],
-            [['article', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
-            [['line_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe']
+            [['article', 'name', 'description', 'canonical', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [['line_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
+            [['article'], 'unique', 'targetAttribute' => ['shop_id', 'article'], 'message' => 'Товар с указанным артикулом уже существует.']
+
         ];
     }
 
@@ -96,6 +98,7 @@ class Product extends \yii\db\ActiveRecord
             'width' => 'Ширина', // Yii::t('app', 'Width'),
             'height' => 'Высота', // Yii::t('app', 'Height'),
             'is_promotion' => 'Отображать на главной странице', //Yii::t('app', 'Is Promotion'),
+            'canonical' => 'Canonical',
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),

@@ -25,10 +25,12 @@ class PriceScope extends ActiveQuery
     }
 
     /**
-     * Находит активный прайс
+     * Находит активный прайс по его типу
+     * @param $shop_id
+     * @param int $type
      * @return $this
      */
-    public function active($shop_id)
+    public function active($shop_id, $type = Price::TYPE_PRODUCT)
     {
         /**
          * @TODO оптимизировать
@@ -36,7 +38,8 @@ class PriceScope extends ActiveQuery
         $active_price = Price::find()
             ->byShop($shop_id)
             ->andWhere('start_date <= :start_date', [':start_date' => date('Y-m-d')])
-            ->orderBy(['start_date ' => SORT_DESC])->one();
+            ->andWhere(['type' => $type])
+            ->orderBy(['start_date' => SORT_DESC])->one();
 
         $this->andWhere(['id' => is_null($active_price) ? null : $active_price->id]);
         return $this;

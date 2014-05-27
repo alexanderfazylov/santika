@@ -95,6 +95,8 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
 
+    <?= $form->field($model, 'canonical')->textInput(['maxlength' => 255]) ?>
+
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'meta_description')->textInput(['maxlength' => 255]) ?>

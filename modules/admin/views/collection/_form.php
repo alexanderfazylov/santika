@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <!--    <?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>-->
 
-    <?= $form->field($model, 'sort')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

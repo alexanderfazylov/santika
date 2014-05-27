@@ -7,6 +7,9 @@
 
 namespace app\commands;
 
+use app\models\Currency;
+use app\models\Price;
+use app\models\PriceProduct;
 use yii\console\Controller;
 
 /**
@@ -17,7 +20,7 @@ use yii\console\Controller;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class HelloController extends Controller
+class SantikaController extends Controller
 {
     /**
      * This command echoes what you have entered as the message.
@@ -26,5 +29,21 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+    }
+
+    public function actionUpdatePrice()
+    {
+        $shop_id = 1;
+        $curs_eur = Currency::getEurValue();
+
+        $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();
+        if (!is_null($price)) {
+
+            $price_products = PriceProduct::findAll(['price_id' => $price->id]);
+            foreach ($price_products as $price_product) {
+                $price_product->cost_rub = $price_product->cost_eur * $curs_eur;
+                $price_product->save();
+            }
+        }
     }
 }

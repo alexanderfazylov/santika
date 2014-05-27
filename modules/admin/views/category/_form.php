@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
     ?>
     <?= $form->field($model, 'parent_id')->dropDownList($parent_categories, ['prompt' => 'Выберите родительскую категорию']) ?>
 
-    <?= $form->field($model, 'sort')->textInput() ?>
+<!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

@@ -23,7 +23,7 @@ class Currency extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Currency';
+        return 'currency';
     }
 
     /**
