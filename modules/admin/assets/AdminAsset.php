@@ -13,6 +13,7 @@ use yii\web\AssetBundle;
 
 class AdminAsset extends AssetBundle
 {
+    public $publishOptions = ['forceCopy' => true];
     //папка где лежат js/css
     public $sourcePath = '@admin';
     public $css = [

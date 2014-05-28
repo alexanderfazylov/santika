@@ -39,7 +39,20 @@ class FileSaveBehavior extends Behavior
             $source = Upload::getTmpUploadsPath() . $model->$attr_tmp;
             $dest = Upload::getUploadsPath() . $upload->path;
             if (!copy($source, $dest)) {
+                /**
+                 * @TODO обработать ошибку
+                 */
+            }
 
+            //переносим миниатуюру то же
+            $source_thumb = Upload::getTmpUploadsPath() . 'thumbnail' . DIRECTORY_SEPARATOR . $model->$attr_tmp;
+            $dest_thumb = Upload::getUploadsPath() . 'thumbnail' . DIRECTORY_SEPARATOR . $upload->path;
+            if (file_exists($source_thumb)) {
+                if (!copy($source_thumb, $dest_thumb)) {
+                    /**
+                     * @TODO обработать ошибку
+                     */
+                }
             }
             $upload->ext = '';
             $upload->save();

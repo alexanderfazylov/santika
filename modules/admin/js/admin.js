@@ -38,7 +38,8 @@ function savePhoto(product_id, upload_tmp, upload_name) {
         },
         success: function (data) {
             if (data.status == 'success') {
-
+                $li = $('<li></li>').html(data.img);
+                $('#photo_sorter').append($li);
             } else {
                 alertMessages(data);
             }
@@ -169,4 +170,60 @@ $(document).on('click', '.delete-product_price', function () {
 
 /**
  * Функционал редактирования стоимости товаров КОНЕЦ
+ */
+
+/**
+ * Функционал для работы с фотогалереей НАЧАЛО
+ */
+
+$(document).on('click', '.delete-photo_gallery', function () {
+    var $li = $(this).parents('li');
+    var $div = $li.find('> div');
+    var photo_gallery_id = $div.attr('photo_gallery-id');
+    $.ajax({
+        url: '/admin/product/delete-photo',
+        type: "POST",
+        dataType: "json",
+        data: {
+            photo_gallery_id: photo_gallery_id
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                $li.remove();
+            } else {
+                alertMessages(data);
+            }
+        }
+
+    });
+});
+
+$(document).on('click', '.save-photo_gallery_sort', function () {
+    var sort_index = 0;
+    var sort = [];
+    var $divs = $('#photo_sorter').find('> li > div');
+    $.each($divs, function (index, element) {
+        sort[$(element).attr('photo_gallery-id')] = sort_index;
+        sort_index++;
+    });
+    $.ajax({
+        url: '/admin/product/save-photo-sort',
+        type: "POST",
+        dataType: "json",
+        data: {
+            sort: sort
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                alert('Сохранено');
+            } else {
+                alertMessages(data);
+            }
+        }
+
+    });
+});
+
+/**
+ * Функционал для работы с фотогалереей КОНЕЦ
  */

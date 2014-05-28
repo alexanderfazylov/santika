@@ -8,6 +8,7 @@ use Yii;
 use app\models\Product;
 use app\models\search\ProductSearch;
 use app\modules\admin\components\AdminController;
+use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -124,10 +125,14 @@ class ProductController extends AdminController
 
     public function actionPhotoGallery($id)
     {
+        /**
+         * @TODO перенести в scope в PhotoGallery
+         */
         $model = Product::find()
             ->with([
                 'photoGalleries' => function ($q) {
                         $q->andWhere(['type' => PhotoGallery::TYPE_PRODUCT]);
+                        $q->orderBy(['sort' => SORT_ASC]);
                     }
             ])
             ->andWhere(['id' => $id])
@@ -137,18 +142,55 @@ class ProductController extends AdminController
         ]);
     }
 
+    /**
+     * @TODO перенести функции в другой контроллер, заменить product_id на object_id, добавить type
+     * @return array
+     */
     public function actionAddPhoto()
     {
         Yii::$app->response->format = 'json';
         if (isset($_POST['product_id']) && isset($_POST['upload_tmp']) && isset($_POST['upload_name'])) {
+            $pg = PhotoGallery::find()
+                ->andWhere(['object_id' => $_POST['product_id']])
+                ->andWhere(['type' => PhotoGallery::TYPE_PRODUCT])
+                ->orderBy(['sort' => SORT_DESC])->one();
+            $sort = is_null($pg) ? 1 : $pg->sort + 1;
             $photo_gallery = new PhotoGallery();
             $photo_gallery->object_id = $_POST['product_id'];
             $photo_gallery->type = PhotoGallery::TYPE_PRODUCT;
-            $photo_gallery->sort = 1;
+            $photo_gallery->sort = $sort;
             $photo_gallery->upload_tmp = $_POST['upload_tmp'];
             $photo_gallery->upload_name = $_POST['upload_name'];
             $photo_gallery->save();
 
+            $html = $photo_gallery->renderSortItem();
+            return ['status' => 'success', 'img' => $html];
+        }
+        return ['status' => 'error', 'message' => 'Не корректный запрос'];
+    }
+
+    public function actionDeletePhoto()
+    {
+        Yii::$app->response->format = 'json';
+        if (isset($_POST['photo_gallery_id'])) {
+            $photo_gallery = PhotoGallery::findOne($_POST['photo_gallery_id']);
+            $photo_gallery->delete();
+
+            return ['status' => 'success'];
+        }
+        return ['status' => 'error', 'message' => 'Не корректный запрос'];
+    }
+
+    public function actionSavePhotoSort()
+    {
+        Yii::$app->response->format = 'json';
+        if (isset($_POST['sort'])) {
+            $ids = array_keys($_POST['sort']);
+            $photo_galleries = PhotoGallery::findAll(['id' => $ids]);
+            foreach ($photo_galleries as $pg) {
+                $pg->sort = $_POST['sort'][$pg->id];
+                $pg->save();
+            }
             return ['status' => 'success'];
         }
         return ['status' => 'error', 'message' => 'Не корректный запрос'];

@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "yiidoc/yii2-chosen": "*",
         "2amigos/yii2-file-upload-widget" : "*",
-        "2amigos/yii2-date-picker-widget" : "*"
+        "2amigos/yii2-date-picker-widget" : "*",
+        "yiisoft/yii2-jui": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
