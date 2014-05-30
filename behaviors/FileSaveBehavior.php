@@ -19,6 +19,7 @@ class FileSaveBehavior extends Behavior
     /**
      * Сохраняет файл из временной папки в Uploads
      * @param $attribute
+     * @param $file_type
      */
     public function saveFileFromAttribute($attribute, $file_type)
     {
@@ -32,28 +33,40 @@ class FileSaveBehavior extends Behavior
             } else {
                 $upload = Upload::findOne($model->$attr_id);
             }
+            $name = $model->$attr_name;
 
-            $upload->name = $model->$attr_name;
-            $upload->path = Upload::getUploadsPathByType($file_type, $upload->name);
+            $uploads_dir = Upload::getUploadsPath();
+            //путь до временного файла
+            $source_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP);
+            $source = $uploads_dir . $source_folder . $model->$attr_tmp;
 
-            $source = Upload::getTmpUploadsPath() . $model->$attr_tmp;
-            $dest = Upload::getUploadsPath() . $upload->path;
+            $dest_folder = Upload::getUploadsPathByType($file_type);
+            $unique_name = Upload::getUniquerName($uploads_dir . $dest_folder, $name);
+            $path = $dest_folder . $unique_name;
+            $dest = $uploads_dir . $path;
             if (!copy($source, $dest)) {
                 /**
                  * @TODO обработать ошибку
                  */
             }
 
+
             //переносим миниатуюру то же
-            $source_thumb = Upload::getTmpUploadsPath() . 'thumbnail' . DIRECTORY_SEPARATOR . $model->$attr_tmp;
-            $dest_thumb = Upload::getUploadsPath() . 'thumbnail' . DIRECTORY_SEPARATOR . $upload->path;
-            if (file_exists($source_thumb)) {
-                if (!copy($source_thumb, $dest_thumb)) {
-                    /**
-                     * @TODO обработать ошибку
-                     */
-                }
+            //путь до временного файла
+            $source_thumb_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP, true);
+            $source_thumb = $uploads_dir . $source_thumb_folder . $model->$attr_tmp;
+
+            $dest_thumb_folder = Upload::getUploadsPathByType($file_type, true);
+            $dest_thumb = $uploads_dir . $dest_thumb_folder . $unique_name;
+
+            if (!copy($source_thumb, $dest_thumb)) {
+                /**
+                 * @TODO обработать ошибку
+                 */
             }
+
+            $upload->name = $name;
+            $upload->path = $path;
             $upload->ext = '';
             $upload->save();
             $model->$attr_id = $upload->id;

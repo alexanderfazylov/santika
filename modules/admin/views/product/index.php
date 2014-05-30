@@ -43,11 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'category_name',
                 'value' => 'category.name'
             ],
+             'name',
+
             // 'color_id',
             // 'drawing_id',
 
             // 'series',
-            // 'name',
             // 'description',
             // 'length',
             // 'width',

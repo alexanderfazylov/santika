@@ -17,8 +17,10 @@ use yii\helpers\Url;
  */
 class Upload extends \yii\db\ActiveRecord
 {
+    const TYPE_TMP = 0;
     const TYPE_PRODUCT = 1;
     const TYPE_COLOR = 2;
+    const TYPE_INTERACTIVE = 3;
 
     /**
      * @inheritdoc
@@ -66,6 +68,9 @@ class Upload extends \yii\db\ActiveRecord
      */
     public static function getUploadsPath()
     {
+        /**
+         * @TODO добавить разделение на салоны
+         */
         $upload_dir = Yii::getAlias('@app') . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
         if (!file_exists($upload_dir) && !is_dir($upload_dir)) {
             mkdir($upload_dir, 0777);
@@ -75,25 +80,25 @@ class Upload extends \yii\db\ActiveRecord
 
     /**
      * папка для загрузки времнных файдов
+     * @param bool $thumbnail
      * @return string
      */
-    public static function getTmpUploadsPath()
+    public static function getTmpUploadsPath($thumbnail = false)
     {
         $upload_dir = self::getUploadsPath();
-        $upload_tmp = $upload_dir . 'tmp' . DIRECTORY_SEPARATOR;
-        if (!file_exists($upload_tmp) && !is_dir($upload_tmp)) {
-            mkdir($upload_tmp, 0777);
-        }
+        $upload_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP, $thumbnail);
+        $upload_tmp = $upload_dir . $upload_folder;
+
         return $upload_tmp;
     }
 
     /**
-     * Папка + уникальное имя файла по его типу
+     * Папка по типу файла
      * @param int $type
-     * @param $name
+     * @param bool $thumbnail
      * @return string
      */
-    public static function getUploadsPathByType($type = self::TYPE_PRODUCT, $name)
+    public static function getUploadsPathByType($type = self::TYPE_PRODUCT, $thumbnail = false)
     {
         $upload_dir = self::getUploadsPath();
         $sub_dir = static::getDirByType($type);
@@ -102,13 +107,33 @@ class Upload extends \yii\db\ActiveRecord
         if (!file_exists($full_path) && !is_dir($full_path)) {
             mkdir($full_path, 0777);
         }
+
+        if ($thumbnail) {
+            $path .= 'thumbnail' . DIRECTORY_SEPARATOR;
+            $full_path = $upload_dir . $path;
+            if (!file_exists($full_path) && !is_dir($full_path)) {
+                mkdir($full_path, 0777);
+            }
+        }
+
+        return $path;
+    }
+
+    /**
+     * Возвращает уникальное имя файла в папке
+     * @param $path
+     * @param $name
+     * @return string
+     */
+    public static function getUniquerName($path, $name)
+    {
         $path_info = static::fullPathInfo($name);
         $file_name = $path_info['filename'];
-        $ext = $path_info['extension'];
-        while (is_file($full_path . $file_name . '.' . $ext)) {
+        $ext = !empty($path_info['extension']) ? '.' . $path_info['extension'] : '';
+        while (is_file($path . $file_name . $ext)) {
             $file_name .= rand(0, 9);
         }
-        return $path . $file_name . '.' . $ext;
+        return $file_name . $ext;
     }
 
     /**
@@ -120,11 +145,17 @@ class Upload extends \yii\db\ActiveRecord
     {
         $dir = '';
         switch ($type) {
+            case static::TYPE_TMP:
+                $dir = 'tmp';
+                break;
             case static::TYPE_PRODUCT:
                 $dir = 'product';
                 break;
             case static::TYPE_COLOR:
                 $dir = 'color';
+                break;
+            case static::TYPE_INTERACTIVE:
+                $dir = 'interactive';
                 break;
         }
         return $dir;
@@ -137,6 +168,9 @@ class Upload extends \yii\db\ActiveRecord
      */
     public function getFileShowLink($thumbnail = false)
     {
+        /**
+         * @TODO передавать id, а не путь в url
+         */
         return Html::a($this->name, $this->getFileShowUrl($thumbnail));
     }
 
@@ -147,6 +181,9 @@ class Upload extends \yii\db\ActiveRecord
      */
     public function getFileShowUrl($thumbnail = false)
     {
+        /**
+         * @TODO передавать id, а не путь в url
+         */
         $path = ($thumbnail ? 'thumbnail' . DIRECTORY_SEPARATOR : '') . $this->path;
         return Url::to(['/admin/default/file-show', 'file' => $path]);
     }

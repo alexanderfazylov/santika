@@ -22,3 +22,26 @@
 /**
  * редактирование стоимоости товаров КОНЕЦ
  */
+
+/**
+ * интреактивное фото НАЧАЛО
+ */
+
+.interactive-owner{
+    position: relative;
+    display: block;
+}
+
+.interactive-owner img{
+    width: 100%;
+    height: 100%;
+}
+.interactive-owner .point{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+
+/**
+ * интреактивное фото КОНЕЦ
+ */

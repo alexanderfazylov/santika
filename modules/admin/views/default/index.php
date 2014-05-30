@@ -18,5 +18,6 @@ echo Menu::widget([
         ['label' => 'Покрытия', 'url' => ['/admin/color']],
         ['label' => 'Прайс листы', 'url' => ['/admin/price']],
         ['label' => 'Стоимость товаров', 'url' => ['/admin/price-product/product', 'price_id' => 1]],
+        ['label' => 'Интерактивные фото', 'url' => ['/admin/interactive']],
     ]
 ]);

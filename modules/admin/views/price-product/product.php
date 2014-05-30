@@ -28,9 +28,6 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
     <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
     <br/>
     <label>Прайс</label>
-    <?php $func = function ($array, $defaultValue) {
-        return $array->start_date . ' (' . $array->typeText . ')';
-    }?>
     <?php $prices = ArrayHelper::map(Price::find()->all(), 'id', function ($array, $defaultValue) {
         return $array->start_date . ' (' . $array->typeText . ')';
     })?>
