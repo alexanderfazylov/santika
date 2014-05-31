@@ -10,11 +10,11 @@ use Yii;
  * @property integer $id
  * @property integer $interactive_id
  * @property integer $product_id
- * @property integer $left
- * @property integer $top
+ * @property double $left
+ * @property double $top
  *
- * @property Product $product
  * @property Interactive $interactive
+ * @property Product $product
  */
 class InteractiveProduct extends \yii\db\ActiveRecord
 {
@@ -33,7 +33,8 @@ class InteractiveProduct extends \yii\db\ActiveRecord
     {
         return [
             [['interactive_id', 'product_id', 'left', 'top'], 'required'],
-            [['interactive_id', 'product_id', 'left', 'top'], 'integer']
+            [['interactive_id', 'product_id'], 'integer'],
+            [['left', 'top'], 'number']
         ];
     }
 
@@ -54,16 +55,16 @@ class InteractiveProduct extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProduct()
+    public function getInteractive()
     {
-        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+        return $this->hasOne(Interactive::className(), ['id' => 'interactive_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInteractive()
+    public function getProduct()
     {
-        return $this->hasOne(Interactive::className(), ['id' => 'interactive_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

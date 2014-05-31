@@ -168,25 +168,37 @@ class InteractiveController extends AdminController
     {
         Yii::$app->response->format = 'json';
 
-        if (isset($_POST['interactive_id'])) {
-            $intaractive_products = InteractiveProduct::find()
-                ->joinWith('product')
-                ->andWhere(['interactive_id' => $_POST['interactive_id']])
-                ->all();
-            $products = [];
-            foreach ($intaractive_products as $ip) {
-                $data = [
-                    'id' => $ip->id,
-                    'product_id' => $ip->product_id,
-                    'product_name' => $ip->product->name,
-                    'left_percent' => $ip->left,
-                    'top_percent' => $ip->top,
-                ];
-                $products[] = $data;
+        if (isset($_POST['InteractiveProduct']) || isset($_POST['InteractiveProductDeleted'])) {
+
+            if (isset($_POST['InteractiveProduct'])) {
+
+                foreach ($_POST['InteractiveProduct'] as $intaractive_product) {
+
+                    if (!empty($intaractive_product['id'])) {
+                        $ip = InteractiveProduct::findOne($intaractive_product['id']);
+                    } else {
+                        $ip = new InteractiveProduct();
+                    }
+                    $ip->load($intaractive_product, '');
+
+                    if (!$ip->save()) {
+                        /**
+                         * @TODO обработать ошибку
+                         */
+//                        return ['status' => 'error', 'messages' => $ip->getErrors()];
+                    }
+                }
+            }
+
+            if (isset($_POST['InteractiveProductDeleted'])) {
+
+                foreach ($_POST['InteractiveProductDeleted'] as $id) {
+                    $ip = InteractiveProduct::findOne($id);
+                    $ip->delete();
+                }
             }
             return [
                 'status' => 'success',
-                'products' => $products
             ];
         }
         return ['status' => 'error', 'message' => 'Не корректный запрос'];

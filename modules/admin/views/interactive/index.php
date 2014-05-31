@@ -37,7 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'upload.fileShowLink:raw',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {product} {update} {delete}',
+                'buttons' => [
+                    'product' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-picture"></span>', $url, [
+                                'title' => 'Отметить товары',
+                                'data-pjax' => '0',
+                            ]);
+                        }
+                ]
+            ],
         ],
     ]); ?>
 
