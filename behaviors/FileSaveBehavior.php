@@ -57,16 +57,18 @@ class FileSaveBehavior extends Behavior
             $source_thumb = $uploads_dir . $source_thumb_folder . $model->$attr_tmp;
 
             $dest_thumb_folder = Upload::getUploadsPathByType($file_type, true);
-            $dest_thumb = $uploads_dir . $dest_thumb_folder . $unique_name;
+            $thumbnail = $dest_thumb_folder . $unique_name;
+            $dest_thumb = $uploads_dir . $thumbnail;
 
             if (!copy($source_thumb, $dest_thumb)) {
                 /**
                  * @TODO обработать ошибку
                  */
             }
-
+            $upload->type = $file_type;
             $upload->name = $name;
             $upload->path = $path;
+            $upload->thumbnail = $thumbnail;
             $upload->ext = '';
             $upload->save();
             $model->$attr_id = $upload->id;

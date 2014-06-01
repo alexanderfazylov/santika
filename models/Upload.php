@@ -14,6 +14,8 @@ use yii\helpers\Url;
  * @property string $name
  * @property string $path
  * @property string $ext
+ * @property string $thumbnail
+ * @property integer $type
  */
 class Upload extends \yii\db\ActiveRecord
 {
@@ -36,8 +38,9 @@ class Upload extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'path'], 'required'],
-            [['name', 'path', 'ext'], 'string', 'max' => 255]
+            [['name', 'path', 'thumbnail', 'type'], 'required'],
+            [['type'], 'integer'],
+            [['name', 'path', 'ext', 'thumbnail'], 'string', 'max' => 255]
         ];
     }
 
@@ -51,6 +54,8 @@ class Upload extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'path' => Yii::t('app', 'Path'),
             'ext' => Yii::t('app', 'Ext'),
+            'thumbnail' => Yii::t('app', 'Thumbnail'),
+            'type' => Yii::t('app', 'Type'),
         ];
     }
 
@@ -184,7 +189,11 @@ class Upload extends \yii\db\ActiveRecord
         /**
          * @TODO передавать id, а не путь в url
          */
-        $path = ($thumbnail ? 'thumbnail' . DIRECTORY_SEPARATOR : '') . $this->path;
+        if ($thumbnail) {
+            $path = $this->thumbnail;
+        } else {
+            $path = $this->path;
+        }
         return Url::to(['/admin/default/file-show', 'file' => $path]);
     }
 

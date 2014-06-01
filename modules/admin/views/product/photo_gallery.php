@@ -37,11 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <span>Выбрать файл</span>
         <?php
         echo FileUpload::widget([
-            'name' => 'files',
+            'name' => 'files[]',
             'url' => ['/admin/default/file-upload'],
             'options' => [
                 'accept' => 'image/*',
                 'name' => 'files',
+                'multiple' => ""
             ],
             'clientOptions' => [
                 'formData' => [],
