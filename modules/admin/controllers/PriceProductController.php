@@ -147,7 +147,7 @@ class PriceProductController extends AdminController
                     ->all();
             } else {
                 /**
-                 * @TODO для товаров сделать другую вьюху
+                 * @TODO для услуг сделать другую вьюху
                  */
                 $products = [];
             }

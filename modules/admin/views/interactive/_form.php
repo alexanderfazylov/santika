@@ -21,8 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <label>Салон</label>
-    <?= Html::dropDownList('shop_id', $shop_id, $shops_array, ['id' => 'interactive-shop_id']) ?>
+    <div class="form-group">
+        <label>Салон</label>
+        <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name'), ['id' => 'interactive-shop_id', 'class' => 'form-control']) ?>
+    </div>
+
 
     <?= $form->field($model, 'line_id')->dropDownList($lines_array, ['promt' => 'Выберите линию']); ?>
 

@@ -24,24 +24,30 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
 <div class="price-product-product">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <label>Салон</label>
-    <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
-    <br/>
-    <label>Прайс</label>
-    <?php $prices = ArrayHelper::map(Price::find()->all(), 'id', function ($array, $defaultValue) {
-        return $array->start_date . ' (' . $array->typeText . ')';
-    })?>
 
-    <?php echo Html::dropDownList('price_id', $price_id, $prices,
-        [
-            'id' => 'price_id',
-            'prompt' => 'Выберите из сипска',
-            'onChange' => new JsExpression('
+    <div class="form-group">
+        <label>Салон</label>
+        <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name'), ['class' => 'form-control']) ?>
+    </div>
+    <div class="form-group">
+        <label>Прайс</label>
+        <?php $prices = ArrayHelper::map(Price::find()->all(), 'id', function ($array, $defaultValue) {
+            return $array->start_date . ' (' . $array->typeText . ')';
+        })?>
+
+        <?php echo Html::dropDownList('price_id', $price_id, $prices,
+            [
+                'id' => 'price_id',
+                'class' => 'form-control',
+                'prompt' => 'Выберите из сипска',
+                'onChange' => new JsExpression('
             if($(this).val() != "") {
                 window.location = "/admin/price-product/product?price_id=" + $(this).val();
             }
 ')
-        ]) ?>
+            ]) ?>
+    </div>
+
     <table id="price-product-table" class="table table-striped table-bordered">
         <thead>
         <tr>
