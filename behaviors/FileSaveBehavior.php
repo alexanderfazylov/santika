@@ -55,15 +55,18 @@ class FileSaveBehavior extends Behavior
             //путь до временного файла
             $source_thumb_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP, true);
             $source_thumb = $uploads_dir . $source_thumb_folder . $model->$attr_tmp;
+            $thumbnail = null;
+            if (file_exists($source_thumb)) {
+                //если загружена картинка, то у нее есть миниатюра
+                $dest_thumb_folder = Upload::getUploadsPathByType($file_type, true);
+                $thumbnail = $dest_thumb_folder . $unique_name;
+                $dest_thumb = $uploads_dir . $thumbnail;
 
-            $dest_thumb_folder = Upload::getUploadsPathByType($file_type, true);
-            $thumbnail = $dest_thumb_folder . $unique_name;
-            $dest_thumb = $uploads_dir . $thumbnail;
-
-            if (!copy($source_thumb, $dest_thumb)) {
-                /**
-                 * @TODO обработать ошибку
-                 */
+                if (!copy($source_thumb, $dest_thumb)) {
+                    /**
+                     * @TODO обработать ошибку
+                     */
+                }
             }
             $upload->type = $file_type;
             $upload->name = $name;

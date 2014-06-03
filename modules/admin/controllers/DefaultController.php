@@ -47,9 +47,19 @@ class DefaultController extends AdminController
         readfile($path);
     }
 
-    public function actionFileShow($file)
+    public function actionFileShow($id, $thumbnail = false)
     {
+        $upload = Upload::findOne($id);
+        if ($thumbnail) {
+            $file = $upload->thumbnail;
+        } else {
+            $file = $upload->path;
+        }
         $path = addslashes(Upload::getUploadsPath() . $file);
+        if (!file_exists($path) || !is_file($path)) {
+            //если нет файла, то вернем картинку по умолчанию
+            $path = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'default.jpeg';
+        }
         $imginfo = getimagesize($path);
         header("Content-type: {$imginfo['mime']}");
         readfile($path);
