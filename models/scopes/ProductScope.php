@@ -37,4 +37,14 @@ class ProductScope extends ActiveQuery
         $this->andWhere(['id' => $query_for_id]);
         return $this;
     }
+
+    /**
+     * @param $url
+     * @return $this
+     */
+    public function byUrl($url)
+    {
+        $this->andWhere(['url' => $url]);
+        return $this;
+    }
 } 

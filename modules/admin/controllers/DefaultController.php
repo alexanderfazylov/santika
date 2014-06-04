@@ -6,7 +6,6 @@ use app\components\UploadHandler;
 use app\models\Upload;
 use app\modules\admin\components\AdminController;
 use Yii;
-use yii\web\UploadedFile;
 
 class DefaultController extends AdminController
 {

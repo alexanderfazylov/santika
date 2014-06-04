@@ -46,6 +46,19 @@ $config = [
                 'admin/<controller:\w+>/<id:\d+>' => 'admin/<controller>/view',
                 'admin/<controller:\w+>/<action:\w+>/' => 'admin/<controller>/<action>',
                 'admin/<controller:\w+>/<action:\w+>' => 'admin/<controller>/<action>',
+
+                /**
+                 * url для каталога во frond-end'e
+                 */
+                'catalog/<url:([-]*\w+)+>' => '/catalog/line',
+                'catalog/collection/<url:([-]*\w+)+>' => '/catalog/collection',
+                'catalog/<line_url:([-]*\w+)+>/<url:([-]*\w+)+>/' => '/catalog/category',
+                //финт, что бы не приходил "product" в параметре category, когда у товара нет категории
+                'GET catalog/<line_url:([-]*\w+)+>/product/<url:([-]*\w+)+>/' => '/catalog/product',
+                'GET catalog/<line_url:([-]*\w+)+>/<category_url:([-]*\w+)+>/<url:([-]*\w+)+>/' => '/catalog/product',
+                'catalog/<line_url:([-]*\w+)+>/<category_url:([-]*\w+)+>/<url:([-]*\w+)+>/' => '/catalog/product',
+                'catalog/<line_url:([-]*\w+)+>/product/<url:([-]*\w+)+>/' => '/catalog/product',
+
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',

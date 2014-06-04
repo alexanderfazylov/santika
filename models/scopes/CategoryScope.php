@@ -22,4 +22,14 @@ class CategoryScope extends ActiveQuery
         $this->andWhere(['shop_id' => $shop_id]);
         return $this;
     }
+
+    /**
+     * @param $url
+     * @return $this
+     */
+    public function byUrl($url)
+    {
+        $this->andWhere(['url' => $url]);
+        return $this;
+    }
 } 

@@ -7,7 +7,6 @@ use app\modules\admin\components\AdminController;
 use Yii;
 use app\models\Interactive;
 use app\models\search\InteractiveSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
