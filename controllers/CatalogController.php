@@ -4,8 +4,11 @@ namespace app\controllers;
 
 use app\models\Category;
 use app\models\Collection;
+use app\models\Interactive;
+use app\models\InteractiveProduct;
 use app\models\Line;
 use app\models\Product;
+use app\models\Upload;
 use Yii;
 use yii\web\Controller;
 
@@ -13,15 +16,24 @@ class CatalogController extends Controller
 {
     public function actionIndex()
     {
-
-        return $this->render('index');
+        $shop_id = 1;
+        $lines = Line::find()->byShop($shop_id)->all();
+        return $this->render('index', [
+            'lines' => $lines
+        ]);
     }
 
     public function actionLine($url)
     {
         $line = Line::find()->byUrl($url)->one();
+        $intaractives = Interactive::find()
+            ->joinWith(Upload::tableName())
+            ->joinWith('interactiveProducts')
+            ->andWhere(['line_id' => $line->id])
+            ->all();
         return $this->render('line', [
             'line' => $line,
+            'intaractives' => $intaractives,
         ]);
     }
 

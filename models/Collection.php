@@ -5,6 +5,7 @@ namespace app\models;
 use app\models\scopes\CategoryScope;
 use Yii;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "collection".
@@ -92,5 +93,14 @@ class Collection extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['collection_id' => 'id']);
+    }
+
+    /**
+     * Возвращает ссылку на коллекцию
+     * @return string
+     */
+    public function createUrl()
+    {
+        return Url::to(['/catalog/collection/', 'url' => $this->url]);
     }
 }

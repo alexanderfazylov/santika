@@ -124,6 +124,9 @@ class InteractiveController extends AdminController
         }
     }
 
+    /**
+     * @TODO переименовать
+     */
     public function actionProduct($id)
     {
         $shop_id = 1;

@@ -6,6 +6,7 @@ use app\models\scopes\LineScope;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "line".
@@ -102,5 +103,14 @@ class Line extends \yii\db\ActiveRecord
     public function getLineProducts()
     {
         return $this->hasMany(LineProduct::className(), ['line_id' => 'id']);
+    }
+
+    /**
+     * Возвращает ссылку на коллекцию
+     * @return string
+     */
+    public function createUrl()
+    {
+        return Url::to(['/catalog/line/', 'url' => $this->url]);
     }
 }
