@@ -13,15 +13,27 @@ use app\models\Product;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = 'Каталог';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php
 
+<h1><?= Html::encode($this->title) ?></h1>
+
+<?php foreach ($lines as $line): ?>
+    <?= Html::a($line->name, $line->createUrl()); ?>
+    <br/>
+<?php endforeach; ?>
+
+<div style="display: none;">
+<?php
+/**
+ * @TODO УДАЛИТЬ
+ */
 $line = Line::find()->one();
 $collection = Collection::find()->one();
 $category = Category::find()->one();
 $product = Product::find()->one();
 ?>
-
     <label>Url examples</label><br/>
     <label>каталог</label> <?= Url::to(['/catalog']); ?><br/>
     <label>линия</label> <?= Url::to(['/catalog/line', 'url' => $line->url]); ?><br/>
@@ -36,7 +48,4 @@ $product = Product::find()->one();
     <br/>
 
 
-<?php foreach ($lines as $line): ?>
-    <?= Html::a($line->name, $line->createUrl()); ?>
-    <br/>
-<?php endforeach; ?>
+</div>

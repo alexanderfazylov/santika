@@ -28,10 +28,12 @@ class FileSaveBehavior extends Behavior
         $attr_id = $attribute . '_id';
         $model = $this->owner;
         if (!empty($model->$attr_tmp)) {
-            if (empty($model->$attr_id)) {
-                $upload = new Upload();
-            } else {
+            $upload = null;
+            if (!empty($model->$attr_id)) {
                 $upload = Upload::findOne($model->$attr_id);
+            }
+            if (is_null($upload)) {
+                $upload = new Upload();
             }
             $name = $model->$attr_name;
 

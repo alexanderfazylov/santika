@@ -85,7 +85,6 @@ function InteractivePoint(options) {
             .attr('class', 'point')
             .css('left', that.left)
             .css('top', that.top)
-            .css('background-color', 'red')
             .attr('title', that.product_name)
         ;
 

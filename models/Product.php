@@ -5,6 +5,7 @@ namespace app\models;
 use app\models\scopes\ProductScope;
 use Yii;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "product".
@@ -30,6 +31,7 @@ use yii\helpers\Inflector;
  * @property string $meta_keywords
  *
  * @property LineProduct[] $lineProducts
+ * @property Upload $photo
  * @property Category $category
  * @property Collection $collection
  * @property Shop $shop
@@ -250,4 +252,30 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PhotoGallery::className(), ['object_id' => 'id']);
     }
+
+    /**
+     * Возвращает ДхШхВ товара
+     * @return string
+     */
+    public function getLwh()
+    {
+        return $this->length . 'x' . $this->width . 'x' . $this->height;
+    }
+
+
+    /**
+     * Генерирует ссылку на товар
+     * @return string
+     */
+    public function createUrlByLine($line_url)
+    {
+        $category = $this->category;
+        if (is_null($category)) {
+            $category_url = null;
+        } else {
+            $category_url = $category->url;
+        }
+        return Url::toRoute(['/catalog/product', 'line_url' => $line_url, 'category_url' => $category_url, 'url' => $this->url]);
+    }
+
 }
