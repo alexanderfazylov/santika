@@ -21,7 +21,8 @@ class CatalogController extends Controller
         $shop_id = 1;
         $lines = Line::find()->byShop($shop_id)->all();
         return $this->render('index', [
-            'lines' => $lines
+            'lines' => $lines,
+            'shop_id' => $shop_id,
         ]);
     }
 
@@ -40,20 +41,30 @@ class CatalogController extends Controller
     }
 
 
-    public function actionLineProduct($url, $category_id = null, $collection_id = null)
+    public function actionLineProduct($line_url, $category_url = null, $collection_url = null)
     {
-        $line = Line::find()->byUrl($url)->one();
+        $line = Line::find()->byUrl($line_url)->one();
+        $shop_id = $line->shop_id;
+
         $query = Product::find()
             ->joinWith('photo')
             ->joinWith('lineProducts')
             ->andWhere(['line_id' => $line->id]);
 
-        if (!empty($category_id)) {
-            $query->andWhere(['category_id' => $category_id]);
+        if (!empty($category_url)) {
+            /**
+             * @TODO переделать на join?
+             */
+            $category = Category::findOne(['url' => $category_url]);
+            $query->andWhere(['category_id' => $category->id]);
         }
 
-        if (!empty($collection_id)) {
-            $query->andWhere(['collection_id' => $collection_id]);
+        if (!empty($collection_url)) {
+            /**
+             * @TODO переделать на join?
+             */
+            $collection = Collection::findOne(['url' => $collection_url]);
+            $query->andWhere(['collection_id' => $collection->id]);
         }
         $products = $query->all();
 
@@ -62,17 +73,17 @@ class CatalogController extends Controller
             ->andWhere(['line_id' => $line->id])
             ->all();
 
-        $collections = Category::find()
-            ->joinWith('lineCategories')
-            ->andWhere(['line_id' => $line->id])
+        $collections = Collection::find()
+            ->byShop($shop_id)
             ->all();
+
         return $this->render('line_product', [
             'products' => $products,
             'line' => $line,
             'categories' => $categories,
-            'category_id' => $category_id,
+            'category_url' => $category_url,
             'collections' => $collections,
-            'collection_id' => $collection_id,
+            'collection_url' => $collection_url,
         ]);
     }
 
@@ -111,6 +122,18 @@ class CatalogController extends Controller
             'product_id' => $product->id,
         ]);
 
+        $next_product = Product::find()
+            ->joinWith('lineProducts')
+            ->andWhere(['line_id' => $line->id])
+            ->andWhere('product.id > ' . $product->id)
+            ->one();
+        $prev_product = Product::find()
+            ->joinWith('lineProducts')
+            ->andWhere(['line_id' => $line->id])
+            ->andWhere('product.id < ' . $product->id)
+            ->one();
+
+
         $other_products = Product::find()
             ->joinWith('photo')
             ->joinWith('lineProducts')
@@ -125,6 +148,8 @@ class CatalogController extends Controller
             'product' => $product,
             'price_product' => $price_product,
             'other_products' => $other_products,
+            'prev_product' => $prev_product,
+            'next_product' => $next_product,
         ]);
     }
 }

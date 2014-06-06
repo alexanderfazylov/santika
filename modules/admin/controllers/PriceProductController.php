@@ -128,7 +128,7 @@ class PriceProductController extends AdminController
      * @param int $price_id
      * @return mixed
      */
-    public function actionProduct($price_id)
+    public function actionProduct($price_id = null)
     {
         $shop_id = 1;
         $price = Price::findOne($price_id);

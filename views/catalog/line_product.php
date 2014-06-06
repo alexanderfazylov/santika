@@ -8,9 +8,9 @@
  * @var Line $line
  * @var Product[] $products
  * @var Category[] $categories
- * @var int $category_id
+ * @var int $category_url
  * @var Collection[] $collections
- * @var int $collection_id
+ * @var int $collection_url
  */
 use app\models\Category;
 use app\models\Collection;
@@ -33,18 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-4">
         <?=
-        Html::dropDownList('Product[category_id]', $category_id, ArrayHelper::map($categories, 'id', 'name'), [
+        Html::dropDownList('Product[category_url]', $category_url, ArrayHelper::map($categories, 'url', 'name'), [
             'prompt' => 'Категории',
             'class' => 'form-control',
-            'id' => 'product-category_id'
+            'id' => 'product-category_url'
         ]); ?>
     </div>
     <div class="col-md-4">
         <?=
-        Html::dropDownList('Product[collection_id]', $collection_id, ArrayHelper::map($collections, 'id', 'name'), [
+        Html::dropDownList('Product[collection_url]', $collection_url, ArrayHelper::map($collections, 'url', 'name'), [
             'prompt' => 'Коллекции',
             'class' => 'form-control',
-            'id' => 'product-collection_id'
+            'id' => 'product-collection_url'
         ]); ?>
     </div>
 </div>
@@ -67,10 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerJs(
     '
-    $(document).on("change", "#product-category_id, #product-collection_id", function () {
-        var category_id = $("#product-category_id").val();
-        var collection_id = $("#product-collection_id").val();
-        window.location = "' . Url::to(['/catalog/line-product/', 'url' => $line->url]) . '?category_id=" + category_id + "&collection_id=" + collection_id;
+    $(document).on("change", "#product-category_url, #product-collection_url", function () {
+        var category_url= $("#product-category_url").val();
+        var collection_url = $("#product-collection_url").val();
+        window.location = "' . Url::to(['/catalog/line-product/', 'line_url' => $line->url]) . '?category_url=" + category_url + "&collection_url=" + collection_url;
     });'
 
 );

@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
-<a href="<?= Url::to(['/catalog/line-product/', 'url' => $line->url]);?>">Все товары</a>
+<a href="<?= Url::to(['/catalog/line-product/', 'line_url' => $line->url]); ?>">Все товары</a>
 <?php
 $items = [];
 foreach ($intaractives as $intaractive) {

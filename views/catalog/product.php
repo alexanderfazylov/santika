@@ -7,6 +7,8 @@
  * @var Line $line
  * @var Category $category
  * @var Product $product
+ * @var Product $prev_product
+ * @var Product $next_product
  * @var Product[] $other_products
  * @var PriceProduct $price_product
  */
@@ -25,6 +27,20 @@ $this->params['breadcrumbs'][] = ['label' => $line->name, 'url' => $line->create
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <h1><?= Html::encode($this->title) ?></h1>
+
+<?php
+if (!is_null($prev_product)) {
+    $prev = Html::tag('span', 'Предидущий товар') . '<br/>' . Html::tag('span', $prev_product->name);
+    echo Html::a($prev, $prev_product->createUrlByLine($line->url));
+}
+?>
+
+<?php
+if (!is_null($next_product)) {
+    $next = Html::tag('span', 'Следующий товар') . '<br/>' . Html::tag('span', $next_product->name);
+    echo Html::a($next, $next_product->createUrlByLine($line->url));
+}
+?>
 
 <?php
 $items = [];
