@@ -6,7 +6,7 @@
  */
 function InteractivePoint(options, data_index) {
     var $owner = $('#blueimp-gallery').find('.slide[data-index="' + data_index + '"]');
-    var $image = $('#blueimp-gallery').find('.slide[data-index="' + 1 + '"]').find('img');
+    var $image = $owner.find('img');
     var image_position = $image.position();
     var that = {};//this;
     that.id = options.id;

@@ -36,7 +36,7 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "
         <?php
         echo FileUpload::widget([
             'name' => 'files',
-            'url' => ['/admin/default/file-upload'],
+            'url' => ['/default/file-upload'],
             'options' => [
                 'accept' => 'image/*',
                 'related_tmp' => '#' . $related_tmp,

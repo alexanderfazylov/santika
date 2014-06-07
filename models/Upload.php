@@ -183,7 +183,7 @@ class Upload extends \yii\db\ActiveRecord
      */
     public function getFileShowUrl($thumbnail = false)
     {
-        return Url::to(['/admin/default/file-show', 'id' => $this->id, 'thumbnail' => $thumbnail]);
+        return Url::to(['/default/file-show', 'id' => $this->id, 'thumbnail' => $thumbnail]);
     }
 
     /**
@@ -204,5 +204,14 @@ class Upload extends \yii\db\ActiveRecord
             'basename' => $file[0],
             'extension' => (isset($file_ext[2])) ? $file_ext[2] : false,
             'filename' => (isset($file_ext[1])) ? $file_ext[1] : $file[0]);
+    }
+
+    /**
+     * Возвращает ссылку на картинку по умолчанию
+     * @return string
+     */
+    public static function defaultFileUrl($thumbnail = 1)
+    {
+        return Url::toRoute(['/default/file-show', 'id' => 0, 'thumbnail' => $thumbnail]);
     }
 }

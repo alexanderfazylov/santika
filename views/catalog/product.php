@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 if (!is_null($prev_product)) {
-    $prev = Html::tag('span', 'Предидущий товар') . '<br/>' . Html::tag('span', $prev_product->name);
+    $prev = Html::tag('span', 'Предыдущий товар') . '<br/>' . Html::tag('span', $prev_product->name);
     echo Html::a($prev, $prev_product->createUrlByLine($line->url));
 }
 ?>

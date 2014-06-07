@@ -30,9 +30,17 @@ $collections = Collection::find()->byShop($shop_id)->all();
         <div class="col-md-2">
             <?=
             Html::dropDownList('line_url', null, ArrayHelper::map($lines, 'url', 'name'), [
-                'prompt' => 'Линии',
+                'prompt' => 'Линия',
                 'class' => 'form-control',
                 'id' => 'line_url'
+            ]); ?>
+        </div>
+        <div class="col-md-2">
+            <?=
+            Html::dropDownList('collection_url', null, ArrayHelper::map($collections, 'url', 'name'), [
+                'prompt' => 'Коллекция',
+                'class' => 'form-control',
+                'id' => 'collection_url'
             ]); ?>
         </div>
         <div class="col-md-2">
@@ -41,17 +49,9 @@ $collections = Collection::find()->byShop($shop_id)->all();
              * @TODO подгрузка данных ajax-ом по линии
              */
             Html::dropDownList('category_url', null, ArrayHelper::map($categories, 'url', 'name'), [
-                'prompt' => 'Категории',
+                'prompt' => 'Категория',
                 'class' => 'form-control',
                 'id' => 'category_url'
-            ]); ?>
-        </div>
-        <div class="col-md-2">
-            <?=
-            Html::dropDownList('collection_url', null, ArrayHelper::map($collections, 'url', 'name'), [
-                'prompt' => 'Коллекции',
-                'class' => 'form-control',
-                'id' => 'collection_url'
             ]); ?>
         </div>
         <div class="col-md-2">
@@ -62,6 +62,9 @@ $collections = Collection::find()->byShop($shop_id)->all();
                 'type' => 'button',
                 'onClick' => '
         var line_url= $("#line_url").val();
+        if(line_url ==""){
+            return false;
+        }
         var category_url= $("#category_url").val();
         var collection_url = $("#collection_url").val();
         window.location = "' . Url::to(['/catalog/line/']) . '/" + line_url + "' . '?category_url=" + category_url + "&collection_url=" + collection_url;
@@ -71,8 +74,9 @@ $collections = Collection::find()->byShop($shop_id)->all();
 </div>
 
 <?php foreach ($lines as $line): ?>
+    <h2>
     <?= Html::a($line->name, $line->createUrl()); ?>
-    <br/>
+    </h2>
 <?php endforeach; ?>
 
 <div style="display: none;">

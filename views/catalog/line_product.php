@@ -16,10 +16,10 @@ use app\models\Category;
 use app\models\Collection;
 use app\models\Line;
 use app\models\Product;
+use app\models\Upload;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\JsExpression;
 
 $this->title = 'Линия ' . $line->name;
 $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['/catalog']];
@@ -56,7 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
          * @TODO ссылка с картинкой используется в разных местах, мб сделать функцию
          */
         ?>
-        <?= Html::a(Html::img($product->photo->getFileShowUrl(true)), $product->createUrlByLine($line->url)); ?>
+        <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
+        <?= Html::a(Html::img($src), $product->createUrlByLine($line->url)); ?>
         <div>
             <div><?= 'Art. ' . $product->article; ?></div>
             <div><?= $product->name; ?></div>

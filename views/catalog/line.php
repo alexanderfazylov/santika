@@ -9,6 +9,7 @@
  */
 use app\models\Interactive;
 use app\models\Line;
+use app\models\Upload;
 use dosamigos\gallery\Carousel;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -71,7 +72,7 @@ Carousel::widget([
 
     <div>
         <a href="" class="product-link">
-            <img class="product-photo" src="/admin/default/file-show?id=45&thumbnail=1"/>
+            <img class="product-photo" src="<?= Upload::defaultFileUrl(1); ?>"/>
         </a></div>
     <div>
         <div class="product-name"></div>
