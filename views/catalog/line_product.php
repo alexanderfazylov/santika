@@ -48,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
-
+<?php
+/**
+ * @TODO вынести в отдельную вьюху\шаблон для отображения всех картинок товаров
+ */
+?>
 <?php foreach ($products as $product): ?>
     <div>
         <?php

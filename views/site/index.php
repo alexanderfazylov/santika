@@ -1,53 +1,48 @@
 <?php
 /**
  * @var yii\web\View $this
+ * @var Shop $shop
+ * @var Product[] $products
  */
-$this->title = 'My Yii Application';
+use app\models\Product;
+use app\models\Shop;
+use app\models\Upload;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$this->title = $shop->name;
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <h2>О компании</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <p><?= $shop->short_about; ?></p>
         </div>
-
+        <div class="row">
+            <?php
+            /**
+             * @TODO вынести в отдельную вьюху\шаблон для отображения всех картинок товаров
+             */
+            ?>
+            <?php foreach ($products as $product): ?>
+                <div>
+                    <?php
+                    /**
+                     * @TODO ссылка с картинкой используется в разных местах, мб сделать функцию
+                     */
+                    ?>
+                    <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
+                    <?= Html::a(Html::img($src), $product->canonical); ?>
+                    <div>
+                        <div><?= 'Art. ' . $product->article; ?></div>
+                        <div><?= $product->name; ?></div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="row">
+            <h2><?= Html::a('Линии', Url::to('/catalog')); ?></h2>
+        </div>
     </div>
 </div>

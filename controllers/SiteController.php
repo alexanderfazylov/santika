@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Product;
+use app\models\Shop;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -49,7 +51,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $shop_id = 1;
+        $shop = Shop::findOne($shop_id);
+
+        $products = Product::find()->byShop($shop_id)->promotion()->all();
+        return $this->render('index', [
+            'shop' => $shop,
+            'products' => $products,
+        ]);
     }
 
     public function actionLogin()

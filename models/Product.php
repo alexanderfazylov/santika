@@ -21,6 +21,7 @@ use yii\helpers\Url;
  * @property string $article
  * @property string $name
  * @property string $description
+ * @property string $canonical
  * @property integer $length
  * @property integer $width
  * @property integer $height
