@@ -52,7 +52,7 @@ class DefaultController extends Controller
         }
         if (is_null($path) || !file_exists($path) || !is_file($path)) {
             //если нет файла, то вернем картинку по умолчанию
-            $path = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'default.jpeg';
+            $path = Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'empty.jpeg';
         }
         $imginfo = getimagesize($path);
         header("Content-type: {$imginfo['mime']}");

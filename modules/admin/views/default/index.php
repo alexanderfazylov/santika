@@ -9,6 +9,7 @@ use yii\widgets\Menu;
 <?php
 echo Menu::widget([
     'items' => [
+//        ['label' => 'Салоны', 'url' => ['/admin/shop']],
         ['label' => 'Линии', 'url' => ['/admin/line']],
         ['label' => 'Коллекции', 'url' => ['/admin/collection']],
         ['label' => 'Категории', 'url' => ['/admin/category']],
