@@ -31,6 +31,9 @@ use yii\helpers\Url;
  * @property string $meta_description
  * @property string $meta_keywords
  *
+ * @property integer[] $line_ids
+ * @property integer[] $old_line_ids
+ *
  * @property LineProduct[] $lineProducts
  * @property Upload $photo
  * @property Category $category
@@ -41,6 +44,7 @@ use yii\helpers\Url;
 class Product extends \yii\db\ActiveRecord
 {
     public $line_ids = [];
+    public $old_line_ids = [];
     public $photo_tmp;
     public $photo_name;
     public $manual_tmp;
@@ -142,20 +146,15 @@ class Product extends \yii\db\ActiveRecord
 
     public function afterSave($insert)
     {
-        /**
-         * @TODO проверить работу, мб в других местах будут баги
-         */
-        LineProduct::deleteAll(['product_id' => $this->id]);
-        if (!empty($this->line_ids)) {
-            foreach ($this->line_ids as $line_id) {
-                $lp = new LineProduct();
-                $lp->product_id = $this->id;
-                $lp->line_id = $line_id;
-                if (!$lp->save()) {
-                    var_dump($lp->getErrors());
-                    exit();
-                }
-            }
+        $line_ids = $this->line_ids == "" ? [] : $this->line_ids;
+        $diff_delete = array_diff($this->old_line_ids, $line_ids);
+        $diff_insert = array_diff($line_ids, $this->old_line_ids);
+        LineProduct::deleteAll(['product_id' => $this->id, 'line_id' => $diff_delete]);
+        foreach ($diff_insert as $line_id) {
+            $lp = new LineProduct();
+            $lp->product_id = $this->id;
+            $lp->line_id = $line_id;
+            $lp->save();
         }
     }
 
@@ -170,6 +169,7 @@ class Product extends \yii\db\ActiveRecord
             $line_ids[] = $line_product->line_id;
         }
         $this->line_ids = $line_ids;
+        $this->old_line_ids = $line_ids;
         parent::afterFind();
     }
 

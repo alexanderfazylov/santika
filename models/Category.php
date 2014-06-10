@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Exception;
 use yii\db\BaseActiveRecord;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 
 /**
@@ -22,6 +23,9 @@ use yii\helpers\Inflector;
  * @property string $meta_description
  * @property string $meta_keywords
  *
+ * @property integer[] $line_ids
+ * @property integer[] $old_line_ids
+ *
  * @property Category $parent
  * @property Category[] $categories
  * @property Shop $shop
@@ -31,6 +35,7 @@ use yii\helpers\Inflector;
 class Category extends \yii\db\ActiveRecord
 {
     public $line_ids = [];
+    public $old_line_ids = [];
     public $parent_name;
 
     /**
@@ -85,12 +90,12 @@ class Category extends \yii\db\ActiveRecord
 
     public function afterSave($insert)
     {
-        /**
-         * @TODO проверить работу, мб в других местах будут баги
-         */
-        LineCategory::deleteAll(['category_id' => $this->id]);
+        $line_ids = $this->line_ids == "" ? [] : $this->line_ids;
+        $diff_delete = array_diff($this->old_line_ids, $line_ids);
+        $diff_insert = array_diff($line_ids, $this->old_line_ids);
+        LineCategory::deleteAll(['category_id' => $this->id, 'line_id' => $diff_delete]);
         if (!empty($this->line_ids)) {
-            foreach ($this->line_ids as $line_id) {
+            foreach ($diff_insert as $line_id) {
                 $lc = new LineCategory();
                 $lc->category_id = $this->id;
                 $lc->line_id = $line_id;
@@ -110,6 +115,7 @@ class Category extends \yii\db\ActiveRecord
             $line_ids[] = $line_category->line_id;
         }
         $this->line_ids = $line_ids;
+        $this->old_line_ids = $line_ids;
         parent::afterFind();
     }
 
