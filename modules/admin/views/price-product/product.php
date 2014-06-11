@@ -15,6 +15,7 @@ use app\models\Shop;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\JsExpression;
+use yii\widgets\MaskedInput;
 
 
 $this->title = 'Редактирование стоимости товаров';
@@ -75,17 +76,26 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
                     <?php echo $product->name; ?>
                 </td>
                 <td>
-                    <?php $cost_eur = $price_exist ? $product->priceProduct[0]->cost_eur : '0.00'; ?>
+                    <?php $cost_eur = $price_exist ? $price_product->cost_eur : '0.00'; ?>
                     <?php echo Html::tag('span', $cost_eur, ['class' => 'hide-on-edit cost_eur']); ?>
-                    <?php
-                    /**
-                     * @TODO masked input
-                     */
-                    ?>
-                    <?php echo Html::textInput('cost_eur', $cost_eur, ['class' => 'show-on-edit ']); ?>
+                    <?=
+                    MaskedInput::widget([
+                        'mask' => '',
+                        'name' => 'cost_eur',
+                        'value' => $cost_eur,
+                        'options' => [
+                            'class' => 'show-on-edit'
+                        ],
+                        'clientOptions' => [
+                            'alias' => 'decimal',
+                            'radixPoint' => ".",
+                            'digits' => 2,
+                            'allowMinus' => false,
+                        ],
+                    ]); ?>
                 </td>
                 <td>
-                    <?php $cost_rub = $price_exist ? $product->priceProduct[0]->cost_rub : '0.00'; ?>
+                    <?php $cost_rub = $price_exist ? $price_product->cost_rub : '0.00'; ?>
                     <?php echo Html::tag('span', $cost_rub, ['class' => 'cost_rub']); ?>
                 </td>
                 <td>
