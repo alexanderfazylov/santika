@@ -126,6 +126,9 @@ class Product extends \yii\db\ActiveRecord
 
     public function beforeValidate()
     {
+        /**
+         * @TODO при поиске в админке выполняются эти функции., мб придумать что то другое?
+         */
         $this->saveFileFromAttribute('photo', Upload::TYPE_PRODUCT);
         $this->saveFileFromAttribute('drawing', Upload::TYPE_PRODUCT);
         $this->saveFileFromAttribute('manual', Upload::TYPE_PRODUCT);
