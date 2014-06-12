@@ -8,8 +8,10 @@ use app\models\Product;
 use Yii;
 use app\models\PriceProduct;
 use app\models\search\PriceProductSearch;
+use yii\base\DynamicModel;
 use yii\base\Exception;
 use app\modules\admin\components\AdminController;
+use yii\data\ArrayDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -130,21 +132,44 @@ class PriceProductController extends AdminController
      */
     public function actionProduct($price_id = null)
     {
+        /**
+         * @TODO сделать правильно
+         */
         $shop_id = 1;
         $price = Price::findOne($price_id);
+        $filter_model = new DynamicModel([
+            'product_id',
+            'name',
+            'article',
+            'cost_eur',
+            'cost_rub',
+        ]);
+        $filter_model->addRule(['name', 'article'], 'string', ['max' => 128]);
+//        $filter_model->addRule(['cost_eur', 'cost_rub'], 'number');;
+
         if (empty($price)) {
 //            throw new Exception('Указанный прайс не найден');
             $products = [];
         } else {
             if ($price->type == Price::TYPE_PRODUCT) {
-                $products = Product::find()
+                $query = Product::find()
                     ->byShop($shop_id)
                     ->with([
                         'priceProduct' => function ($q) use ($price_id) {
                                 $q->andWhere(['price_id' => $price_id]);
                             }
-                    ])
-                    ->all();
+                    ]);
+
+                if (($filter_model->load(Yii::$app->request->getQueryParams()) && $filter_model->validate())) {
+
+                    $query->andFilterWhere(['like', 'article', $filter_model->article])
+                        ->andFilterWhere(['like', 'name', $filter_model->name])
+//                        ->andFilterWhere(['like',  'cost_eur', $filter_model->cost_eur])
+//                        ->andFilterWhere(['like',  'cost_rub', $filter_model->cost_rub])
+                    ;
+                }
+                $products = $query->all();
+
             } else {
                 /**
                  * @TODO для услуг сделать другую вьюху
@@ -152,10 +177,34 @@ class PriceProductController extends AdminController
                 $products = [];
             }
         }
+        $array = [];
+        foreach ($products as $product) {
+            $price_exist = !empty($product->priceProduct);
+            /** @var PriceProduct $price_product */
+            $price_product = ($price_exist) ? $product->priceProduct[0] : null;
+
+            $array[] = [
+                'product_id' => $product->id,
+                'name' => $product->name,
+                'article' => $product->article,
+                'cost_eur' => $price_exist ? $price_product->cost_eur : '0.00',
+                'cost_rub' => $price_exist ? $price_product->cost_rub : '0.00',
+            ];
+        }
+
+        $data_provider = new ArrayDataProvider([
+            'allModels' => $array,
+            'sort' => [
+                'attributes' => ['product_id', 'name', 'article', 'cost_eur', 'cost_rub'],
+            ],
+        ]);
+
         return $this->render('product', [
             'products' => $products,
             'shop_id' => $shop_id,
             'price_id' => $price_id,
+            'data_provider' => $data_provider,
+            'filter_model' => $filter_model,
         ]);
     }
 
