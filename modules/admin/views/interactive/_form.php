@@ -34,6 +34,7 @@ use yii\widgets\ActiveForm;
         'form' => $form,
         'model' => $model,
         'attribute' => 'upload',
+        'accept' => 'image/*'
     ]);
     ?>
 

@@ -8,6 +8,7 @@
  * @var \yii\bootstrap\ActiveForm $form
  * @var \yii\db\ActiveRecord $model
  * @var string $attribute
+ * @var string $accept
  */
 use dosamigos\fileupload\FileUpload;
 use yii\helpers\Html;
@@ -38,7 +39,7 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "
             'name' => 'files',
             'url' => ['/default/file-upload'],
             'options' => [
-                'accept' => 'image/*',
+                'accept' => $accept,
                 'related_tmp' => '#' . $related_tmp,
                 'related_name' => '#' . $related_name,
                 'name' => 'files',
@@ -71,7 +72,7 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "
         ?>
     </span>
 
-    <?php echo Html::tag('span', '', ['class' => 'file-show', 'target' => 'blank']) ?>
+<?php echo Html::tag('span', '', ['class' => 'file-show', 'target' => 'blank']) ?>
     <div class="progress">
         <div class="bar" style="width: 0%;"></div>
     </div>

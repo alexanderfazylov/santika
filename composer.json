@@ -21,7 +21,8 @@
         "yiidoc/yii2-chosen": "*",
         "2amigos/yii2-file-upload-widget" : "*",
         "2amigos/yii2-date-picker-widget" : "*",
-        "yiisoft/yii2-jui": "*"
+        "yiisoft/yii2-jui": "*",
+        "phpoffice/phpexcel": "dev-develop"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

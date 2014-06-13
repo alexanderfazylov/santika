@@ -49,6 +49,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'type')->dropDownList(Price::getTypesText()) ?>
 
+    <?php
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'import',
+        'accept' => '**'
+    ]);
+    ?>
+
+    <?= $form->field($model, 'article_column')->textInput() ?>
+
+    <?= $form->field($model, 'cost_column')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

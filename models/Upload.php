@@ -23,6 +23,7 @@ class Upload extends \yii\db\ActiveRecord
     const TYPE_PRODUCT = 1;
     const TYPE_COLOR = 2;
     const TYPE_INTERACTIVE = 3;
+    const TYPE_PRICE = 3;
 
     /**
      * @inheritdoc
@@ -162,6 +163,9 @@ class Upload extends \yii\db\ActiveRecord
             case static::TYPE_INTERACTIVE:
                 $dir = 'interactive';
                 break;
+            case static::TYPE_PRICE:
+                $dir = 'price';
+                break;
         }
         return $dir;
     }
@@ -184,6 +188,22 @@ class Upload extends \yii\db\ActiveRecord
     public function getFileShowUrl($thumbnail = false)
     {
         return Url::to(['/default/file-show', 'id' => $this->id, 'thumbnail' => $thumbnail]);
+    }
+
+    /**
+     * Возвращает физический путь к файлу
+     * @param bool $thumbnail
+     * @return string
+     */
+    public function getFilePath($thumbnail = false)
+    {
+        $uploads_dir = Upload::getUploadsPath();
+        if ($thumbnail) {
+            $path = $uploads_dir . $this->thumbnail;
+        } else {
+            $path = $uploads_dir . $this->path;
+        }
+        return addslashes($path);
     }
 
     /**

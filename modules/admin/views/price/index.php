@@ -22,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать прайс лист', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <p>
+        <?= Html::a('Импортировать прайс лист', ['import'], ['class' => 'btn btn-success']) ?>
+    </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,

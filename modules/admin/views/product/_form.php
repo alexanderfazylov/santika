@@ -76,6 +76,7 @@ use yii\widgets\ActiveForm;
         'form' => $form,
         'model' => $model,
         'attribute' => 'photo',
+        'accept' => 'image/*'
     ]);
     ?>
 
@@ -84,6 +85,7 @@ use yii\widgets\ActiveForm;
         'form' => $form,
         'model' => $model,
         'attribute' => 'manual',
+        'accept' => '*'
     ]);
     ?>
 
@@ -92,6 +94,7 @@ use yii\widgets\ActiveForm;
         'form' => $form,
         'model' => $model,
         'attribute' => 'drawing',
+        'accept' => 'image/*'
     ]);
     ?>
 

@@ -43,12 +43,7 @@ class DefaultController extends Controller
         $upload = Upload::findOne($id);
         $path = null;
         if (!is_null($upload)) {
-            if ($thumbnail) {
-                $file = $upload->thumbnail;
-            } else {
-                $file = $upload->path;
-            }
-            $path = addslashes(Upload::getUploadsPath() . $file);
+            $path = $upload->getFilePath($thumbnail);
         }
         if (is_null($path) || !file_exists($path) || !is_file($path)) {
             //если нет файла, то вернем картинку по умолчанию
