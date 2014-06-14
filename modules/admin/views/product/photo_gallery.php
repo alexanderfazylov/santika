@@ -5,16 +5,20 @@
  * Date: 27.05.14
  * Time: 16:36
  * @var Product $model
+ * @var integer $color_id
  */
 use app\models\Product;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadUI;
 use dosamigos\gallery\Gallery;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\Sortable;
 use yii\web\JsExpression;
 
-$this->title = 'Фотогалерея ' . $model->name;
+$this->title = 'Фотогалерея ';
+$this->params['breadcrumbs'][] = ['label' => 'Товары', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -28,9 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
      */
     ?>
 
-    <?= Html::a('Просмотр', ['view', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-
     <?= Html::activeHiddenInput($model, 'id'); ?>
+
+    <?php $colors = ArrayHelper::map($model->productColors, 'color_id', 'color.name'); ?>
+    <div class="form-group">
+        <label>Покрытие</label>
+        <?php echo Html::dropDownList('color_id', $color_id, $colors, ['id' => 'product-color_id', 'class' => 'form-control', 'prompt' => 'Без покрытия',
+            'onChange' => new JsExpression('
+                window.location = "/admin/product/photo-gallery?id=' . $model->id . '&color_id=" + $(this).val();
+')
+        ]) ?>
+    </div>
+
     <br/>
     <span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
@@ -48,7 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'formData' => [],
                 'done' => new JsExpression('function (e, data){
                     var product_id = $("#product-id").val();
-                    savePhoto(product_id, data.result.files[0].name, data.result.files[0].origin_name);
+                    var color_id = $("#product-color_id").val();
+                    savePhoto(product_id, color_id, data.result.files[0].name, data.result.files[0].origin_name);
                 }'),
                 'progress' => new JsExpression('function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -69,7 +83,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     $items = [];
-    foreach ($model->photoGalleries as $photo_gallery):
+
+    foreach ($model->photoGalleries as $photo_gallery) {
 
         if (empty($photo_gallery->upload)) {
             continue;
@@ -78,7 +93,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'content' => $photo_gallery->renderSortItem(),
         ];
         $items[] = $item;
-    endforeach; ?>
+    }
+    ?>
 
     <?= Html::button('Сохранить сортировку', ['class' => 'btn btn-info save-photo_gallery_sort']) ?>
     <?php echo Sortable::widget(

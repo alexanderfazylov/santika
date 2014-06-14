@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\models\scopes\ColorScope;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "color".
@@ -10,8 +12,13 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $upload_id
+ * @property string $article
  *
  * @property Upload $upload
+ * @property PhotoGallery[] $photoGalleries
+ * @property PriceProduct[] $priceProducts
+ * @property Product[] $products
+ * @property ProductColor[] $productColors
  */
 class Color extends \yii\db\ActiveRecord
 {
@@ -32,9 +39,9 @@ class Color extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'article'], 'required'],
             [['upload_id'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'article'], 'string', 'max' => 255],
             [['upload_tmp', 'upload_name'], 'safe']
         ];
     }
@@ -47,6 +54,7 @@ class Color extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => 'Наименование',
+            'article' => 'Артикул',
             'upload_id' => 'Изображение',
             'upload.name' => 'Изображение',
             'upload_name' => 'Изображение',
@@ -76,4 +84,43 @@ class Color extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Upload::className(), ['id' => 'upload_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhotoGalleries()
+    {
+        return $this->hasMany(PhotoGallery::className(), ['color_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPriceProducts()
+    {
+        return $this->hasMany(PriceProduct::className(), ['color_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['color_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductColors()
+    {
+        return $this->hasMany(ProductColor::className(), ['color_id' => 'id']);
+    }
+
+    public static function find()
+    {
+        return new ColorScope(get_called_class());
+    }
+
+
 }

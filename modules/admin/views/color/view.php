@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'article',
             'name',
             'upload.fileShowLink:raw',
         ],

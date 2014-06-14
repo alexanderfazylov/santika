@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'layout'=> "{summary}\n{pager}\n{items}\n{pager}",
+        'layout' => "{summary}\n{pager}\n{items}\n{pager}",
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -44,8 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'category_name',
                 'value' => 'category.name'
             ],
-             'name',
-
+            'name',
+            [
+                'attribute' => 'is_published',
+                'filter' => [1 => 'Да', 0 => 'Нет']
+            ],
             // 'color_id',
             // 'drawing_id',
 

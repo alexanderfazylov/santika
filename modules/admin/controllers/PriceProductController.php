@@ -141,6 +141,7 @@ class PriceProductController extends AdminController
             'product_id',
             'name',
             'article',
+            'color_id',
             'cost_eur',
             'cost_rub',
         ]);
@@ -149,58 +150,83 @@ class PriceProductController extends AdminController
 
         if (empty($price)) {
 //            throw new Exception('Указанный прайс не найден');
-            $products = [];
+            $array = [];
         } else {
             if ($price->type == Price::TYPE_PRODUCT) {
                 $query = Product::find()
                     ->byShop($shop_id)
                     ->with([
                         'priceProduct' => function ($q) use ($price_id) {
+                                //что бы выбрать только из нужного прайс-листа
+                                $q->andWhere(['price_id' => $price_id, 'color_id' => null]);
+                            },
+                        'productColors.color',
+                        'productColors.priceProducts' => function ($q) use ($price_id) {
+                                //что бы выбрать только из нужного прайс-листа
                                 $q->andWhere(['price_id' => $price_id]);
-                            }
+                            },
                     ]);
-
-                if (($filter_model->load(Yii::$app->request->getQueryParams()) && $filter_model->validate())) {
 
                     $query->andFilterWhere(['like', 'article', $filter_model->article])
                         ->andFilterWhere(['like', 'name', $filter_model->name])
+                        ->andFilterWhere(['productColors.color_id' => $filter_model->color_id])
 //                        ->andFilterWhere(['like',  'cost_eur', $filter_model->cost_eur])
 //                        ->andFilterWhere(['like',  'cost_rub', $filter_model->cost_rub])
                     ;
-                }
                 $products = $query->all();
 
+                $array = [];
+                foreach ($products as $product) {
+                    if (!empty($product->productColors)) {
+                        foreach ($product->productColors as $product_color) {
+                            //у товара есть покрытий, поэтому цена берется из каждого покрытия отдельно
+                            $price_exist = !empty($product_color->priceProducts);
+                            /** @var PriceProduct $price_product */
+                            $price_product = ($price_exist) ? $product_color->priceProducts[0] : null;
+
+                            $array[] = [
+                                'product_id' => $product->id,
+                                'name' => $product->name,
+                                'article' => $product->article,
+                                'color' => $product_color->color->name,
+                                'color_id' => $product_color->color->id,
+                                'cost_eur' => $price_exist ? $price_product->cost_eur : '0.00',
+                                'cost_rub' => $price_exist ? $price_product->cost_rub : '0.00',
+                            ];
+                        }
+                    } else {
+                        //у товара нет покрытий, поэтому цена берется из товара
+                        $price_exist = !empty($product->priceProduct);
+                        /** @var PriceProduct $price_product */
+                        $price_product = ($price_exist) ? $product->priceProduct[0] : null;
+
+                        $array[] = [
+                            'product_id' => $product->id,
+                            'name' => $product->name,
+                            'article' => $product->article,
+                            'color' => '',
+                            'color_id' => null,
+                            'cost_eur' => $price_exist ? $price_product->cost_eur : '0.00',
+                            'cost_rub' => $price_exist ? $price_product->cost_rub : '0.00',
+                        ];
+                    }
+                }
             } else {
                 /**
                  * @TODO для услуг сделать другую вьюху
                  */
-                $products = [];
+                $array = [];
             }
-        }
-        $array = [];
-        foreach ($products as $product) {
-            $price_exist = !empty($product->priceProduct);
-            /** @var PriceProduct $price_product */
-            $price_product = ($price_exist) ? $product->priceProduct[0] : null;
-
-            $array[] = [
-                'product_id' => $product->id,
-                'name' => $product->name,
-                'article' => $product->article,
-                'cost_eur' => $price_exist ? $price_product->cost_eur : '0.00',
-                'cost_rub' => $price_exist ? $price_product->cost_rub : '0.00',
-            ];
         }
 
         $data_provider = new ArrayDataProvider([
             'allModels' => $array,
             'sort' => [
-                'attributes' => ['product_id', 'name', 'article', 'cost_eur', 'cost_rub'],
+                'attributes' => ['product_id', 'name', 'color', 'article', 'cost_eur', 'cost_rub'],
             ],
         ]);
 
         return $this->render('product', [
-            'products' => $products,
             'shop_id' => $shop_id,
             'price_id' => $price_id,
             'data_provider' => $data_provider,
@@ -213,12 +239,18 @@ class PriceProductController extends AdminController
         Yii::$app->response->format = 'json';
 
         if (isset($_POST['price_id']) && isset($_POST['product_id']) && isset($_POST['cost_eur'])) {
-            $model = PriceProduct::findOne(['price_id' => $_POST['price_id'], 'product_id' => $_POST['product_id']]);
+            $color_id = isset($_POST['color_id']) ? $_POST['color_id'] : null;
+            $model = PriceProduct::findOne([
+                'price_id' => $_POST['price_id'],
+                'product_id' => $_POST['product_id'],
+                'color_id' => $color_id,
+            ]);
 
             if (empty($model)) {
                 $model = new PriceProduct();
                 $model->price_id = $_POST['price_id'];
                 $model->product_id = $_POST['product_id'];
+                $model->color_id = $color_id;
             }
 
             $model->cost_eur = $_POST['cost_eur'];

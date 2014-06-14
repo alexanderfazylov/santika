@@ -35,7 +35,7 @@ class PriceProduct extends \yii\db\ActiveRecord
             [['price_id', 'product_id', 'cost_eur'], 'required'],
             [['price_id', 'product_id'], 'integer'],
             [['cost_eur', 'cost_rub'], 'number'],
-            [['price_id', 'product_id'], 'unique', 'targetAttribute' => ['price_id', 'product_id'], 'message' => 'The combination of Price ID and Product ID has already been taken.']
+            [['price_id', 'product_id', 'color_id'], 'unique', 'targetAttribute' => ['price_id', 'product_id', 'color_id'], 'message' => 'The combination of Price ID and Product ID has already been taken.']
         ];
     }
 

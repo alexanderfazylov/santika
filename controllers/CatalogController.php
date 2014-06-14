@@ -7,6 +7,7 @@ use app\models\Collection;
 use app\models\Interactive;
 use app\models\InteractiveProduct;
 use app\models\Line;
+use app\models\PhotoGallery;
 use app\models\Price;
 use app\models\PriceProduct;
 use app\models\Product;
@@ -47,6 +48,7 @@ class CatalogController extends Controller
         $shop_id = $line->shop_id;
 
         $query = Product::find()
+            ->published()
             ->joinWith('photo')
             ->joinWith('lineProducts')
             ->andWhere(['line_id' => $line->id]);
@@ -106,35 +108,48 @@ class CatalogController extends Controller
         ]);
     }
 
-    public function actionProduct($line_url, $url, $category_url = null)
+    public function actionProduct($line_url, $url, $category_url = null, $color_id = null)
     {
         $line = Line::find()->byUrl($line_url)->one();
         $category = Category::find()->byUrl($category_url)->one();
         $product = Product::find()
-            ->joinWith('photoGalleries')
-            ->byUrl($url)->one();
+            ->published()
+            ->with([
+                'productColors.color',
+                'photoGalleries' => function ($q) use ($color_id) {
+                        $q->andWhere(['type' => PhotoGallery::TYPE_PRODUCT]);
+                        $q->andWhere(['color_id' => $color_id]);
+                        $q->orderBy(['sort' => SORT_ASC]);
+                    },
+            ])
+            ->byUrl($url)
+            ->one();
 
         $shop_id = $line->shop_id;
         $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();
-
+        /**
+         * @todo пернести в with?
+         */
         $price_product = PriceProduct::findOne([
             'price_id' => $price->id,
             'product_id' => $product->id,
+            'color_id' => $color_id,
         ]);
 
         $next_product = Product::find()
+            ->published()
             ->joinWith('lineProducts')
             ->andWhere(['line_id' => $line->id])
             ->andWhere('product.id > ' . $product->id)
             ->one();
         $prev_product = Product::find()
+            ->published()
             ->joinWith('lineProducts')
             ->andWhere(['line_id' => $line->id])
             ->andWhere('product.id < ' . $product->id)
             ->one();
-
-
         $other_products = Product::find()
+            ->published()
             ->joinWith('photo')
             ->joinWith('lineProducts')
             ->andWhere(['line_id' => $line->id])
@@ -150,6 +165,7 @@ class CatalogController extends Controller
             'other_products' => $other_products,
             'prev_product' => $prev_product,
             'next_product' => $next_product,
+            'color_id' => $color_id,
         ]);
     }
 }

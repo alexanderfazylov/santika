@@ -23,16 +23,18 @@ function alertMessages(data) {
 /**
  * Сохраняет фото товара из временной папки
  * @param product_id
+ * @param color_id
  * @param upload_tmp
  * @param upload_name
  */
-function savePhoto(product_id, upload_tmp, upload_name) {
+function savePhoto(product_id, color_id, upload_tmp, upload_name) {
     $.ajax({
         url: '/admin/product/add-photo',
         type: "POST",
         dataType: "json",
         data: {
             product_id: product_id,
+            color_id: color_id,
             upload_tmp: upload_tmp,
             upload_name: upload_name
         },
@@ -109,16 +111,19 @@ $(document).on('change', '#category-line_ids', function () {
  */
 $(document).on('click', '.edit-product_price', function () {
     $(this).parents('tr').addClass('tr-edit');
+    return false;
 });
 
 $(document).on('click', '.cancel-product_price', function () {
     $(this).parents('tr').removeClass('tr-edit');
+    return false;
 });
 
 $(document).on('click', '.save-product_price', function () {
     var $tr = $(this).parents('tr');
     var price_id = $('#price_id').val();
     var product_id = $tr.data('product_id');
+    var color_id = $tr.data('color_id');
     var cost_eur = $tr.find('input[name="cost_eur"]').val();
     $.ajax({
         url: '/admin/price-product/save-ajax',
@@ -127,6 +132,7 @@ $(document).on('click', '.save-product_price', function () {
         data: {
             price_id: price_id,
             product_id: product_id,
+            color_id: color_id,
             cost_eur: cost_eur
         },
         success: function (data) {
@@ -140,6 +146,7 @@ $(document).on('click', '.save-product_price', function () {
         }
 
     });
+    return false;
 });
 
 $(document).on('click', '.delete-product_price', function () {
@@ -166,6 +173,7 @@ $(document).on('click', '.delete-product_price', function () {
         }
 
     });
+    return false;
 });
 
 /**
@@ -196,14 +204,16 @@ $(document).on('click', '.delete-photo_gallery', function () {
         }
 
     });
+    return false;
 });
 
 $(document).on('click', '.save-photo_gallery_sort', function () {
     var sort_index = 0;
-    var sort = [];
+    var sort = {};
     var $divs = $('#photo_sorter').find('> li > div');
     $.each($divs, function (index, element) {
-        sort[$(element).attr('photo_gallery-id')] = sort_index;
+        var id = $(element).attr('photo_gallery-id');
+        sort[id] = sort_index;
         sort_index++;
     });
     $.ajax({
@@ -222,6 +232,7 @@ $(document).on('click', '.save-photo_gallery_sort', function () {
         }
 
     });
+    return false;
 });
 
 /**

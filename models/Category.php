@@ -88,7 +88,41 @@ class Category extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
+
     public function afterSave($insert)
+    {
+        if ($this->use_related_ids) {
+            $this->saveLines();
+        }
+    }
+
+    /**
+     * Подготавливает массив линий
+     */
+    public function prepare()
+    {
+        $this->use_related_ids = 1;
+        $this->prepareLines();
+    }
+
+    /**
+     * Вытаскивает все линии товара
+     */
+    public function prepareLines()
+    {
+        $line_categories = LineCategory::findAll(['category_id' => $this->id]);
+        $line_ids = [];
+        foreach ($line_categories as $line_category) {
+            $line_ids[] = $line_category->line_id;
+        }
+        $this->line_ids = $line_ids;
+        $this->old_line_ids = $line_ids;
+    }
+
+    /**
+     * Сохраняет разницу в выбранных линиях
+     */
+    public function saveLines()
     {
         $line_ids = $this->line_ids == "" ? [] : $this->line_ids;
         $diff_delete = array_diff($this->old_line_ids, $line_ids);
@@ -102,21 +136,6 @@ class Category extends \yii\db\ActiveRecord
                 $lc->save();
             }
         }
-    }
-
-    public function afterFind()
-    {
-        /**
-         * @TODO оптимизировать
-         */
-        $line_categories = LineCategory::findAll(['category_id' => $this->id]);
-        $line_ids = [];
-        foreach ($line_categories as $line_category) {
-            $line_ids[] = $line_category->line_id;
-        }
-        $this->line_ids = $line_ids;
-        $this->old_line_ids = $line_ids;
-        parent::afterFind();
     }
 
 

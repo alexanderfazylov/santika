@@ -64,6 +64,7 @@ class ProductController extends AdminController
     public function actionCreate()
     {
         $model = new Product;
+        $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -84,6 +85,7 @@ class ProductController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -123,22 +125,26 @@ class ProductController extends AdminController
         }
     }
 
-    public function actionPhotoGallery($id)
+    public function actionPhotoGallery($id, $color_id = null)
     {
         /**
          * @TODO перенести в scope в PhotoGallery
          */
         $model = Product::find()
             ->with([
-                'photoGalleries' => function ($q) {
+                'productColors.color',
+                'photoGalleries' => function ($q) use ($color_id) {
                         $q->andWhere(['type' => PhotoGallery::TYPE_PRODUCT]);
+                        $q->andWhere(['color_id' => $color_id]);
                         $q->orderBy(['sort' => SORT_ASC]);
-                    }
+                    },
             ])
             ->andWhere(['id' => $id])
             ->one();
+
         return $this->render('photo_gallery', [
             'model' => $model,
+            'color_id' => $color_id,
         ]);
     }
 
@@ -150,15 +156,18 @@ class ProductController extends AdminController
     {
         Yii::$app->response->format = 'json';
         if (isset($_POST['product_id']) && isset($_POST['upload_tmp']) && isset($_POST['upload_name'])) {
+            $color_id = isset($_POST['color_id']) ? $_POST['color_id'] : null;
             $pg = PhotoGallery::find()
                 ->andWhere(['object_id' => $_POST['product_id']])
                 ->andWhere(['type' => PhotoGallery::TYPE_PRODUCT])
+                ->andWhere(['color_id' => $color_id])
                 ->orderBy(['sort' => SORT_DESC])->one();
             $sort = is_null($pg) ? 1 : $pg->sort + 1;
             $photo_gallery = new PhotoGallery();
             $photo_gallery->object_id = $_POST['product_id'];
             $photo_gallery->type = PhotoGallery::TYPE_PRODUCT;
             $photo_gallery->sort = $sort;
+            $photo_gallery->color_id = $color_id;
             $photo_gallery->upload_tmp = $_POST['upload_tmp'];
             $photo_gallery->upload_name = $_POST['upload_name'];
             $photo_gallery->save();

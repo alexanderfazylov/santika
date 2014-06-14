@@ -16,8 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'article')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?php
     echo $this->render('/default/_file_upload.php', [

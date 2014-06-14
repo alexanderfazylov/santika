@@ -2,6 +2,7 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\Product;
 use app\modules\admin\components\AdminController;
 use Yii;
 use app\models\Category;
@@ -61,6 +62,7 @@ class CategoryController extends AdminController
     public function actionCreate()
     {
         $model = new Category;
+        $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -84,6 +86,7 @@ class CategoryController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -4,7 +4,6 @@
  * User: KURT
  * Date: 24.05.14
  * Time: 23:48
- * @var Product[] $products
  * @var int $shop_id
  * @var int $price_id
  * @var ArrayDataProvider $data_provider
@@ -46,11 +45,6 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
                 'id' => 'price_id',
                 'class' => 'form-control',
                 'prompt' => 'Выберите из сипска',
-                'onChange' => new JsExpression('
-            if($(this).val() != "") {
-                window.location = "/admin/price-product/product?price_id=" + $(this).val();
-            }
-')
             ]) ?>
     </div>
 
@@ -59,8 +53,9 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
         'id' => 'price-product-table',
         'dataProvider' => $data_provider,
         'filterModel' => $filter_model,
+        'filterSelector' => '#price_id',
         'rowOptions' => function ($model, $key, $index, $grid) {
-                return ['data-product_id' => $model['product_id']];
+                return ['data-product_id' => $model['product_id'], 'data-color_id' => $model['color_id']];
             },
         'layout' => "{summary}\n{pager}\n{items}\n{pager}",
         'columns' => [
@@ -73,6 +68,10 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
             [
                 'label' => 'Товар',
                 'attribute' => 'name',
+            ],
+            [
+                'label' => 'Покрытие',
+                'attribute' => 'color',
             ],
             [
                 'label' => 'Стоимость (евро)',

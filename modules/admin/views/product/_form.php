@@ -56,7 +56,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_id')->dropDownList($category_array, ['prompt' => 'Выберите категорию']) ?>
 
-   <?= $form->field($model, 'color_id')->dropDownList($colors_array, ['prompt' => 'Выберите покрытие'])  ?>
+    <?=
+    $form->field($model, 'color_ids')->widget(Chosen::className(), [
+        'multiple' => true,
+        'items' => $colors_array,
+        'options' => [
+            'class' => 'form-control',
+            'data-placeholder' => 'Выберите покрытия',
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'length')->textInput() ?>
 
@@ -65,6 +73,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'height')->textInput() ?>
 
     <?= $form->field($model, 'is_promotion')->checkbox() ?>
+
+    <?= $form->field($model, 'is_published')->checkbox() ?>
 
     <?php
     /**

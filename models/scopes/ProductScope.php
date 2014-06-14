@@ -56,6 +56,15 @@ class ProductScope extends ActiveQuery
         $this->andWhere(['is_promotion' => 1]);
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        $this->andWhere(['is_published' => 1]);
+        return $this;
+    }
     /**
      * @param string $article
      * @return $this

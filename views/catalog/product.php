@@ -11,13 +11,17 @@
  * @var Product $next_product
  * @var Product[] $other_products
  * @var PriceProduct $price_product
+ * @var integer $color_id
  */
 use app\models\Category;
 use app\models\Line;
+use app\models\PhotoGallery;
 use app\models\PriceProduct;
 use app\models\Product;
 use dosamigos\gallery\Carousel;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\JsExpression;
 
 
@@ -45,8 +49,6 @@ if (!is_null($next_product)) {
 <?php
 $items = [];
 foreach ($product->photoGalleries as $photo_gallery) {
-    $products = [];
-
     $items[] = [
         'title' => $product->name,
         'href' => $photo_gallery->upload->getFileShowUrl(),
@@ -75,8 +77,14 @@ Carousel::widget([
         <div>
             <div>ДхШхВ<span class="product-lwh"><?= $product->getLwh(); ?></span></div>
             <div>Цвет<span class="product-color">
-                    <?= !empty($product->color_id) ? $product->color->name : ''; ?>
+                <?php $colors = ArrayHelper::map($product->productColors, 'color_id', 'color.name'); ?>
+                <?php echo Html::dropDownList('color_id', $color_id, $colors, ['id' => 'product-color_id', 'class' => 'form-control', 'prompt' => 'Без покрытия',
+                    'onChange' => new JsExpression('
+                window.location = "' . $product->createUrlByLine($line->url) . '?color_id=" + $(this).val();
+')
+                ]) ?>
                 </span>
+
             </div>
         </div>
     </div>

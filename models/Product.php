@@ -26,6 +26,7 @@ use yii\helpers\Url;
  * @property integer $width
  * @property integer $height
  * @property integer $is_promotion
+ * @property integer $is_published
  * @property string $url
  * @property string $meta_title
  * @property string $meta_description
@@ -33,18 +34,29 @@ use yii\helpers\Url;
  *
  * @property integer[] $line_ids
  * @property integer[] $old_line_ids
+ * @property integer[] $color_ids
+ * @property integer[] $old_color_ids
  *
+ * @property InteractiveProduct[] $interactiveProducts
  * @property LineProduct[] $lineProducts
+ * @property PriceProduct[] $priceProducts
+ * @property Upload $drawing
+ * @property Upload $manual
  * @property Upload $photo
  * @property Category $category
  * @property Collection $collection
+ * @property Color $color
  * @property Shop $shop
  * @property PhotoGallery[] $photoGalleries
+ * @property ProductColor[] $productColors
  */
 class Product extends \yii\db\ActiveRecord
 {
+    public $use_related_ids = false;
     public $line_ids = [];
     public $old_line_ids = [];
+    public $color_ids = [];
+    public $old_color_ids = [];
     public $photo_tmp;
     public $photo_name;
     public $manual_tmp;
@@ -67,9 +79,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'article', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion'], 'integer'],
+            [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion', 'is_published'], 'integer'],
             [['article', 'name', 'description', 'canonical', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
-            [['line_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
+            [['line_ids', 'color_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
             [['article'], 'unique', 'targetAttribute' => ['shop_id', 'article'], 'message' => 'Товар с указанным артикулом уже существует.']
 
         ];
@@ -91,6 +103,7 @@ class Product extends \yii\db\ActiveRecord
             'category.name' => 'Категория', //Yii::t('app', 'Category ID'),
             'category_name' => 'Категория', //Yii::t('app', 'Category ID'),
             'line_ids' => 'Линии',
+            'color_ids' => 'Покрытия',
             'photo.fileShowLink' => 'Фото',
             'photo_id' => 'Фото',
             'manual.fileShowLink' => 'Инструкция',
@@ -106,6 +119,7 @@ class Product extends \yii\db\ActiveRecord
             'width' => 'Ширина', // Yii::t('app', 'Width'),
             'height' => 'Высота', // Yii::t('app', 'Height'),
             'is_promotion' => 'Отображать на главной странице', //Yii::t('app', 'Is Promotion'),
+            'is_published' => 'Опубликовано',
             'canonical' => 'Canonical',
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
@@ -149,6 +163,42 @@ class Product extends \yii\db\ActiveRecord
 
     public function afterSave($insert)
     {
+        if ($this->use_related_ids) {
+            $this->saveLines();
+            $this->saveColors();
+        }
+    }
+
+    /**
+     * Подготавливает массив линий и покрытий
+     */
+    public function prepare()
+    {
+        $this->use_related_ids = 1;
+        $this->prepareLines();
+        $this->prepareColors();
+    }
+
+
+    /**
+     * Вытаскивает все линии товара
+     */
+    public function prepareLines()
+    {
+        $line_products = LineProduct::findAll(['product_id' => $this->id]);
+        $line_ids = [];
+        foreach ($line_products as $line_product) {
+            $line_ids[] = $line_product->line_id;
+        }
+        $this->line_ids = $line_ids;
+        $this->old_line_ids = $line_ids;
+    }
+
+    /**
+     * Сохраняет разницу в выбранных линиях
+     */
+    public function saveLines()
+    {
         $line_ids = $this->line_ids == "" ? [] : $this->line_ids;
         $diff_delete = array_diff($this->old_line_ids, $line_ids);
         $diff_insert = array_diff($line_ids, $this->old_line_ids);
@@ -161,19 +211,35 @@ class Product extends \yii\db\ActiveRecord
         }
     }
 
-    public function afterFind()
+    /**
+     * Вытаскивает все покрытия товара
+     */
+    public function prepareColors()
     {
-        /**
-         * @TODO оптимизировать
-         */
-        $line_products = LineProduct::findAll(['product_id' => $this->id]);
-        $line_ids = [];
-        foreach ($line_products as $line_product) {
-            $line_ids[] = $line_product->line_id;
+        $product_colors = ProductColor::findAll(['product_id' => $this->id]);
+        $color_ids = [];
+        foreach ($product_colors as $product_color) {
+            $color_ids[] = $product_color->color_id;
         }
-        $this->line_ids = $line_ids;
-        $this->old_line_ids = $line_ids;
-        parent::afterFind();
+        $this->color_ids = $color_ids;
+        $this->old_color_ids = $color_ids;
+    }
+
+    /**
+     * Сохраняет разницу в выбранных покрытиях
+     */
+    public function saveColors()
+    {
+        $color_ids = $this->color_ids == "" ? [] : $this->color_ids;
+        $diff_delete = array_diff($this->old_color_ids, $color_ids);
+        $diff_insert = array_diff($color_ids, $this->old_color_ids);
+        ProductColor::deleteAll(['product_id' => $this->id, 'color_id' => $diff_delete]);
+        foreach ($diff_insert as $color_id) {
+            $pc = new ProductColor();
+            $pc->product_id = $this->id;
+            $pc->color_id = $color_id;
+            $pc->save();
+        }
     }
 
     /**
@@ -182,6 +248,14 @@ class Product extends \yii\db\ActiveRecord
     public function getLineProducts()
     {
         return $this->hasMany(LineProduct::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductColors()
+    {
+        return $this->hasMany(ProductColor::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -269,10 +343,14 @@ class Product extends \yii\db\ActiveRecord
 
     /**
      * Генерирует ссылку на товар
+     * @param $line_url
      * @return string
      */
     public function createUrlByLine($line_url)
     {
+        /**
+         * @TODO $this->category делает дополнительный sql запрос
+         */
         $category = $this->category;
         if (is_null($category)) {
             $category_url = null;

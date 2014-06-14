@@ -16,7 +16,7 @@ class ColorSearch extends Color
     {
         return [
             [['id', 'upload_id'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'article'], 'safe'],
         ];
     }
 
@@ -43,7 +43,8 @@ class ColorSearch extends Color
             'upload_id' => $this->upload_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'article', $this->article]);
 
         return $dataProvider;
     }
