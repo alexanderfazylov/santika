@@ -52,7 +52,7 @@ $config = [
                  */
                 'catalog/<url:([-]*\w+)+>' => '/catalog/line',
                 'catalog/collection/<url:([-]*\w+)+>' => '/catalog/collection',
-                'catalog/collection/<parent_url:([-]*\w+)+>/<url:([-]*\w+)+>' => '/catalog/collection',//мб не нужно?
+                'catalog/collection/<parent_url:([-]*\w+)+>/<url:([-]*\w+)+>' => '/catalog/collection', //мб не нужно?
                 'catalog/line/<line_url:([-]*\w+)+>' => '/catalog/line-product',
                 'catalog/<line_url:([-]*\w+)+>/<url:([-]*\w+)+>/' => '/catalog/category',
                 //финт, что бы не приходил "product" в параметре category, когда у товара нет категории

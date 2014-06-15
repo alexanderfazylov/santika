@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
+use app\components\ThemedController;
 use app\models\Category;
 use app\models\Collection;
 use app\models\Interactive;
-use app\models\InteractiveProduct;
 use app\models\Line;
 use app\models\PhotoGallery;
 use app\models\Price;
@@ -13,9 +13,8 @@ use app\models\PriceProduct;
 use app\models\Product;
 use app\models\Upload;
 use Yii;
-use yii\web\Controller;
 
-class CatalogController extends Controller
+class CatalogController extends ThemedController
 {
     public function actionIndex()
     {
