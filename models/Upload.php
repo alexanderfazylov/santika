@@ -23,7 +23,7 @@ class Upload extends \yii\db\ActiveRecord
     const TYPE_PRODUCT = 1;
     const TYPE_COLOR = 2;
     const TYPE_INTERACTIVE = 3;
-    const TYPE_PRICE = 3;
+    const TYPE_PRICE = 4;
 
     /**
      * @inheritdoc

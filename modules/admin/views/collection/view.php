@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'shop.name',
             'name',
+            'parent.name',
             'description',
 //            'sort',
             'url',

@@ -9,8 +9,6 @@
  */
 use app\models\Product;
 use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadUI;
-use dosamigos\gallery\Gallery;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\jui\Sortable;

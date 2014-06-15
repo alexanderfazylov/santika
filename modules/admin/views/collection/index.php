@@ -31,6 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
 //            'shop_id',
             'name',
+            [
+                'attribute' => 'parent_name',
+                'value' => 'parent.name'
+            ],
             'description',
 //            'sort',
              'url',

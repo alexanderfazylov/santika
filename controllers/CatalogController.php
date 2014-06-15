@@ -89,9 +89,8 @@ class CatalogController extends Controller
         ]);
     }
 
-    public function actionCollection($url)
+    public function actionCollection($url, $parent_url = null)
     {
-
         $collection = Collection::find()->byUrl($url)->one();
         return $this->render('collection', [
             'collection' => $collection,

@@ -238,3 +238,23 @@ $(document).on('click', '.save-photo_gallery_sort', function () {
 /**
  * Функционал для работы с фотогалереей КОНЕЦ
  */
+
+/**
+ * Функционал для работы с загрузчиком файлов НАЧАЛО
+ */
+$(document).on('click', '.delete-tmp-file', function () {
+    $(this).siblings('.tmp-file-path').val('');
+    $(this).siblings('.tmp-file-name').val('');
+    $(this).siblings('.tmp-file').html('');
+    $(this).addClass('hidden');
+    return false;
+});
+$(document).on('click', '.delete-uploaded-file', function () {
+    $(this).siblings('.uploaded-file-id').val('');
+    $(this).siblings('.uploaded-file').html('');
+    $(this).addClass('hidden');
+    return false;
+});
+/**
+ * Функционал для работы с загрузчиком файлов КОНЕЦ
+ */

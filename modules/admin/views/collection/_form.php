@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Collection;
 use app\models\Shop;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -10,6 +11,18 @@ use yii\widgets\ActiveForm;
  * @var app\models\Collection $model
  * @var yii\widgets\ActiveForm $form
  */
+?>
+<?php
+/**
+ * @TODO вынести всю работу с данными из вьюх в функции классов
+ */
+$query = Collection::find()->byShop($model->shop_id);
+if (!is_null($model->id)) {
+    $query->andWhere(['NOT IN', 'id', [$model->id]]);
+}
+$query->andWhere(['parent_id' => null]);
+$collections = $query->all();
+$collections_array = ArrayHelper::map($collections, 'id', 'name');
 ?>
 
 <div class="collection-form">
@@ -22,9 +35,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+
+    <?php
+    $options = ['prompt' => ''];
+    if ($model->getChilds()->count() != 0) {
+        //Нельзя назначить родительскую коллекцию коллекции, которая является родительской
+        $collections_array = [];
+        $options['disabled'] = 'disabled';
+    } ?>
+
+    <?= $form->field($model, 'parent_id')->dropDownList($collections_array, $options) ?>
+
     <!--    <?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>-->
 
-<!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
+    <!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

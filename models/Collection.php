@@ -19,7 +19,10 @@ use yii\helpers\Url;
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property integer $parent_id
  *
+ * @property Collection $parent
+ * @property Collection[] $childs
  * @property Shop $shop
  * @property Product[] $products
  */
@@ -40,9 +43,24 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort'], 'integer'],
+            [['shop_id', 'sort', 'parent_id'], 'integer'],
+            [['parent_id'], 'checkParentId'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255]
         ];
+    }
+
+    /**
+     * Проверка значения в parent_id
+     * @param $attribute
+     */
+    public function checkParentId($attribute)
+    {
+        if ($this->getChilds()->count() != 0) {
+            $this->addError('parent_id', 'Нельзя назначить родительскую коллекцию коллекции, которая является родительской.');
+        }
+        if ($this->getParent()->andWhere(['parent_id' => null])->count() == 0) {
+            $this->addError('parent_id', 'Нельзя назначить дочернюю коллекцию как родительскую.');
+        }
     }
 
     /**
@@ -57,6 +75,9 @@ class Collection extends \yii\db\ActiveRecord
             'name' => 'Название', //Yii::t('app', 'Name'),
             'description' => 'Описание', //Yii::t('app', 'Description'),
             'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
+            'parent_id' => 'Родительская коллекция',
+            'parent_name' => 'Родительская коллекция',
+            'parent.name' => 'Родительская коллекция',
             'url' => Yii::t('app', 'Url'),
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
@@ -96,11 +117,27 @@ class Collection extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(Collection::className(), ['id' => 'parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChilds()
+    {
+        return $this->hasMany(Collection::className(), ['parent_id' => 'id']);
+    }
+
+    /**
      * Возвращает ссылку на коллекцию
      * @return string
      */
     public function createUrl()
     {
-        return Url::to(['/catalog/collection/', 'url' => $this->url]);
+        return Url::to(['/catalog/collection/', 'url' => $this->url, 'parent_url' => !empty($this->parent_id) ? $this->parent->url : null]);
     }
 }

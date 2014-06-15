@@ -22,14 +22,19 @@ $attr_name = $attribute . '_name';
 $attr_id = $attribute . '_id';
 $related_tmp = Html::getInputId($model, $attr_tmp);
 $related_name = Html::getInputId($model, $attr_name);
-$filed = $form->field($model, $attr_id);
-echo $filed->begin();
+$field = $form->field($model, $attr_id);
+echo $field->begin();
 echo Html::activeLabel($model, $attr_id, ['class' => 'control-label']);
-echo Html::activeHiddenInput($model, $attr_id);
-echo Html::activeHiddenInput($model, $attr_tmp);
-echo Html::activeHiddenInput($model, $attr_name);
-echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "";
+echo Html::activeHiddenInput($model, $attr_id, ['class' => 'uploaded-file-id']);
+echo Html::activeHiddenInput($model, $attr_tmp, ['class' => 'tmp-file-path']);
+echo Html::activeHiddenInput($model, $attr_name, ['class' => 'tmp-file-name']);
 ?>
+<?php if (!empty($model->$attribute)) : ?>
+    <br/>
+    <?= Html::tag('span', $model->$attribute->fileShowLink, ['class' => 'uploaded-file']); ?>
+    &nbsp;
+    <?= Html::a('Удалить', '#', ['class' => 'delete-uploaded-file']); ?>
+<?php endif; ?>
     <br/>
     <span class="btn btn-success fileinput-button">
             <i class="glyphicon glyphicon-plus"></i>
@@ -55,9 +60,13 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "
 
                     $(this)
                     .parents(".fileinput-button")
-                    .siblings(".file-show")
-//                    .attr("href", data.result.files[0].url)
+                    .siblings(".tmp-file")
                     .text(data.result.files[0].origin_name);
+
+                    $(this)
+                    .parents(".fileinput-button")
+                    .siblings(".delete-tmp-file")
+                    .removeClass("hidden")
                 }'),
                 'progress' => new JsExpression('function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -72,8 +81,10 @@ echo !empty($model->$attribute) ? '<br/>' . $model->$attribute->fileShowLink : "
         ?>
     </span>
 
-<?php echo Html::tag('span', '', ['class' => 'file-show', 'target' => 'blank']) ?>
+<?php echo Html::tag('span', '', ['class' => 'tmp-file']) ?>
+    &nbsp;
+<?php echo Html::a('Удалить', '#', ['class' => 'delete-tmp-file hidden']) ?>
     <div class="progress">
         <div class="bar" style="width: 0%;"></div>
     </div>
-<?php echo $filed->end(); ?>
+<?php echo $field->end(); ?>

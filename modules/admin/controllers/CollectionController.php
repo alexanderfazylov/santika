@@ -62,7 +62,7 @@ class CollectionController extends AdminController
     public function actionCreate()
     {
         $model = new Collection;
-
+        $model->shop_id = 1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
