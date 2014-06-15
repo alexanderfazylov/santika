@@ -29,7 +29,10 @@ class CategorySearch extends Category
     public function search($params)
     {
         $query = Category::find();
-        $query->joinWith('parent');
+        $query->joinWith(['parent' => function ($q) {
+                $q->from('category parent');
+            },
+        ]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -47,10 +50,10 @@ class CategorySearch extends Category
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'shop_id' => $this->shop_id,
-            'parent_id' => $this->parent_id,
-            'sort' => $this->sort,
+            'category.id' => $this->id,
+            'category.shop_id' => $this->shop_id,
+            'category.parent_id' => $this->parent_id,
+            'category.sort' => $this->sort,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -40,7 +41,18 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'meta_description',
             // 'meta_keywords',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'delete' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'class'=>'custom-delete',
+                                'data-pjax' => '0',
+                            ]);
+                        }
+                ]
+            ],
         ],
     ]); ?>
 

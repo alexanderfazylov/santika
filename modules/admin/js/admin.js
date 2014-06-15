@@ -258,3 +258,28 @@ $(document).on('click', '.delete-uploaded-file', function () {
 /**
  * Функционал для работы с загрузчиком файлов КОНЕЦ
  */
+
+
+/**
+ * Специальное удаление, с провкеркой ajax ответа НАЧАЛО
+ */
+$(document).on('click', '.custom-delete', function () {
+    var url = $(this).attr('href');
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'post',
+        data: {},
+        success: function (data) {
+            if (data.status == 'success') {
+                window.location.reload();
+            } else {
+                alertMessages(data);
+            }
+        }
+    });
+    return false;
+});
+/**
+ * Специальное удаление, с провкеркой ajax ответа КОНЕЦ
+ */
