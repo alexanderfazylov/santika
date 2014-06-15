@@ -34,6 +34,7 @@ use yii\helpers\Inflector;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    public $use_related_ids = false;
     public $line_ids = [];
     public $old_line_ids = [];
     public $parent_name;
