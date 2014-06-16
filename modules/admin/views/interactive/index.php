@@ -46,6 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'title' => 'Отметить товары',
                                 'data-pjax' => '0',
                             ]);
+                        },
+                    'delete' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'class' => 'custom-delete',
+                                'data-pjax' => '0',
+                            ]);
                         }
                 ]
             ],

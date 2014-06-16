@@ -21,6 +21,7 @@ use yii\helpers\Url;
  * @property string $meta_description
  * @property string $meta_keywords
  *
+ * @property Interactive[] $interactives
  * @property Shop $shop
  * @property LineCategory[] $lineCategories
  * @property LineProduct[] $lineProducts
@@ -79,6 +80,37 @@ class Line extends \yii\db\ActiveRecord
     public static function find()
     {
         return new LineScope(get_called_class());
+    }
+
+    public function beforeDelete()
+    {
+        /**
+         * Проверка на существование связанных записей, что бы не было ошибок по FK
+         */
+        $errors = [];
+        if ($this->getLineProducts()->count() != 0) {
+            $errors[] = 'Связь линия-товар';
+        }
+        if ($this->getLineCategories()->count() != 0) {
+            $errors[] = 'Связь линия-категория';
+        }
+        if ($this->getInteractives()->count() != 0) {
+            $errors[] = 'Интерьерные фотографии';
+        }
+        if (!empty($errors)) {
+            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            return false;
+        }
+
+        return parent::beforeDelete();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInteractives()
+    {
+        return $this->hasMany(Interactive::className(), ['line_id' => 'id']);
     }
 
     /**

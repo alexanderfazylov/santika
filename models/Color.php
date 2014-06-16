@@ -77,6 +77,29 @@ class Color extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
+    public function beforeDelete()
+    {
+        /**
+         * Проверка на существование связанных записей, что бы не было ошибок по FK
+         */
+        $errors = [];
+        if ($this->getPriceProducts()->count() != 0) {
+            $errors[] = 'Стоимость товара';
+        }
+        if ($this->getProductColors()->count() != 0) {
+            $errors[] = 'Товары';
+        }
+        if ($this->getPhotoGalleries()->count() != 0) {
+            $errors[] = 'Фотогалерея товара';
+        }
+        if (!empty($errors)) {
+            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            return false;
+        }
+
+        return parent::beforeDelete();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

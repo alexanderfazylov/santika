@@ -98,9 +98,13 @@ class PriceController extends AdminController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        Yii::$app->response->format = 'json';
+        $model = $this->findModel($id);
+        if ($model->delete()) {
+            return ['status' => 'success'];
+        } else {
+            return ['status' => 'error', 'messages' => $model->getErrors()];
+        }
     }
 
     /**

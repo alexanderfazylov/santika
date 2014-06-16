@@ -88,6 +88,23 @@ class Interactive extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
+
+    public function beforeDelete()
+    {
+        /**
+         * Проверка на существование связанных записей, что бы не было ошибок по FK
+         */
+        $errors = [];
+        if ($this->getInteractiveProducts()->count() != 0) {
+            $errors[] = 'Связь фотография - товар';
+        }
+        if (!empty($errors)) {
+            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            return false;
+        }
+
+        return parent::beforeDelete();
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

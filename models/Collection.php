@@ -100,6 +100,26 @@ class Collection extends \yii\db\ActiveRecord
         return new CategoryScope(get_called_class());
     }
 
+    public function beforeDelete()
+    {
+        /**
+         * Проверка на существование связанных записей, что бы не было ошибок по FK
+         */
+        $errors = [];
+        if ($this->getChilds()->count() != 0) {
+            $errors[] = 'Коллекции';
+        }
+        if ($this->getProducts()->count() != 0) {
+            $errors[] = 'Товары';
+        }
+        if (!empty($errors)) {
+            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            return false;
+        }
+
+        return parent::beforeDelete();
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
