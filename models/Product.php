@@ -79,6 +79,8 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'article', 'name', 'description', 'url'], 'required'],
+            [['shop_id', 'article', 'name', 'description', 'url', 'line_ids', 'color_ids', 'collection_id', 'category_id'], 'required', 'on' => 'admin'],
+
             [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion', 'is_published'], 'integer'],
             [['article', 'name', 'description', 'canonical', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
             [['line_ids', 'color_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],

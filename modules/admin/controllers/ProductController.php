@@ -64,6 +64,7 @@ class ProductController extends AdminController
     public function actionCreate()
     {
         $model = new Product;
+        $model->setScenario('admin');
         $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -85,6 +86,7 @@ class ProductController extends AdminController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario('admin');
         $model->prepare();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
