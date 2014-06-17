@@ -96,10 +96,10 @@ class Interactive extends \yii\db\ActiveRecord
          */
         $errors = [];
         if ($this->getInteractiveProducts()->count() != 0) {
-            $errors[] = 'Связь фотография - товар';
+            $errors[] = 'Связь фотография-товар';
         }
         if (!empty($errors)) {
-            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            $this->addError('id', 'Нельзя удалить, т.к. есть закрепленные ' . implode(', ', $errors));
             return false;
         }
 

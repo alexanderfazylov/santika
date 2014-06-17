@@ -147,6 +147,7 @@ class PriceProductController extends AdminController
         ]);
         $filter_model->addRule(['name', 'article'], 'string', ['max' => 128]);
 //        $filter_model->addRule(['cost_eur', 'cost_rub'], 'number');;
+        $filter_model->load(Yii::$app->request->getQueryParams());
 
         if (empty($price)) {
 //            throw new Exception('Указанный прайс не найден');
@@ -167,12 +168,12 @@ class PriceProductController extends AdminController
                             },
                     ]);
 
-                    $query->andFilterWhere(['like', 'article', $filter_model->article])
-                        ->andFilterWhere(['like', 'name', $filter_model->name])
-                        ->andFilterWhere(['productColors.color_id' => $filter_model->color_id])
+                $query->andFilterWhere(['like', 'article', $filter_model->article])
+                    ->andFilterWhere(['like', 'name', $filter_model->name])
+                    ->andFilterWhere(['productColors.color_id' => $filter_model->color_id])
 //                        ->andFilterWhere(['like',  'cost_eur', $filter_model->cost_eur])
 //                        ->andFilterWhere(['like',  'cost_rub', $filter_model->cost_rub])
-                    ;
+                ;
                 $products = $query->all();
 
                 $array = [];
@@ -271,7 +272,12 @@ class PriceProductController extends AdminController
         Yii::$app->response->format = 'json';
 
         if (isset($_POST['price_id']) && isset($_POST['product_id'])) {
-            $model = PriceProduct::findOne(['price_id' => $_POST['price_id'], 'product_id' => $_POST['product_id']]);
+            $color_id = isset($_POST['color_id']) ? $_POST['color_id'] : null;
+            $model = PriceProduct::findOne([
+                'price_id' => $_POST['price_id'],
+                'product_id' => $_POST['product_id'],
+                'color_id' => $color_id,
+            ]);
 
             if (!empty($model)) {
                 $model->delete();

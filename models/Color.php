@@ -93,7 +93,7 @@ class Color extends \yii\db\ActiveRecord
             $errors[] = 'Фотогалерея товара';
         }
         if (!empty($errors)) {
-            $this->addError('id', 'Нельзя удалить, т.к. есть связи с ' . implode(', ', $errors));
+            $this->addError('id', 'Нельзя удалить, т.к. есть закрепленные ' . implode(', ', $errors));
             return false;
         }
 

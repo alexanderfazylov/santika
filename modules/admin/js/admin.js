@@ -153,13 +153,15 @@ $(document).on('click', '.delete-product_price', function () {
     var $tr = $(this).parents('tr');
     var price_id = $('#price_id').val();
     var product_id = $tr.data('product_id');
+    var color_id = $tr.data('color_id');
     $.ajax({
         url: '/admin/price-product/delete-ajax',
         type: "POST",
         dataType: "json",
         data: {
             price_id: price_id,
-            product_id: product_id
+            product_id: product_id,
+            color_id: color_id
         },
         success: function (data) {
             if (data.status == 'success') {
