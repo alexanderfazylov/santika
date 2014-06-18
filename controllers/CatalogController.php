@@ -11,6 +11,7 @@ use app\models\PhotoGallery;
 use app\models\Price;
 use app\models\PriceProduct;
 use app\models\Product;
+use app\models\ShowWith;
 use app\models\Upload;
 use Yii;
 
@@ -149,9 +150,12 @@ class CatalogController extends ThemedController
         $other_products = Product::find()
             ->published()
             ->joinWith('photo')
-            ->joinWith('lineProducts')
-            ->andWhere(['line_id' => $line->id])
-            ->andWhere(['NOT IN', 'product.id', $product->id])
+            ->joinWith(['showWith' => function ($q) use ($product) {
+                    $q->andWhere([
+                        'object_id' => $product->id,
+                    ]);
+                }
+            ])
             ->limit(10)
             ->all();
 

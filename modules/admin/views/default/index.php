@@ -20,5 +20,6 @@ echo Menu::widget([
         ['label' => 'Прайс листы', 'url' => ['/admin/price']],
         ['label' => 'Стоимость товаров', 'url' => ['/admin/price-product/product']],
         ['label' => 'Интерактивные фото', 'url' => ['/admin/interactive']],
+        ['label' => 'Отображать на странице', 'url' => ['/admin/show-with/product']],
     ]
 ]);

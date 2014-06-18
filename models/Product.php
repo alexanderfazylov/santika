@@ -382,6 +382,33 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
+     * Возвращает связь с товаром в котором отображается текущий товар
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShowWith()
+    {
+        /**
+         * @TODO нет связи в БД
+         */
+        return $this->hasMany(ShowWith::className(), ['product_id' => 'id'])
+            ->andWhere([ShowWith::tableName() . '.type' => ShowWith::TYPE_PRODUCT]);
+    }
+
+
+    /**
+     * Возвращает связь с товарами которые отображаются вместе с текущим
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShowWithAlter()
+    {
+        /**
+         * @TODO нет связи в БД
+         */
+        return $this->hasMany(ShowWith::className(), ['object_id' => 'id'])
+            ->andWhere([ShowWith::tableName() . '.type' => ShowWith::TYPE_PRODUCT]);
+    }
+
+    /**
      * Возвращает ДхШхВ товара
      * @return string
      */

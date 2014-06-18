@@ -24,6 +24,7 @@ class AdminAsset extends AssetBundle
     ];
     //нужно, что бы подключить js/css проекта
     public $depends = [
+        'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
 

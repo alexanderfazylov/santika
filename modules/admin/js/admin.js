@@ -285,3 +285,177 @@ $(document).on('click', '.custom-delete', function () {
 /**
  * Специальное удаление, с провкеркой ajax ответа КОНЕЦ
  */
+
+/**
+ * Функционал для отображение товара на странице с ... НАЧАЛО
+ */
+/**
+ * @TODO будут конфликты с формой создания\редактирования
+ */
+$(document).on('change', '#showwith-type', function () {
+    var shop_id = $('#showwith-shop_id').val();
+    var type = $(this).val();
+
+    $.ajax({
+        url: '/admin/show-with/get-objects',
+        type: "POST",
+        dataType: "json",
+        data: {
+            shop_id: shop_id,
+            type: type
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                var objects_select = $('#showwith-object_id');
+                objects_select.find('option[value!=""]').remove();
+                $.each(data.objects, function (index, object) {
+                    $('<option>')
+                        .val(object.id)
+                        .text(object.name)
+                        .appendTo(objects_select);
+                })
+            }
+        }
+    })
+});
+
+$(document).on('change', '#showwith-object_id', function () {
+    var shop_id = $('#showwith-shop_id').val();
+    var type = $('#showwith-type').val();
+    var object_id = $(this).val();
+
+    $.ajax({
+        url: '/admin/show-with/get-products',
+        type: "POST",
+        dataType: "json",
+        data: {
+            shop_id: shop_id,
+            type: type,
+            object_id: object_id
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                var products_select = $('#showwith-product_id');
+                var owner = $('#showwith-sorter');
+                owner.html('');
+                products_select.find('option').removeAttr('disabled');
+                if (type == 4) {
+                    //когда выбрали тип товар, то нельзя отображать сам товар на своей странице
+                    products_select.find('option[value="' + object_id + '"]').attr('disabled', 'disabled');
+                }
+                $.each(data.products, function (index, product) {
+                    displayShowWith(product);
+                })
+            }
+        }
+    })
+});
+
+$(document).on('click', '#add-showwith', function () {
+    var shop_id = $('#showwith-shop_id').val();
+    var type = $('#showwith-type').val();
+    var object_id = $('#showwith-object_id').val();
+    var product_id = $('#showwith-product_id').val();
+
+    if (type == "" || object_id == "" || product_id == "") {
+        alert('Не все поля заполнены');
+        return false;
+    }
+    $.ajax({
+        url: '/admin/show-with/add-product',
+        type: "POST",
+        dataType: "json",
+        data: {
+            shop_id: shop_id,
+            type: type,
+            object_id: object_id,
+            product_id: product_id
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                displayShowWith(data.product);
+            } else {
+                alertMessages(data);
+            }
+        }
+    });
+    return false;
+});
+
+$(document).on('click', '.delete-showwith', function () {
+    var li = $(this).parents('li');
+    var showwith_id = li.attr('showwith_id');
+    var product_id = li.attr('product_id');
+
+    $.ajax({
+        url: '/admin/show-with/delete-product',
+        type: "POST",
+        dataType: "json",
+        data: {
+            id: showwith_id,
+            product_id: product_id
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                li.remove();
+
+                $('#showwith-product_id').find('option[value="' + product_id + '"]').removeAttr('disabled');
+            } else {
+                alertMessages(data);
+            }
+        }
+    });
+    return false;
+});
+
+$(document).on('click', '.save-showwith_sort', function () {
+    var sort_index = 0;
+    var sort = {};
+    var $lies = $('#showwith-sorter').find('>li');
+    $.each($lies, function (index, element) {
+        var id = $(element).attr('showwith_id');
+        sort[id] = sort_index;
+        sort_index++;
+    });
+    $.ajax({
+        url: '/admin/show-with/save-sort',
+        type: "POST",
+        dataType: "json",
+        data: {
+            sort: sort
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+                alert('Сохранено');
+            } else {
+                alertMessages(data);
+            }
+        }
+
+    });
+    return false;
+});
+
+/*отображает товар из showWith*/
+function displayShowWith(data) {
+    var products_select = $('#showwith-product_id');
+    var owner = $('#showwith-sorter');
+
+    products_select.find('option[value="' + data.product_id + '"]').attr('disabled', 'disabled');
+    products_select.val("");
+
+    var li = $('<li></li>')
+        .attr('showwith_id', data.id)
+        .attr('product_id', data.product_id);
+    var span = $('<span></span>').text(data.name);
+    var img = $('<img>').attr('src', data.photo);
+    var del = $('<a></a>')
+        .text('Удалить')
+        .attr('href', '#')
+        .addClass('delete-showwith');
+
+    li.append(span).append(img).append(del).appendTo(owner);
+}
+/**
+ * Функционал для отображение товара на странице с ... КОНЕЦ
+ */
