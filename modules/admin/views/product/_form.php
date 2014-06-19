@@ -77,11 +77,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'is_published')->checkbox() ?>
 
     <?php
-    /**
-     * @TODO придумать что нить с загрузкой файлов
-     */
-    ?>
-    <?php
     echo $this->render('/default/_file_upload.php', [
         'form' => $form,
         'model' => $model,
