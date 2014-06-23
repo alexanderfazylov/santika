@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "shop".
@@ -106,5 +107,14 @@ class Shop extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['shop_id' => 'id']);
+    }
+
+    /**
+     * Массив всех салонов
+     * @return array
+     */
+    public static function listData()
+    {
+        return ArrayHelper::map(static::find()->all(), 'id', 'name');
     }
 }

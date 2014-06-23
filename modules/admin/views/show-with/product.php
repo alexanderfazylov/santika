@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form-group">
         <label>Салон</label>
-        <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name'), ['id' => 'showwith-shop_id', 'class' => 'form-control']) ?>
+        <?php echo Html::dropDownList('shop_id', $shop_id, Shop::listData(), ['id' => 'showwith-shop_id', 'class' => 'form-control']) ?>
     </div>
 
     <?=

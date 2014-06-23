@@ -24,7 +24,8 @@ use yii\widgets\ActiveForm;
 <div class="product-form">
     <?php
     $line_id = 1;
-    $lines_array = ArrayHelper::map(Line::find()->byShop($model->shop_id)->all(), 'id', 'name');
+    $shops_array = Shop::listData();
+    $lines_array = Line::listData($model->shop_id);
     $collection_array = ArrayHelper::map(Collection::find()->byShop($model->shop_id)->all(), 'id', 'name');
     $selected_lines = ArrayHelper::map(LineProduct::find()->andWhere(['product_id' => $model->id])->all(), 'id', 'line_id');
     $category_array = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines), 'id', 'name');
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'shop_id')->dropDownList($shops_array) ?>
 
     <?=
     $form->field($model, 'line_ids')->widget(Chosen::className(), [

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = 'Редактирование стоимост�
 
     <div class="form-group">
         <label>Салон</label>
-        <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name'), ['class' => 'form-control']) ?>
+        <?php echo Html::dropDownList('shop_id', $shop_id, Shop::listData(), ['class' => 'form-control']) ?>
     </div>
     <div class="form-group">
         <label>Прайс</label>

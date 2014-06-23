@@ -17,8 +17,8 @@ use yii\widgets\ActiveForm;
 
 <div class="line-product-form">
 
-    <?php $shops_array = ArrayHelper::map(Shop::find()->all(), 'id', 'name'); ?>
-    <?php $lines_array = ArrayHelper::map(Line::find()->byShop($shop_id)->all(), 'id', 'name'); ?>
+    <?php $shops_array = Shop::listData(); ?>
+    <?php $lines_array = Line::listData($shop_id); ?>
     <?php $products_array = ArrayHelper::map(Product::find()->byShop($shop_id)->all(), 'id', 'name'); ?>
 
     <?php $form = ActiveForm::begin(); ?>

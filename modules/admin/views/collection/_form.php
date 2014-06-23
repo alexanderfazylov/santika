@@ -16,6 +16,7 @@ use yii\widgets\ActiveForm;
 /**
  * @TODO вынести всю работу с данными из вьюх в функции классов
  */
+$shops_array = Shop::listData();
 $query = Collection::find()->byShop($model->shop_id);
 if (!is_null($model->id)) {
     $query->andWhere(['NOT IN', 'id', [$model->id]]);
@@ -29,13 +30,11 @@ $collections_array = ArrayHelper::map($collections, 'id', 'name');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'shop_id')->dropDownList($shops_array) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
 
     <?php
     $options = ['prompt' => ''];

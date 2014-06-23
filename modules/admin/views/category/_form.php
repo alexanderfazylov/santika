@@ -17,13 +17,13 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="category-form">
-    <?php $lines_array = ArrayHelper::map(Line::find()->byShop($model->shop_id)->all(), 'id', 'name'); ?>
+    <?php $lines_array = Line::listData($model->shop_id); ?>
     <?php $selected_lines = ArrayHelper::map(LineCategory::find()->andWhere(['category_id' => $model->id])->all(), 'id', 'line_id'); ?>
     <?php $parent_categories = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines, $model->id), 'id', 'name'); ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'shop_id')->dropDownList(Shop::listData()) ?>
 
     <?=
     $form->field($model, 'line_ids')->widget(Chosen::className(), [
@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
     ?>
     <?= $form->field($model, 'parent_id')->dropDownList($parent_categories, ['prompt' => 'Выберите родительскую категорию']) ?>
 
-<!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
+    <!--    --><?php //= $form->field($model, 'sort')->textInput() ?>
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>
 

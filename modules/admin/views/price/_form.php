@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'shop_id')->dropDownList(ArrayHelper::map(Shop::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'shop_id')->dropDownList(Shop::listData()) ?>
 
     <?= $form->field($model, 'start_date')->hiddenInput() ?>
 

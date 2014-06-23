@@ -16,14 +16,14 @@ use yii\widgets\ActiveForm;
 
 <div class="interactive-form">
 
-    <?php $shops_array = ArrayHelper::map(Shop::find()->all(), 'id', 'name'); ?>
-    <?php $lines_array = ArrayHelper::map(Line::find()->byShop($shop_id)->all(), 'id', 'name'); ?>
+    <?php $shops_array = Shop::listData(); ?>
+    <?php $lines_array = Line::listData($shop_id); ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
         <label>Салон</label>
-        <?php echo Html::dropDownList('shop_id', $shop_id, ArrayHelper::map(Shop::find()->all(), 'id', 'name'), ['id' => 'interactive-shop_id', 'class' => 'form-control']) ?>
+        <?php echo Html::dropDownList('shop_id', $shop_id, $shops_array, ['id' => 'interactive-shop_id', 'class' => 'form-control']) ?>
     </div>
 
 

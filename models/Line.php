@@ -5,6 +5,7 @@ namespace app\models;
 use app\models\scopes\LineScope;
 use Yii;
 use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
 
@@ -144,5 +145,15 @@ class Line extends \yii\db\ActiveRecord
     public function createUrl()
     {
         return Url::to(['/catalog/line/', 'url' => $this->url]);
+    }
+
+    /**
+     * Массив линий по магазину
+     * @param $shop_id
+     * @return array
+     */
+    public static function listData($shop_id)
+    {
+        return ArrayHelper::map(static::find()->byShop($shop_id)->all(), 'id', 'name');
     }
 }
