@@ -10,6 +10,7 @@ namespace app\commands;
 use app\models\Currency;
 use app\models\Price;
 use app\models\PriceProduct;
+use app\models\Shop;
 use yii\console\Controller;
 
 /**
@@ -33,7 +34,7 @@ class SantikaController extends Controller
 
     public function actionUpdatePrice()
     {
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $curs_eur = Currency::getEurValue();
 
         $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();

@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use app\models\Currency;
 use app\models\Price;
 use app\models\Product;
+use app\models\Shop;
 use Yii;
 use app\models\PriceProduct;
 use app\models\search\PriceProductSearch;
@@ -135,7 +136,7 @@ class PriceProductController extends AdminController
         /**
          * @TODO сделать правильно
          */
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $price = Price::findOne($price_id);
         $filter_model = new DynamicModel([
             'product_id',

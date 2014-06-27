@@ -7,6 +7,7 @@ use app\models\Collection;
 use app\models\Line;
 use app\models\LineProduct;
 use app\models\Product;
+use app\models\Shop;
 use app\models\Upload;
 use app\modules\admin\components\AdminController;
 use Yii;
@@ -130,7 +131,7 @@ class ShowWithController extends AdminController
 
     public function actionProduct()
     {
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $products = Product::find()->byShop($shop_id)->all();
         $model = new ShowWith();
         return $this->render('product', [

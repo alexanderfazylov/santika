@@ -51,7 +51,7 @@ class SiteController extends ThemedController
 
     public function actionIndex()
     {
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $shop = Shop::findOne($shop_id);
 
         $products = Product::find()->byShop($shop_id)->promotion()->all();

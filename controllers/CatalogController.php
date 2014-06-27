@@ -11,6 +11,7 @@ use app\models\PhotoGallery;
 use app\models\Price;
 use app\models\PriceProduct;
 use app\models\Product;
+use app\models\Shop;
 use app\models\ShowWith;
 use app\models\Upload;
 use Yii;
@@ -19,7 +20,7 @@ class CatalogController extends ThemedController
 {
     public function actionIndex()
     {
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $lines = Line::find()->byShop($shop_id)->all();
         return $this->render('index', [
             'lines' => $lines,

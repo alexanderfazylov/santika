@@ -117,4 +117,12 @@ class Shop extends \yii\db\ActiveRecord
     {
         return ArrayHelper::map(static::find()->all(), 'id', 'name');
     }
+
+    /**
+     * Возвращает id салона по url.
+     * @return int
+     */
+    public static function getIdFromUrl(){
+        return 1;
+    }
 }

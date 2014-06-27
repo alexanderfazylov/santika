@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\models\InteractiveProduct;
+use app\models\Shop;
 use app\modules\admin\components\AdminController;
 use Yii;
 use app\models\Interactive;
@@ -66,7 +67,7 @@ class InteractiveController extends AdminController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $shop_id = 1;
+            $shop_id = Shop::getIdFromUrl();
             return $this->render('create', [
                 'model' => $model,
                 'shop_id' => $shop_id,
@@ -87,7 +88,7 @@ class InteractiveController extends AdminController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $shop_id = 1;
+            $shop_id = Shop::getIdFromUrl();
             return $this->render('update', [
                 'model' => $model,
                 'shop_id' => $shop_id,
@@ -133,7 +134,7 @@ class InteractiveController extends AdminController
      */
     public function actionProduct($id)
     {
-        $shop_id = 1;
+        $shop_id = Shop::getIdFromUrl();
         $interactive = $this->findModel($id);
         return $this->render('product', [
                 'shop_id' => $shop_id,

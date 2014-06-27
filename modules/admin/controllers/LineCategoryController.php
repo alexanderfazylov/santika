@@ -3,6 +3,7 @@
 namespace app\modules\admin\controllers;
 
 use app\models\Category;
+use app\models\Shop;
 use Yii;
 use app\models\LineCategory;
 use app\models\search\LineCategorySearch;
@@ -67,7 +68,7 @@ class LineCategoryController extends AdminController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $shop_id = 1;
+            $shop_id = Shop::getIdFromUrl();
             return $this->render('create', [
                 'model' => $model,
                 'shop_id' => $shop_id,
@@ -88,7 +89,7 @@ class LineCategoryController extends AdminController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $shop_id = 1;
+            $shop_id = Shop::getIdFromUrl();
             return $this->render('update', [
                 'model' => $model,
                 'shop_id' => $shop_id,
