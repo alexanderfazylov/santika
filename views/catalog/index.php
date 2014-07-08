@@ -73,10 +73,19 @@ $collections = Collection::find()->byShop($shop_id)->all();
     </form>
 </div>
 
-<?php foreach ($lines as $line): ?>
-    <h2>
-    <?= Html::a($line->name, $line->createUrl()); ?>
-    </h2>
+<?php foreach ($lines as $key => $line): ?>
+    <a href="<?= $line->createUrl(); ?>"
+       class="<?= ($key % 2 == 0) ? 'b-catalog__item--left' : 'b-catalog__item--right'; ?>">
+        <img src="i/cat1.jpg">
+
+        <div class="descr">
+            <div class="title"><?= $line->name ?></div>
+            <div class="text">Дизайнер: Prospero Rasulo</div>
+            <div class="text">Революционный дизайн, сочетающий совершенные пропорции
+                с чистыми формами.
+            </div>
+        </div>
+    </a>
 <?php endforeach; ?>
 
 <div style="display: none;">
