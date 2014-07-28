@@ -20,13 +20,22 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/reset.css',
         'css/site.css',
+        'css/gessi.css',
+        'css/demoStyleSheet.css',
+        'css/jquery.selectbox.css',
+//        'css/jquery.fancybox-1.3.4.css',
     ];
     public $js = [
         'js/main.js',
+        'js/fadeSlideShow.js',
+        'js/jcarousellite.js',
+        'js/jquery.selectbox-0.2.js',
+//        'js/jquery.fancybox-1.3.4.pack.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\bootstrap\BootstrapAsset',
+        'newerton\fancybox\FancyBoxAsset',
     ];
 
     public function init()
@@ -35,6 +44,6 @@ class AppAsset extends AssetBundle
         /**
          * @TODO тут надо дополнительно подключить css файл нужной темы
          */
-        $this->css[] = 'css/gessi/style.css';
+//        $this->css[] = 'css/gessi/style.css';
     }
 }

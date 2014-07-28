@@ -22,7 +22,9 @@
         "2amigos/yii2-file-upload-widget" : "*",
         "2amigos/yii2-date-picker-widget" : "*",
         "yiisoft/yii2-jui": "*",
-        "phpoffice/phpexcel": "dev-develop"
+        "phpoffice/phpexcel": "dev-develop",
+        "newerton/yii2-fancybox": "dev-master"
+
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

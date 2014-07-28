@@ -7,6 +7,7 @@ use app\models\Category;
 use app\models\Collection;
 use app\models\Interactive;
 use app\models\Line;
+use app\models\LineCategory;
 use app\models\PhotoGallery;
 use app\models\Price;
 use app\models\PriceProduct;
@@ -52,7 +53,9 @@ class CatalogController extends ThemedController
             ->published()
             ->joinWith('photo')
             ->joinWith('lineProducts')
-            ->andWhere(['line_id' => $line->id]);
+//            ->andWhere(['line_id' => $line->id])
+            ->limit(20);
+
 
         if (!empty($category_url)) {
             /**
@@ -71,13 +74,26 @@ class CatalogController extends ThemedController
         }
         $products = $query->all();
 
+        $category_ids = LineCategory::categoryIdsByLine($line->id);
         $categories = Category::find()
-            ->joinWith('lineCategories')
-            ->andWhere(['line_id' => $line->id])
+            ->joinWith(['childs' => function ($q) use ($category_ids) {
+                    //т.к. условие добавляется в общее where, то выберем детей из категорий в линии
+                    //и родителей без детей
+                    $q->orWhere(['childs.id' => $category_ids]);
+                    $q->orWhere(['childs.id' => null]);
+                },
+            ])
+            ->isParent()
+            ->andWhere([Category::tableName() . '.id' => $category_ids])
             ->all();
 
         $collections = Collection::find()
+            ->joinWith(['childs' => function ($q) {
+                    $q->from('collection childs');
+                },
+            ])
             ->byShop($shop_id)
+            ->isParent()
             ->all();
 
         return $this->render('line_product', [
@@ -151,12 +167,12 @@ class CatalogController extends ThemedController
         $other_products = Product::find()
             ->published()
             ->joinWith('photo')
-            ->joinWith(['showWith' => function ($q) use ($product) {
-                    $q->andWhere([
-                        'object_id' => $product->id,
-                    ]);
-                }
-            ])
+//            ->joinWith(['showWith' => function ($q) use ($product) {
+//                    $q->andWhere([
+//                        'object_id' => $product->id,
+//                    ]);
+//                }
+//            ])
             ->limit(10)
             ->all();
 

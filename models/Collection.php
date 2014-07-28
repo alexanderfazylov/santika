@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\scopes\CategoryScope;
+use app\models\scopes\CollectionScope;
 use Yii;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
@@ -93,11 +94,11 @@ class Collection extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return CategoryScope
+     * @return CollectionScope
      */
     public static function find()
     {
-        return new CategoryScope(get_called_class());
+        return new CollectionScope(get_called_class());
     }
 
     public function beforeDelete()
@@ -149,7 +150,8 @@ class Collection extends \yii\db\ActiveRecord
      */
     public function getChilds()
     {
-        return $this->hasMany(Collection::className(), ['parent_id' => 'id']);
+        return $this->hasMany(Collection::className(), ['parent_id' => 'id'])
+             ->from(self::tableName() . ' AS child');
     }
 
     /**

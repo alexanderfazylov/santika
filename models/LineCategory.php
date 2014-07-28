@@ -88,4 +88,22 @@ class LineCategory extends \yii\db\ActiveRecord
         }
         return $result;
     }
+
+    /**
+     * Возвращает массив из id категорий, которые есть в бд
+     * @return array
+     * NOT USED
+     */
+    public static function categoryIdsByLine($line_id)
+    {
+        $array = self::find()
+            ->select('category_id')
+            ->andWhere(['line_id' => $line_id])
+            ->asArray()->all();
+        $result = [];
+        foreach ($array as $a) {
+            $result[] = $a['category_id'];
+        }
+        return $result;
+    }
 }

@@ -9,6 +9,7 @@
 namespace app\models\scopes;
 
 
+use app\models\Collection;
 use yii\db\ActiveQuery;
 
 class CollectionScope extends ActiveQuery
@@ -19,7 +20,7 @@ class CollectionScope extends ActiveQuery
      */
     public function byShop($shop_id)
     {
-        $this->andWhere(['shop_id' => $shop_id]);
+        $this->andWhere([Collection::tableName() . '.shop_id' => $shop_id]);
         return $this;
     }
 
@@ -30,6 +31,15 @@ class CollectionScope extends ActiveQuery
     public function byUrl($url)
     {
         $this->andWhere(['url' => $url]);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function isParent()
+    {
+        $this->andWhere([Collection::tableName() . '.parent_id' => null]);
         return $this;
     }
 } 

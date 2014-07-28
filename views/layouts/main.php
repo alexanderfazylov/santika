@@ -1,4 +1,7 @@
 <?php
+use app\models\Collection;
+use app\models\Line;
+use app\models\Shop;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -10,6 +13,10 @@ use app\assets\AppAsset;
  * @var string $content
  */
 AppAsset::register($this);
+
+$shop_id = Shop::getIdFromUrl();
+$lines = Line::find()->byShop($shop_id)->all();
+$collections = Collection::find()->byShop($shop_id)->all();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -19,6 +26,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?php echo Html::csrfMetaTags(); ?>
 </head>
 <body>
 
@@ -26,27 +34,35 @@ AppAsset::register($this);
 <div class="wrapper">
 
     <header class="header">
-        <span class="logo"></span>
-        <span class="dealer">Официальный дилер</span>
+        <a href="/">
+            <span class="logo"></span>
+            <span class="dealer">Официальный дилер</span>
+        </a>
+
         <div class="b-top-bar">
             <a class="notepad" href="">Блокнот (21)</a>
             <a class="menu" href="">меню</a>
         </div>
-    </header><!-- .header-->
+    </header>
+    <!-- .header-->
 
     <div class="b-panel-r">
         <ul class="b-menu-right">
             <li><a href="">Компания</a></li>
             <li><a href="">проекты</a>
                 <ul>
-                    <li><a href="">Goccia</a></li>
-                    <li><a href="">Rettangolo</a></li>
-                    <li><a href="">Ovale</a></li>
-                    <li><a href="">Riflessi e Trasparenze</a></li>
-                    <li><a href="">Mimi</a></li>
+                    <?php foreach ($collections as $collection): ?>
+                        <li><a href="<?= $collection->createUrl(); ?>"><?= $collection->name; ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
-            <li><a href="">Линии</a></li>
+            <li><a href="">Линии</a>
+                <ul>
+                    <?php foreach ($lines as $line): ?>
+                        <li><a href="<?= $line->createUrl(); ?>"><?= $line->name; ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
             <li><a href="">Услуги и сервис</a></li>
             <li><a href="">Дизайнерам</a></li>
             <li><a href="">Регистрация</a></li>
@@ -57,11 +73,13 @@ AppAsset::register($this);
         </div>
     </div>
 
-    <main class="content container">
-    <?= $content ?>
-    </main><!-- .content -->
+    <main class="content <!--container-->">
+        <?= $content ?>
+    </main>
+    <!-- .content -->
 
-</div><!-- .wrapper -->
+</div>
+<!-- .wrapper -->
 
 <footer class="footer">
     <div class="copy">© 2014 Gessi</div>
@@ -71,7 +89,8 @@ AppAsset::register($this);
         <li><a href="">Коллекции</a></li>
         <li><a href="">Дизайнерам</a></li>
     </ul>
-</footer><!-- .footer -->
+</footer>
+<!-- .footer -->
 
 <?php $this->endBody() ?>
 </body>

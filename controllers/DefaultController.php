@@ -3,8 +3,11 @@
 namespace app\controllers;
 
 use app\components\UploadHandler;
+use app\models\Category;
+use app\models\LineCategory;
 use app\models\Upload;
 use Yii;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class DefaultController extends Controller
@@ -52,5 +55,19 @@ class DefaultController extends Controller
         $imginfo = getimagesize($path);
         header("Content-type: {$imginfo['mime']}");
         readfile($path);
+    }
+    public  function  actionTest(){
+
+        $category_ids = LineCategory::categoryIdsByLine(1);
+        $categories = Category::find()
+            ->joinWith(['childs' => function ($q) use ($category_ids) {
+                    $q->andWhere(['childs.id' => $category_ids]);
+                },
+            ])
+            ->isParent()
+            ->andWhere([Category::tableName() . '.id' => $category_ids])
+            ->all();
+        echo '<pre>';
+        VarDumper::dump($categories);
     }
 }

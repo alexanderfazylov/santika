@@ -24,6 +24,7 @@ class Upload extends \yii\db\ActiveRecord
     const TYPE_COLOR = 2;
     const TYPE_INTERACTIVE = 3;
     const TYPE_PRICE = 4;
+    const TYPE_LINE = 5;
 
     /**
      * @inheritdoc
@@ -165,6 +166,9 @@ class Upload extends \yii\db\ActiveRecord
                 break;
             case static::TYPE_PRICE:
                 $dir = 'price';
+                break;
+            case static::TYPE_LINE:
+                $dir = 'line';
                 break;
         }
         return $dir;

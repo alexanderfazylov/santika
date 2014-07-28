@@ -21,14 +21,18 @@ function InteractivePoint(options, data_index) {
      */
     var $div = $('<div></div>')
             .attr('id', 'point_' + that.id)
-            .attr('class', 'point')
+//            .attr('class', 'point')
+            .attr('class', 'pop')
             .css('left', that.left)
             .css('top', that.top)
         ;
+    $div.data('fancybox-href','#quick');
     $div.hover(function () {
         showProductInfo(options);
     });
-
+    $div.fancybox({
+        overlayColor : '#000'
+    });
     $owner.append($div);
 }
 /**
@@ -44,4 +48,86 @@ function showProductInfo(product) {
     $owner.find('.product-lwh').text(product.lwh);
     $owner.find('.product-color').text(product.color);
     $owner.find('.product-description').text(product.description);
+//    $('#quick').removeClass('hidden');
 }
+
+/**
+ * анимация на странице
+ */
+$(function () {
+    $('.app-index #slideshow').fadeSlideShow({
+        height: 460,
+        interval: 9000,
+        autoplay: true
+    });
+});
+
+/**
+ * листалка товаров на главной странице
+ */
+$(function () {
+    $(".app-index .gallery").jCarouselLite({
+        //mouseWheel: true,
+        btnNext: ".next",
+        btnPrev: ".prev",
+        visible: 10
+    });
+});
+
+/**
+ * select'ы на странице каталога
+ */
+$(function () {
+    $("select").selectbox();
+});
+
+
+/**
+ * Интерьерные фото
+ */
+$(function () {
+    $("a.pop").fancybox({
+        overlayColor: '#000'
+    });
+});
+
+$(function () {
+    $('.app-collection #slideshow').fadeSlideShow({
+        interval: 9000,
+        autoplay: true,
+        NextElementText: 'Далее',
+        PrevElementText: 'Назад'
+    });
+});
+
+
+/**
+ *  листалка на странице товара
+ */
+$(function () {
+    $(".app-product .gallery").jCarouselLite({
+        btnNext: ".next",
+        btnPrev: ".prev",
+        visible: 5
+    });
+});
+/**
+ *  листалка на странице товара
+ */
+$(function () {
+    $('.app-product #slideshow').fadeSlideShow({
+        height: 460,
+        interval: 9000,
+        autoplay: true
+    });
+});
+
+/**
+ * Отображение меню
+ */
+$(function () {
+    $('.menu').click(function(){
+        $('.b-panel-r').toggleClass('menu-visible');
+        return false;
+    });
+});

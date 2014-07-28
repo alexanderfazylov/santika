@@ -89,6 +89,19 @@ $config = [
 //                ),
             ),
         ),
+//        'assetManager' => [
+//            'bundles' => [
+//                'yii\bootstrap\BootstrapAsset' => [
+//                    'css' => []
+//                ],
+//            ],
+//        ],
+        'request' => [
+            'enableCookieValidation' => true,
+            'enableCsrfValidation' => true,
+            'cookieValidationKey' => 'xxxxxxx',
+        ],
+
     ],
     'params' => $params,
 ];

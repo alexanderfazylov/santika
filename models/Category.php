@@ -93,11 +93,12 @@ class Category extends \yii\db\ActiveRecord
     }
 
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
         if ($this->use_related_ids) {
             $this->saveLines();
         }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function beforeDelete()
@@ -189,7 +190,8 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getChilds()
     {
-        return $this->hasMany(Category::className(), ['parent_id' => 'id']);
+        return $this->hasMany(Category::className(), ['parent_id' => 'id'])
+            ->from(self::tableName() . ' AS childs');
     }
 
     /**
