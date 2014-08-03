@@ -26,6 +26,9 @@ function InteractivePoint(options, data_index) {
             .css('left', that.left)
             .css('top', that.top)
         ;
+    /**
+     * @TODO доделать fabcybox
+     */
     $div.data('fancybox-href','#quick');
     $div.hover(function () {
         showProductInfo(options);
@@ -48,6 +51,7 @@ function showProductInfo(product) {
     $owner.find('.product-lwh').text(product.lwh);
     $owner.find('.product-color').text(product.color);
     $owner.find('.product-description').text(product.description);
+    $owner.find('.product-price').text(product.price);
 //    $('#quick').removeClass('hidden');
 }
 
@@ -66,10 +70,10 @@ $(function () {
  * листалка товаров на главной странице
  */
 $(function () {
-    $(".app-index .gallery").jCarouselLite({
+    $(".app-index .b-carusel .gallery").jCarouselLite({
         //mouseWheel: true,
-        btnNext: ".next",
-        btnPrev: ".prev",
+        btnNext: ".app-index .b-carusel .next",
+        btnPrev: ".app-index .b-carusel .prev",
         visible: 10
     });
 });
@@ -105,22 +109,22 @@ $(function () {
  *  листалка на странице товара
  */
 $(function () {
-    $(".app-product .gallery").jCarouselLite({
-        btnNext: ".next",
-        btnPrev: ".prev",
+    $(".app-product .b-carusel .gallery").jCarouselLite({
+        btnNext: ".app-product .b-carusel .next",
+        btnPrev: ".app-product .b-carusel .prev",
         visible: 5
     });
 });
 /**
  *  листалка на странице товара
  */
-$(function () {
-    $('.app-product #slideshow').fadeSlideShow({
-        height: 460,
-        interval: 9000,
-        autoplay: true
-    });
-});
+//$(function () {
+//    $('.app-product #slideshow').fadeSlideShow({
+//        height: 460,
+//        interval: 9000,
+//        autoplay: true
+//    });
+//});
 
 /**
  * Отображение меню

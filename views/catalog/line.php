@@ -28,6 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $items = [];
     foreach ($intaractives as $intaractive) {
+        /**
+         * @TODO подтягивать инфу о товарах через ajax
+         */
         $products = [];
         foreach ($intaractive->interactiveProducts as $ip) {
             $products[] = [
@@ -42,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'color' => !empty($ip->product->color_id) ? $ip->product->color->name : '',
                 'photo' => !empty($ip->product->photo) ? $ip->product->photo->getFileShowUrl(true) : '',
                 'link' => $ip->product->createUrlByLine($line->url),
-                'price' => $ip->product->createUrlByLine($line->url),
+                'price' => '100 р.',
             ];
         }
 
@@ -137,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div><span>Монтаж:</span> ????</div>
         </div>
         <div class="text product-description"></div>
-        <div class="price">Стоимость<span>??? р.</span></div>
+        <div class="price">Стоимость<span class="product-price">???</span></div>
         <a href="" class="add product-link">Дополнительная информация</a>
     </div>
 </div>

@@ -16,7 +16,7 @@ AppAsset::register($this);
 
 $shop_id = Shop::getIdFromUrl();
 $lines = Line::find()->byShop($shop_id)->all();
-$collections = Collection::find()->byShop($shop_id)->all();
+//$collections = Collection::find()->byShop($shop_id)->all();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -50,11 +50,11 @@ $collections = Collection::find()->byShop($shop_id)->all();
         <ul class="b-menu-right">
             <li><a href="">Компания</a></li>
             <li><a href="">проекты</a>
-                <ul>
-                    <?php foreach ($collections as $collection): ?>
-                        <li><a href="<?= $collection->createUrl(); ?>"><?= $collection->name; ?></a></li>
-                    <?php endforeach; ?>
-                </ul>
+<!--                <ul>-->
+<!--                    --><?php //foreach ($collections as $collection): ?>
+<!--                        <li><a href="--><?php //= $collection->createUrl(); ?><!--">--><?php //= $collection->name; ?><!--</a></li>-->
+<!--                    --><?php //endforeach; ?>
+<!--                </ul>-->
             </li>
             <li><a href="">Линии</a>
                 <ul>

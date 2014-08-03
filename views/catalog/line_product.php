@@ -150,11 +150,25 @@ $this->params['breadcrumbs'][] = $this->title;
     </ul>
 
     <ul class="b-rzd__items">
+        <?php $big_count = 0; ?>
+        <?php $small_count = 0; ?>
         <?php foreach ($products as $key => $product): ?>
             <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
-
-            <!--        <li class="b-rzd__item ">-->
-            <li class="b-rzd__item <?= ($key > 0 && ($key % 4 == 0 || $key % 5 == 0)) ? 'big' : '' ?>">
+            <?php
+            //рисуем 4 маленьких и 2 больших товара
+            if ($small_count == 4) {
+                $big = true;
+                $big_count++;
+                if ($big_count == 2) {
+                    $small_count = 0;
+                }
+            } else {
+                $big = false;
+                $big_count = 0;
+                $small_count++;
+            }
+            ?>
+            <li class="b-rzd__item <?= $big ? 'big' : '' ?>">
                 <div class="image"> <?= Html::a(Html::img($src), $product->createUrlByLine($line->url)); ?></div>
                 <div class="descr">
                     <span><?= 'Art. ' . $product->article; ?></span>

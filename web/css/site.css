@@ -86,29 +86,25 @@ a.desc:after {
 /**
 * Интерактивные фото НАЧАЛО
 */
-.slides .point {
+.app-collection .slides .point {
     position: absolute;
     width: 20px;
     height: 20px;
     background-color: red;
 }
 
-/*.product-info {*/
-/*position: absolute;*/
-/*left: 50px;*/
-/*top: 200px;*/
-/*}*/
-
-.slides .slide .slide-content {
+.app-collection .slides .slide .slide-content {
     width: 100% !important;
 }
-.app-collection .blueimp-gallery{
-   margin-top: 0;
+
+.app-collection .blueimp-gallery {
+    margin-top: 0;
 }
 
-.pop{
+.app-collection .pop {
     cursor: pointer;
 }
+
 /**
 * Интерактивные фото КОНЕЦ
 */
@@ -126,11 +122,41 @@ a.desc:after {
 /**
 * Меню НАЧАЛО
 */
-.b-panel-r.menu-visible{
+.b-panel-r.menu-visible {
     right: 0;
     padding-top: 0px;
     top: 80px;
 }
+
 /**
 * Меню КОНЕЦ
+*/
+/**
+* Слайд шоу на странице товара НАЧАЛО
+*/
+.app-product .blueimp-gallery-container {
+    width: 700px;
+    margin: auto;
+}
+
+.app-product .blueimp-gallery {
+    background: none;
+}
+
+.app-product .blueimp-gallery .prev, .blueimp-gallery .next {
+    display: none;
+}
+
+.app-product .blueimp-gallery-carousel {
+    box-shadow: none;
+}
+
+/**
+* Слайд шоу на странице товара КОНЕЦ
+*/
+/**
+* Страница с товарами линии НАЧАЛО
+*/
+/**
+* Страница с товарами линии КОНЕЦ
 */

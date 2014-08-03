@@ -30,69 +30,41 @@ $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['/catal
 $this->params['breadcrumbs'][] = ['label' => $line->name, 'url' => $line->createUrl()];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div style="display: none">
-    <?php
-    $items = [];
-    foreach ($product->photoGalleries as $photo_gallery) {
-        $items[] = [
-            'title' => $product->name,
-            'href' => $photo_gallery->upload->getFileShowUrl(),
-        ];
-    }
-    ?>
-    <?=
-    Carousel::widget([
-        'items' => $items,
-        'json' => true,
-        'clientOptions' => [
-
-        ]
-    ]);?>
-</div>
 <div class="app-product">
     <div class="b-navigation">
-
         <a href="<?= $line->createUrl(); ?>" class="back">Вернуться назад<span>к коллекции</span></a>
+        <?php
+        if (!is_null($next_product)) {
+            $next = Html::tag('span', $next_product->name);
+            echo Html::a('Следующий товар' . $next, $next_product->createUrlByLine($line->url), ['class' => 'next']);
+        }
+        ?>
         <?php
         if (!is_null($prev_product)) {
             $prev = Html::tag('span', $prev_product->name);
             echo Html::a('Предыдущий товар' . $prev, $prev_product->createUrlByLine($line->url), ['class' => 'prev']);
         }
         ?>
+    </div>
 
+    <div class="blueimp-gallery-container">
         <?php
-        if (!is_null($next_product)) {
-            $next = Html::tag('span', $next_product->name);
-            echo Html::a('Следующий товар' . $next, $next_product->createUrlByLine($line->url), ['class' => 'prev']);
+        $items = [];
+        foreach ($product->photoGalleries as $photo_gallery) {
+            $items[] = [
+//                'title' => $product->name,
+                'href' => $photo_gallery->upload->getFileShowUrl(),
+            ];
         }
         ?>
-    </div>
+        <?=
+        Carousel::widget([
+            'items' => $items,
+            'json' => true,
+            'clientOptions' => [
 
-    <div id="slideshowWrapper" class="slider">
-        <ul id="slideshow">
-            <li>
-                <img src="/images/product1.jpg" alt=""/>
-            </li>
-            <li>
-                <img src="/images/product.jpg" alt=""/>
-            </li>
-            <li>
-                <img src="/images/product2.jpg" alt=""/>
-            </li>
-            <li>
-                <img src="/images/product.jpg" alt=""/>
-            </li>
-        </ul>
-    </div>
-
-
-    <div class="b-slider hidden">
-        <div id="slider" class="nivoSlider">
-            <img src="/images/product.jpg" alt=""/>
-            <img src="/images/product1.jpg" alt=""/>
-            <img src="/images/product2.jpg" alt=""/>
-            <img src="/images/product1.jpg" alt=""/>
-        </div>
+            ]
+        ]);?>
     </div>
 
     <div class="b-product">
@@ -135,6 +107,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="b-product__price">
             Стоимость<br>
             <span class="new"><?= !is_null($price_product) ? $price_product->cost_rub . ' р.' : '' ?></span>
+            <?php
+            /**
+             * @TODO сделать предыдущую цену
+             */
+            ?>
             <span class="old">47 990.00 р.</span>
         </div>
         <div class="b-links">
@@ -149,6 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <ul>
             <li>
                 <img src="/i/component1.jpg">
+
                 <div class="descr">
                     <a href="">Внешние части со встроенным
                         изливом. Длина 150 мм.</a>
@@ -157,6 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </li>
             <li>
                 <img src="/i/component2.jpg">
+
                 <div class="descr">
                     <a href="">Внутренний элемент для смесителя
                         с изливом.</a>
@@ -169,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="b-producer">
         <div class="b-producer__wrap">
             <div class="b-producer__image">
-                <img src="/images/producer1.jpg" alt="" />
+                <img src="/images/producer1.jpg" alt=""/>
             </div>
 
             <div class="b-producer__descr">
@@ -182,9 +161,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     продуктов для эстетов. Современные решения для ванной на все "случаи жизни".</p>
             </div>
         </div>
-        <img src="/images/producer2.jpg" class="img" alt="" />
-        <img src="/images/producer3.jpg" class="img" alt="" />
-        <img src="/images/producer4.jpg" class="img" alt="" />
+        <img src="/images/producer2.jpg" class="img" alt=""/>
+        <img src="/images/producer3.jpg" class="img" alt=""/>
+        <img src="/images/producer4.jpg" class="img" alt=""/>
     </div>
     <div class="b-carusel">
         <div class="title">

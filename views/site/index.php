@@ -74,7 +74,7 @@ $this->title = $shop->name;
     </div>
 
     <div class="b-gessi">
-        <img class="b-gessi__image" src="i/gessi1.jpg">
+        <img class="b-gessi__image" src="/i/gessi1.jpg">
 
         <div class="b-gessi__wrap">
             <div class="b-gessi__title">Сантехника Gessi</div>
