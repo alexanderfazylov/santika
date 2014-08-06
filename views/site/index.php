@@ -66,10 +66,10 @@ $this->title = $shop->name;
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-        <div class="nav">
-            <button class="prev"></button>
-            <button class="next"></button>
+            <div class="nav">
+                <button class="prev"></button>
+                <button class="next"></button>
+            </div>
         </div>
     </div>
 

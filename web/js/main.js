@@ -70,11 +70,13 @@ $(function () {
  * листалка товаров на главной странице
  */
 $(function () {
-    $(".app-index .b-carusel .gallery").jCarouselLite({
-        //mouseWheel: true,
-        btnNext: ".app-index .b-carusel .next",
-        btnPrev: ".app-index .b-carusel .prev",
-        visible: 10
+    $(".app-index .b-carusel .gallery").each(function () {
+        $(this).jCarouselLite({
+            //mouseWheel: true,
+            btnNext: $(this).find('> .nav .next')[0],
+            btnPrev: $(this).find('> .nav .prev')[0],
+            visible: 10
+        });
     });
 });
 
@@ -109,10 +111,12 @@ $(function () {
  *  листалка на странице товара
  */
 $(function () {
-    $(".app-product .b-carusel .gallery").jCarouselLite({
-        btnNext: ".app-product .b-carusel .next",
-        btnPrev: ".app-product .b-carusel .prev",
-        visible: 5
+    $(".app-product .b-carusel .gallery").each(function () {
+        $(this).jCarouselLite({
+            btnNext: $(this).find('> .nav .next')[0],
+            btnPrev: $(this).find('> .nav .prev')[0],
+            visible: 5
+        });
     });
 });
 /**

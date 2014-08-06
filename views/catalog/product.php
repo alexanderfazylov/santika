@@ -185,10 +185,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </div>
-        <div class="nav">
-            <button class="prev"></button>
-            <button class="next"></button>
+            <div class="nav">
+                <button class="prev"></button>
+                <button class="next"></button>
+            </div>
         </div>
     </div>
 
