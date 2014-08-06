@@ -23,7 +23,7 @@ use app\models\Upload;
         <div class="gallery">
             <ul>
                 <?php foreach ($models as $model): ?>
-                    <li class="show_childs"
+                    <li class="<?= $model->getChilds()->count() > 0 ? 'has_childs' : ''; ?>"
                         object_type="<?= $object_type ?>"
                         object_id="<?= $model->id ?>"
                         hide_level="<?= 'level' . ($level + 1) ?>"

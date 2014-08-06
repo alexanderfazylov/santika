@@ -167,7 +167,7 @@ $(function () {
         //скрываем все меню
         $('.b-rzd__menu .b-carusel').addClass('hidden');
     });
-    $(document).on('mouseenter', '.show_childs', function () {
+    $(document).on('mouseenter', '.b-rzd__menu li', function () {
         //отображаем дочерние элементы  выбранного пункта меню
 
         var object_type = $(this).attr('object_type');

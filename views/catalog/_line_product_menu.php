@@ -13,13 +13,13 @@ use app\models\Collection;
 ?>
 <div class="b-rzd__menu" style="position: relative">
     <ul class="parents">
-        <li class="parent show_childs"
+        <li class="parent"
             object_type="group"
             object_id="category"
             hide_level="level1">
             <a class="parent-link" href="">Категории</a>
         </li>
-        <li class="parent  show_childs"
+        <li class="parent"
             object_type="group"
             object_id="collection"
             hide_level="level1">
