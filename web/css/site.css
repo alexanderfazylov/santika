@@ -157,6 +157,41 @@ a.desc:after {
 /**
 * Страница с товарами линии НАЧАЛО
 */
+.app-rzd .b-rzd__menu div {
+    height: auto;
+}
+
+.app-rzd .b-carusel li {
+    min-height: 0;
+}
+
+.preload-carusel {
+    display: block !important;
+    position: absolute;
+    left: -9999px;
+    top: 0px;
+}
+
 /**
 * Страница с товарами линии КОНЕЦ
+*/
+
+/**
+* Общийе стили для листалки НАЧАЛО
+*/
+
+.b-carusel {
+    padding: 0 !important;
+}
+
+.b-carusel .gallery {
+    padding: 0 0 100px;
+}
+
+.b-carusel li {
+    margin: 0;
+}
+
+/**
+* Общийе стили для листалки КОНЕЦ
 */

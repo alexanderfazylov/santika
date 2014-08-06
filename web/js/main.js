@@ -29,12 +29,12 @@ function InteractivePoint(options, data_index) {
     /**
      * @TODO доделать fabcybox
      */
-    $div.data('fancybox-href','#quick');
+    $div.data('fancybox-href', '#quick');
     $div.hover(function () {
         showProductInfo(options);
     });
     $div.fancybox({
-        overlayColor : '#000'
+        overlayColor: '#000'
     });
     $owner.append($div);
 }
@@ -130,8 +130,51 @@ $(function () {
  * Отображение меню
  */
 $(function () {
-    $('.menu').click(function(){
+    $('.menu').click(function () {
         $('.b-panel-r').toggleClass('menu-visible');
         return false;
+    });
+});
+
+
+/**
+ * Выпадающее меню на странице товаров линии
+ */
+$(function () {
+    $(".app-rzd .b-rzd__menu .gallery").each(function () {
+        var visible = 7;
+        var circular = true;
+        if ($(this).find('li').size() < visible) {
+            visible = $(this).find('li').size();
+            circular = false;
+            $(this).find('> .nav').addClass('hidden');
+        }
+        $(this).parents('.b-carusel').addClass('preload-carusel');
+        $(this).jCarouselLite({
+            btnNext: $(this).find('> .nav .next')[0],
+            btnPrev: $(this).find('> .nav .prev')[0],
+            visible: visible,
+            circular: circular
+        });
+        $(this).parents('.b-carusel').removeClass('preload-carusel');
+    });
+
+    $(document).on('mouseleave', '.b-rzd__menu', function () {
+        //скрываем все меню
+        $('.b-rzd__menu .b-carusel').addClass('hidden');
+    });
+    $(document).on('mouseenter', '.show_childs', function () {
+        //отображаем дочерние элементы  выбранного пункта меню
+
+        var object_type = $(this).attr('object_type');
+        var object_id = $(this).attr('object_id');
+        var hide_level = $(this).attr('hide_level');
+
+        $(this).siblings().removeClass('active');
+        //т.к. из-за листалки у нас будет несколько клонгов элемента, то отметим их все активными
+        $(this).parent().find('[object_type="' + object_type + '"][object_id="' + object_id + '"]').addClass('active');
+
+        $('.' + hide_level).addClass('hidden');
+        $('div[parent_type="' + object_type + '"][parent_id="' + object_id + '"]').removeClass('hidden');
     });
 });

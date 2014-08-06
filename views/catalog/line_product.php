@@ -70,84 +70,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div>линия <span>Gessi Mimi</span></div>
     </div>
 
-    <ul class="b-rzd__menu">
-        <li class="parent">
-            <a class="parent-link" href="">Категории</a>
-            <ul class="child-items">
-                <?php foreach ($categories as $category): ?>
-                    <li class="child-item">
-                        <?php if ($category->getChilds()->count() > 0): ?>
-                            <span class="child-link" href="">
-                               <div><img src="/images/tv1.jpg"></div>
-                                <?= $category->name; ?>
-                           </span>
-                            <ul>
-                                <?php foreach ($category->childs as $child): ?>
-                                    <li>
-                                        <a href="">
-                                            <div><img src="/images/tv2.jpg"></div>
-                                            <?= $child->name; ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                            <div class="nav">
-                                <span></span>
-                                <span class="active"></span>
-                            </div>
-                        <?php else: ?>
-                            <a class="child-link" href="">
-                                <div><img src="/images/tv2.jpg"></div>
-                                <?= $category->name; ?>
-                            </a>
-                        <?php endif; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <div class="nav">
-                <span></span>
-                <span class="active"></span>
-            </div>
-        </li>
-        <li class="parent">
-            <a class="parent-link" href="">Коллекции</a>
-            <ul class="child-items">
-                <?php foreach ($collections as $collection): ?>
-                    <li class="child-item">
-                        <?php if ($collection->getChilds()->count() > 0): ?>
-                            <span class="child-link" href="">
-                               <div><img src="/images/tv1.jpg"></div>
-                                <?= $collection->name; ?>
-                           </span>
-                            <ul>
-                                <?php foreach ($collection->childs as $child): ?>
-                                    <li>
-                                        <a href="">
-                                            <div><img src="/images/tv2.jpg"></div>
-                                            <?= $child->name; ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                            <div class="nav">
-                                <span></span>
-                                <span class="active"></span>
-                            </div>
-                        <?php else: ?>
-                            <a class="child-link" href="">
-                                <div><img src="/images/tv2.jpg"></div>
-                                <?= $collection->name; ?>
-                            </a>
-                        <?php endif; ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <div class="nav">
-                <span></span>
-                <span class="active"></span>
-            </div>
-        </li>
-    </ul>
+
+    <?php
+    echo $this->render('/catalog/_line_product_menu', array(
+        'categories' => $categories,
+        'collections' => $collections,
+    ));
+    ?>
 
     <ul class="b-rzd__items">
         <?php $big_count = 0; ?>

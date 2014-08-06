@@ -19,10 +19,10 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/reset.css',
-        'css/site.css',
         'css/gessi.css',
         'css/demoStyleSheet.css',
         'css/jquery.selectbox.css',
+        'css/site.css',
 //        'css/jquery.fancybox-1.3.4.css',
     ];
     public $js = [

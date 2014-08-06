@@ -75,6 +75,9 @@ class CatalogController extends ThemedController
         $products = $query->all();
 
         $category_ids = LineCategory::categoryIdsByLine($line->id);
+        /**
+         * @TODO проверить рекурсию в категориях
+         */
         $categories = Category::find()
             ->joinWith(['childs' => function ($q) use ($category_ids) {
                     //т.к. условие добавляется в общее where, то выберем детей из категорий в линии

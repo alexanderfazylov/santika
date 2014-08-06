@@ -22,6 +22,7 @@ use yii\helpers\Inflector;
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
+ * @property integer $photo_id
  *
  * @property integer[] $line_ids
  * @property integer[] $old_line_ids
@@ -31,6 +32,7 @@ use yii\helpers\Inflector;
  * @property Shop $shop
  * @property LineCategory[] $lineCategories
  * @property Product[] $products
+ * @property Upload $photo
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -38,6 +40,8 @@ class Category extends \yii\db\ActiveRecord
     public $line_ids = [];
     public $old_line_ids = [];
     public $parent_name;
+    public $photo_tmp;
+    public $photo_name;
 
     /**
      * @inheritdoc
@@ -54,9 +58,9 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'url'], 'required'],
-            [['shop_id', 'parent_id', 'sort'], 'integer'],
+            [['shop_id', 'parent_id', 'sort', 'photo_id'], 'integer'],
             [['name', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
-            [['line_ids'], 'safe']
+            [['line_ids', 'photo_tmp', 'photo_name'], 'safe']
         ];
     }
     /**
@@ -82,12 +86,26 @@ class Category extends \yii\db\ActiveRecord
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
+            'photo.fileShowLink' => 'Фото',
+            'photo_id' => 'Фото',
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            'fileSaveBehavior' => [
+                'class' => 'app\behaviors\FileSaveBehavior',
+            ]
+        ];
+    }
 
     public function beforeValidate()
     {
+        /**
+         * @TODO при поиске в админке выполняются эти функции., мб придумать что то другое?
+         */
+        $this->saveFileFromAttribute('photo', Upload::TYPE_PRODUCT);
         $this->url = Inflector::slug($this->name);
         return parent::beforeValidate();
     }
@@ -216,6 +234,14 @@ class Category extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhoto()
+    {
+        return $this->hasOne(Upload::className(), ['id' => 'photo_id']);
     }
 
     /**

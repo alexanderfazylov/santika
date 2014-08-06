@@ -21,14 +21,19 @@ use yii\helpers\Url;
  * @property string $meta_description
  * @property string $meta_keywords
  * @property integer $parent_id
+ * @property integer $photo_id
  *
  * @property Collection $parent
  * @property Collection[] $childs
  * @property Shop $shop
  * @property Product[] $products
+ * @property Upload $photo
  */
 class Collection extends \yii\db\ActiveRecord
 {
+    public $photo_tmp;
+    public $photo_name;
+
     /**
      * @inheritdoc
      */
@@ -44,9 +49,10 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort', 'parent_id'], 'integer'],
+            [['shop_id', 'sort', 'parent_id', 'photo_id'], 'integer'],
             [['parent_id'], 'checkParentId'],
-            [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255]
+            [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [['photo_tmp', 'photo_name'], 'safe']
         ];
     }
 
@@ -83,11 +89,26 @@ class Collection extends \yii\db\ActiveRecord
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
+            'photo.fileShowLink' => 'Фото',
+            'photo_id' => 'Фото',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'fileSaveBehavior' => [
+                'class' => 'app\behaviors\FileSaveBehavior',
+            ]
         ];
     }
 
     public function beforeValidate()
     {
+        /**
+         * @TODO при поиске в админке выполняются эти функции., мб придумать что то другое?
+         */
+        $this->saveFileFromAttribute('photo', Upload::TYPE_PRODUCT);
         $this->url = Inflector::slug($this->name);
         return parent::beforeValidate();
     }
@@ -151,7 +172,15 @@ class Collection extends \yii\db\ActiveRecord
     public function getChilds()
     {
         return $this->hasMany(Collection::className(), ['parent_id' => 'id'])
-             ->from(self::tableName() . ' AS child');
+            ->from(self::tableName() . ' AS child');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhoto()
+    {
+        return $this->hasOne(Upload::className(), ['id' => 'photo_id']);
     }
 
     /**
