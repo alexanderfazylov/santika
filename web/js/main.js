@@ -166,6 +166,7 @@ $(function () {
     $(document).on('mouseleave', '.b-rzd__menu', function () {
         //скрываем все меню
         $('.b-rzd__menu .b-carusel').addClass('hidden');
+        $('.b-rzd__menu .active').removeClass('active');
     });
     $(document).on('mouseenter', '.b-rzd__menu li', function () {
         //отображаем дочерние элементы  выбранного пункта меню

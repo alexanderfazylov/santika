@@ -172,6 +172,42 @@ a.desc:after {
     top: 0px;
 }
 
+.app-rzd .b-rzd__menu .parents {
+    border-bottom: 1px solid #000;
+}
+
+.app-rzd .b-rzd__menu .parents li.active {
+    border-left: 1px solid #967b6a;
+    border-right: 1px solid #967b6a;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.app-rzd .b-rzd__menu .b-carusel {
+    overflow: unset !important;
+}
+
+.app-rzd .b-rzd__menu .gallery {
+    overflow: unset !important;
+    height: 129px;
+    border-bottom: 1px solid #000;
+}
+
+.app-rzd .b-rzd__menu .gallery li.active {
+}
+
+.app-rzd .b-rzd__menu .gallery li.active.has_childs {
+    background-color: #fff;
+    height: 230px !important;
+    border-left: 1px solid #967b6a;
+    border-right: 1px solid #967b6a;
+    box-sizing: border-box;
+}
+
+.app-rzd .b-rzd__menu .b-carusel .nav {
+    z-index: 4;
+}
+
 /**
 * Страница с товарами линии КОНЕЦ
 */
