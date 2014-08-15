@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\scopes\ProductScope;
+use dosamigos\transliterator\TransliteratorHelper;
 use Yii;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
@@ -149,7 +150,7 @@ class Product extends \yii\db\ActiveRecord
         $this->saveFileFromAttribute('drawing', Upload::TYPE_PRODUCT);
         $this->saveFileFromAttribute('manual', Upload::TYPE_PRODUCT);
 
-        $this->url = Inflector::slug($this->name);
+        $this->url = Inflector::slug(TransliteratorHelper::process($this->name));
         return parent::beforeValidate();
     }
 

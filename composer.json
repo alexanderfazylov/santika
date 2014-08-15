@@ -19,8 +19,9 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "yiidoc/yii2-chosen": "*",
-        "2amigos/yii2-file-upload-widget" : "*",
-        "2amigos/yii2-date-picker-widget" : "*",
+        "2amigos/yii2-file-upload-widget": "*",
+        "2amigos/yii2-date-picker-widget": "*",
+        "2amigos/yii2-transliterator-helper": "*",
         "yiisoft/yii2-jui": "*",
         "phpoffice/phpexcel": "dev-develop",
         "newerton/yii2-fancybox": "dev-master"
