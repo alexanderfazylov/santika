@@ -115,7 +115,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
         <a href="<?= $line->createUrl(); ?>"
            class="<?= ($key % 2 == 0) ? 'b-catalog__item--left' : 'b-catalog__item--right'; ?>">
             <div class="b-catalog__item__image">
-                <?php $src = !empty($line->photo_id) ? $line->photo->getFileShowUrl(false) : Upload::defaultFileUrl(true) ?>
+                <?php $src = !empty($line->photo_id) ? $line->photo->getFileShowUrl(Upload::SIZE_RECTANGLE_600_450) : Upload::defaultFileUrl(Upload::SIZE_RECTANGLE_600_450) ?>
                 <img src="<?= $src; ?>">
             </div>
 

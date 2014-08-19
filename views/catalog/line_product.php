@@ -82,7 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $big_count = 0; ?>
         <?php $small_count = 0; ?>
         <?php foreach ($products as $key => $product): ?>
-            <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
             <?php
             //рисуем 4 маленьких и 2 больших товара
             if ($small_count == 4) {
@@ -98,6 +97,8 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             ?>
             <li class="b-rzd__item <?= $big ? 'big' : '' ?>">
+                <?php $size = ($big ? Upload::SIZE_SQUARE_510 : Upload::SIZE_SQUARE_245); ?>
+                <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl($size) : Upload::defaultFileUrl($size) ?>
                 <div class="image"> <?= Html::a(Html::img($src), $product->createUrlByLine($line->url)); ?></div>
                 <div class="descr">
                     <span><?= 'Art. ' . $product->article; ?></span>

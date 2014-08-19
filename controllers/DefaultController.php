@@ -41,12 +41,12 @@ class DefaultController extends Controller
         readfile($path);
     }
 
-    public function actionFileShow($id, $thumbnail = false)
+    public function actionFileShow($id, $size = Upload::SIZE_ORIGIN)
     {
         $upload = Upload::findOne($id);
         $path = null;
         if (!is_null($upload)) {
-            $path = $upload->getFilePath($thumbnail);
+            $path = $upload->getFilePath($size);
         }
         if (is_null($path) || !file_exists($path) || !is_file($path)) {
             //если нет файла, то вернем картинку по умолчанию

@@ -161,7 +161,7 @@ class ShowWithController extends AdminController
                     'id' => $show_with->id,
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'photo' => !empty($product->photo_id) ? $product->photo->getFileShowUrl() : Upload::defaultFileUrl(),
+                    'photo' => !empty($product->photo_id) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(),
                     'type' => $type,
                     'object_id' => $object_id,
                 ];
@@ -234,7 +234,7 @@ class ShowWithController extends AdminController
                     'id' => $show_with->id,
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'photo' => !empty($product->photo_id) ? $product->photo->getFileShowUrl() : Upload::defaultFileUrl(),
+                    'photo' => !empty($product->photo_id) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(),
                     'type' => $show_with->type,
                     'object_id' => $show_with->object_id,
                 ];

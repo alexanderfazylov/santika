@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'article' => $ip->product->article,
                 'lwh' => $ip->product->getLwh(),
                 'color' => !empty($ip->product->color_id) ? $ip->product->color->name : '',
-                'photo' => !empty($ip->product->photo) ? $ip->product->photo->getFileShowUrl(true) : '',
+                'photo' => !empty($ip->product->photo) ? $ip->product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : '',
                 'link' => $ip->product->createUrlByLine($line->url),
                 'price' => '100 р.',
             ];

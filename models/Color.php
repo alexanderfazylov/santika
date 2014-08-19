@@ -147,12 +147,12 @@ class Color extends \yii\db\ActiveRecord
 
     /**
      * Возвращает url на файл или миниатюру
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public function getFileShowUrl($thumbnail = false)
+    public function getFileShowUrl($size = Upload::SIZE_ORIGIN)
     {
-        return !is_null($this->upload_id) ? $this->upload->getFileShowUrl($thumbnail) : Upload::defaultFileUrl($thumbnail);
+        return !is_null($this->upload_id) ? $this->upload->getFileShowUrl($size) : Upload::defaultFileUrl($size);
     }
 
 }
