@@ -64,7 +64,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
                 <div class="b-catalog__filter__select">
                     <?=
                     Html::dropDownList('line_url', null, ArrayHelper::map($lines, 'url', 'name'), [
-                        'prompt' => 'Линия товаров',
+                        'prompt' => 'Все линии',
                         'class' => 'form-control',
                         'id' => 'line_url',
                     ]); ?>
@@ -76,7 +76,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
                      * @TODO подгрузка данных ajax-ом по линии
                      */
                     Html::dropDownList('category_url', null, ArrayHelper::map($categories, 'url', 'name'), [
-                        'prompt' => 'Категория',
+                        'prompt' => 'Все категории',
                         'class' => 'form-control',
                         'id' => 'category_url'
                     ]); ?>
@@ -84,7 +84,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
                 <div class="b-catalog__filter__select">
                     <?=
                     Html::dropDownList('collection_url', null, ArrayHelper::map($collections, 'url', 'name'), [
-                        'prompt' => 'Коллекция',
+                        'prompt' => 'Все коллекции',
                         'class' => 'form-control',
                         'id' => 'collection_url'
                     ]); ?>

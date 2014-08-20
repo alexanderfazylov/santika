@@ -46,8 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'name',
             [
-                'attribute' => 'is_published',
-                'filter' => [1 => 'Да', 0 => 'Нет']
+                'attribute' => 'is_promotion',
+                'filter' => [1 => 'Да', 0 => 'Нет'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                        return Html::checkbox("product-is_promotion[{$model->id}]", $model->is_promotion, ['class' => 'product-is_promotion', 'data-product_id' => $model->id]);
+                    }
             ],
             // 'color_id',
             // 'drawing_id',
