@@ -1,21 +1,21 @@
 @font-face {
     font-family: 'helveticaneuecyrmedium';
-    src: url('../fonts/helveticaneuecyr-medium-webfont.eot');
-    src: url('../fonts/helveticaneuecyr-medium-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/helveticaneuecyr-medium-webfont.woff') format('woff'), url('../fonts/helveticaneuecyr-medium-webfont.ttf') format('truetype');
+    src: url('/fonts/helveticaneuecyr-medium-webfont.eot');
+    src: url('/fonts/helveticaneuecyr-medium-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/helveticaneuecyr-medium-webfont.woff') format('woff'), url('/fonts/helveticaneuecyr-medium-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'helveticaneuecyrthin';
-    src: url('../fonts/helveticaneuecyr-thin-webfont.eot');
-    src: url('../fonts/helveticaneuecyr-thin-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/helveticaneuecyr-thin-webfont.woff') format('woff'), url('../fonts/helveticaneuecyr-thin-webfont.ttf') format('truetype');
+    src: url('/fonts/helveticaneuecyr-thin-webfont.eot');
+    src: url('/fonts/helveticaneuecyr-thin-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/helveticaneuecyr-thin-webfont.woff') format('woff'), url('/fonts/helveticaneuecyr-thin-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'helveticaneuecyrlight';
-    src: url('../fonts/helveticaneuecyr-light-webfont.eot');
-    src: url('../fonts/helveticaneuecyr-light-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/helveticaneuecyr-light-webfont.woff') format('woff'), url('../fonts/helveticaneuecyr-light-webfont.ttf') format('truetype');
+    src: url('/fonts/helveticaneuecyr-light-webfont.eot');
+    src: url('/fonts/helveticaneuecyr-light-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/helveticaneuecyr-light-webfont.woff') format('woff'), url('/fonts/helveticaneuecyr-light-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -161,7 +161,7 @@ body {
     max-width: 100%;
 }
 .b-carusel li .descr {
-    display: none;
+    visibility: hidden;
     font-size: 1.4rem;
     line-height: 2.4rem;
 }
@@ -171,7 +171,7 @@ body {
     color: #967b6a;
 }
 .b-carusel li:hover .descr {
-    display: block;
+    visibility: visible;
 }
 .b-carusel .nav {
     position: absolute;
@@ -953,36 +953,41 @@ body {
 }
 .app-rzd .b-rzd__items {
     max-width: 1440px;
-    margin: 0 auto;
+    text-align: justify;
+    margin: -2px auto 0;
 }
 .app-rzd .b-rzd__items li {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
-    padding: 0 15px;
-    margin-bottom: 50px;
+    padding: 100px 10px 0;
     display: inline-block;
-    position: relative;
     width: 24%;
-    height: 340px;
-    padding-top: 255px;
+    max-width: 320px;
     line-height: 1rem;
     vertical-align: top;
 }
+.app-rzd .b-rzd__items li:before {
+    content: "";
+    display: block;
+    position: absolute;
+    margin-top: -100px;
+    left: 0;
+    right: 0;
+    border-bottom: #f7efe9 1px solid;
+}
 .app-rzd .b-rzd__items li.big {
-    padding: 465px 50px 0;
+    padding: 100px 10px 0;
     width: 49%;
-    height: 550px;
-    max-width: 700px;
+    max-width: 640px;
 }
 .app-rzd .b-rzd__items li.big div.image {
-    max-height: 590px !important;
-    max-width: 590px !important;
+    max-height: 620px !important;
+    max-width: 620px !important;
 }
 .app-rzd .b-rzd__items li:hover .descr {
-    display: block;
+    visibility: visible;
 }
 .app-rzd .b-rzd__items li div.image {
-    position: absolute;
     text-align: center;
     bottom: 100px;
     max-width: 300px;
@@ -994,7 +999,8 @@ body {
     max-height: 100%;
 }
 .app-rzd .b-rzd__items li .descr {
-    display: none;
+    visibility: hidden;
+    height: 100px;
     font-size: 1.4rem;
     line-height: 1.8rem;
     text-align: center;

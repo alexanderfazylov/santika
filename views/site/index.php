@@ -56,7 +56,7 @@ $this->title = $shop->name;
         <div class="gallery">
             <ul>
                 <?php foreach ($products as $product): ?>
-                    <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
+                    <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
                     <li>
                         <div class="image"> <?= Html::a(Html::img($src), $product->canonical); ?></div>
                         <div class="descr">

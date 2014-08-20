@@ -15,6 +15,7 @@ use yii\helpers\Url;
  * @property string $path
  * @property string $ext
  * @property string $thumbnail
+ * @property string $file_name
  * @property integer $type
  */
 class Upload extends \yii\db\ActiveRecord
@@ -25,6 +26,12 @@ class Upload extends \yii\db\ActiveRecord
     const TYPE_INTERACTIVE = 3;
     const TYPE_PRICE = 4;
     const TYPE_LINE = 5;
+
+    const SIZE_ORIGIN = '';
+    const SIZE_SQUARE_245 = 'square_245';
+    const SIZE_SQUARE_300 = 'square_300';
+    const SIZE_SQUARE_510 = 'square_510';
+    const SIZE_RECTANGLE_600_450 = 'rectangle_600_450';
 
     /**
      * @inheritdoc
@@ -87,13 +94,13 @@ class Upload extends \yii\db\ActiveRecord
 
     /**
      * папка для загрузки времнных файдов
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public static function getTmpUploadsPath($thumbnail = false)
+    public static function getTmpUploadsPath($size = Upload::SIZE_ORIGIN)
     {
         $upload_dir = self::getUploadsPath();
-        $upload_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP, $thumbnail);
+        $upload_folder = Upload::getUploadsPathByType(Upload::TYPE_TMP, $size);
         $upload_tmp = $upload_dir . $upload_folder;
 
         return $upload_tmp;
@@ -102,10 +109,10 @@ class Upload extends \yii\db\ActiveRecord
     /**
      * Папка по типу файла
      * @param int $type
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public static function getUploadsPathByType($type = self::TYPE_PRODUCT, $thumbnail = false)
+    public static function getUploadsPathByType($type = self::TYPE_PRODUCT, $size = Upload::SIZE_ORIGIN)
     {
         $upload_dir = self::getUploadsPath();
         $sub_dir = static::getDirByType($type);
@@ -115,8 +122,8 @@ class Upload extends \yii\db\ActiveRecord
             mkdir($full_path, 0777);
         }
 
-        if ($thumbnail) {
-            $path .= 'thumbnail' . DIRECTORY_SEPARATOR;
+        if ($size) {
+            $path .= $size . DIRECTORY_SEPARATOR;
             $full_path = $upload_dir . $path;
             if (!file_exists($full_path) && !is_dir($full_path)) {
                 mkdir($full_path, 0777);
@@ -176,38 +183,35 @@ class Upload extends \yii\db\ActiveRecord
 
     /**
      * Возвращает ссылку на файл или миниатюру
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public function getFileShowLink($thumbnail = false)
+    public function getFileShowLink($size = Upload::SIZE_ORIGIN)
     {
-        return Html::a($this->name, $this->getFileShowUrl($thumbnail));
+        return Html::a($this->name, $this->getFileShowUrl($size));
     }
 
     /**
      * Возвращает url на файл или миниатюру
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public function getFileShowUrl($thumbnail = false)
+    public function getFileShowUrl($size = Upload::SIZE_ORIGIN)
     {
-        return Url::to(['/default/file-show', 'id' => $this->id, 'thumbnail' => $thumbnail]);
+        return Url::to(['/default/file-show', 'id' => $this->id, 'size' => $size]);
     }
 
     /**
      * Возвращает физический путь к файлу
-     * @param bool $thumbnail
+     * @param string $size
      * @return string
      */
-    public function getFilePath($thumbnail = false)
+    public function getFilePath($size = Upload::SIZE_ORIGIN)
     {
         $uploads_dir = Upload::getUploadsPath();
-        if ($thumbnail) {
-            $path = $uploads_dir . $this->thumbnail;
-        } else {
-            $path = $uploads_dir . $this->path;
-        }
-        return addslashes($path);
+        $path = static::getUploadsPathByType($type = $this->type, $size);
+        $abs_path = $uploads_dir . $path . $this->file_name;
+        return addslashes($abs_path);
     }
 
     /**
@@ -232,10 +236,39 @@ class Upload extends \yii\db\ActiveRecord
 
     /**
      * Возвращает ссылку на картинку по умолчанию
+     * @param string $size
      * @return string
      */
-    public static function defaultFileUrl($thumbnail = 1)
+    public static function defaultFileUrl($size = Upload::SIZE_ORIGIN)
     {
-        return Url::toRoute(['/default/file-show', 'id' => 0, 'thumbnail' => $thumbnail]);
+        return Url::toRoute(['/default/file-show', 'id' => 0, 'size' => $size]);
+    }
+    public function isFileExist(){
+        $file_path = $this->getFilePath();
+        return file_exists($file_path);
+    }
+
+    /**
+     * @TODO доделать описение, возврщать все типы? проверить миграцию
+     */
+    public static function getAllTypes()
+    {
+        return [
+            static::TYPE_LINE,
+            static::TYPE_PRODUCT,
+            static::TYPE_PRICE,
+            static::TYPE_COLOR,
+            static::TYPE_INTERACTIVE,
+        ];
+    }
+
+    public static function getAllSizes()
+    {
+        return [
+            static::SIZE_SQUARE_245,
+            static::SIZE_SQUARE_300,
+            static::SIZE_SQUARE_510,
+            static::SIZE_RECTANGLE_600_450,
+        ];
     }
 }

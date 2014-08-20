@@ -18,6 +18,7 @@ use app\models\Line;
 use app\models\PhotoGallery;
 use app\models\PriceProduct;
 use app\models\Product;
+use app\models\Upload;
 use dosamigos\gallery\Carousel;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -53,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
         foreach ($product->photoGalleries as $photo_gallery) {
             $items[] = [
 //                'title' => $product->name,
-                'href' => $photo_gallery->upload->getFileShowUrl(),
+                'href' => $photo_gallery->upload->getFileShowUrl(Upload::SIZE_SQUARE_510),
             ];
         }
         ?>
@@ -89,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach ($product->productColors as $product_color) : ?>
                         <?php ?>
                         <img
-                            src="<?= $product_color->color->getFileShowUrl(true) ?>"> <?= $product_color->color->article ?> <?= $product_color->color->name ?>
+                            src="<?= $product_color->color->getFileShowUrl(Upload::SIZE_SQUARE_245) ?>"> <?= $product_color->color->article ?> <?= $product_color->color->name ?>
                         <br>
                     <?php endforeach; ?>
                     <?php //$colors = ArrayHelper::map($product->productColors, 'color_id', 'color.name'); ?>
@@ -176,7 +177,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($other_products as $other_product) : ?>
                     <li>
                         <div class="image">
-                            <img src="<?= $other_product->photo->getFileShowUrl(true); ?>" alt=""/>
+                            <img src="<?= $other_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>" alt=""/>
                         </div>
                         <div class="descr">
                             <span><?= 'ART. ' . $other_product->article; ?></span>

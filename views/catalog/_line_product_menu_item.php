@@ -29,7 +29,7 @@ use app\models\Upload;
                         hide_level="<?= 'level' . ($level + 1) ?>"
                         >
                         <a href="">
-                            <?php $src = !empty($model->photo_id) ? $model->photo->getFileShowUrl(true) : Upload::defaultFileUrl(true) ?>
+                            <?php $src = !empty($model->photo_id) ? $model->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
                             <div><img src="<?= $src; ?>"></div>
                             <?= $model->name; ?>
                         </a>

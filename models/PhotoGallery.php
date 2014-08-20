@@ -95,7 +95,7 @@ class PhotoGallery extends \yii\db\ActiveRecord
     public function renderSortItem()
     {
         $html = '';
-        $html .= Html::img($this->upload->getFileShowUrl(true));
+        $html .= Html::img($this->upload->getFileShowUrl(Upload::SIZE_SQUARE_245));
         $html .= Html::a('Удалить', '#', ['class' => 'delete-photo_gallery']);
 
         $html = Html::tag('div', $html, ['photo_gallery-id' => $this->id, 'sort' => $this->sort]);
