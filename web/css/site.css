@@ -216,15 +216,15 @@ a.desc:after {
 * Общийе стили для листалки НАЧАЛО
 */
 
-.b-carusel {
+.b-rzd__menu .b-carusel {
     padding: 0 !important;
 }
 
-.b-carusel .gallery {
+.b-rzd__menu .b-carusel .gallery {
     padding: 0 0 100px;
 }
 
-.b-carusel li {
+.b-rzd__menu .b-carusel li {
     margin: 0;
 }
 
