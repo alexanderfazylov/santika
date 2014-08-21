@@ -145,5 +145,14 @@ class Color extends \yii\db\ActiveRecord
         return new ColorScope(get_called_class());
     }
 
+    /**
+     * Возвращает url на файл или миниатюру
+     * @param string $size
+     * @return string
+     */
+    public function getFileShowUrl($size = Upload::SIZE_ORIGIN)
+    {
+        return !is_null($this->upload_id) ? $this->upload->getFileShowUrl($size) : Upload::defaultFileUrl($size);
+    }
 
 }

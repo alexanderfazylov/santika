@@ -459,3 +459,29 @@ function displayShowWith(data) {
 /**
  * Функционал для отображение товара на странице с ... КОНЕЦ
  */
+
+/**
+ * Функционал сменеы отображать на главной странице товар начало
+ */
+$(document).on('click', '.product-index .product-is_promotion', function () {
+    var product_id = $(this).data('product_id');
+    var is_promotion = $(this).is(':checked') ? 1 : 0;
+    $.ajax({
+        url: '/admin/product/change-is-promotion',
+        type: "POST",
+        dataType: "json",
+        data: {
+            product_id: product_id,
+            is_promotion: is_promotion
+        },
+        success: function (data) {
+            if (data.status == 'success') {
+            } else {
+                alertMessages(data);
+            }
+        }
+    });
+});
+/**
+ * Функционал сменеы отображать на главной странице товар КОНЕЦ
+ */

@@ -9,6 +9,7 @@
 namespace app\models\scopes;
 
 
+use app\models\Category;
 use yii\db\ActiveQuery;
 
 class CategoryScope extends ActiveQuery
@@ -19,7 +20,7 @@ class CategoryScope extends ActiveQuery
      */
     public function byShop($shop_id)
     {
-        $this->andWhere(['shop_id' => $shop_id]);
+        $this->andWhere([Category::tableName() . '.shop_id' => $shop_id]);
         return $this;
     }
 
@@ -30,6 +31,15 @@ class CategoryScope extends ActiveQuery
     public function byUrl($url)
     {
         $this->andWhere(['url' => $url]);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function isParent()
+    {
+        $this->andWhere([Category::tableName() . '.parent_id' => null]);
         return $this;
     }
 } 

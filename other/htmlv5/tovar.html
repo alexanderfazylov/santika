@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title></title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="style.css" rel="stylesheet">
+    <link href="css.css" rel="stylesheet">
+    <link rel="stylesheet" href="jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="demoStyleSheet.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("a.pop").fancybox({
+                overlayColor : '#000'
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="js/jcarousellite.js"></script>
+
+    <script type="text/javascript">
+        jQuery(function(){
+            jQuery(".gallery").jCarouselLite({
+                btnNext: ".next",
+                btnPrev: ".prev",
+                visible: 5
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="js/fadeSlideShow.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('#slideshow').fadeSlideShow({
+                height: 460,
+                interval: 9000,
+                autoplay: true
+            });
+        });
+    </script>
+
+
+
+</head>
+
+<body class="app-product">
+
+<div class="wrapper">
+
+    <header class="header">
+        <span class="logo"></span>
+        <span class="dealer">Официальный дилер</span>
+        <div class="b-top-bar">
+            <a class="notepad" href="">Блокнот (21)</a>
+            <a class="menu" href="">меню</a>
+        </div>
+    </header><!-- .header-->
+
+    <div class="b-panel-r">
+        <ul class="b-menu-right">
+            <li><a href="">Компания</a></li>
+            <li><a href="">проекты</a>
+                <ul>
+                    <li><a href="">Goccia</a></li>
+                    <li><a href="">Rettangolo</a></li>
+                    <li><a href="">Ovale</a></li>
+                    <li><a href="">Riflessi e Trasparenze</a></li>
+                    <li><a href="">Mimi</a></li>
+                </ul>
+            </li>
+            <li><a href="">Линии</a></li>
+            <li><a href="">Услуги и сервис</a></li>
+            <li><a href="">Дизайнерам</a></li>
+            <li><a href="">Регистрация</a></li>
+        </ul>
+        <div class="contacts">
+            +7 (843) 524 71 76<br>
+            info@gessi-promo.ru
+        </div>
+    </div>
+
+    <main class="content">
+
+        <div class="b-navigation">
+            <a href="" class="back">Вернуться назад<span>к коллекции</span></a>
+            <a href="" class="next">Следующий товар<span>Биде Goccia art. 39115</span></a>
+            <a href="" class="prev">Предыдущий товар<span>Смеситель Goccia art. 33607</span></a>
+        </div>
+
+        <div id="slideshowWrapper"  class="slider">
+            <ul id="slideshow">
+                <li>
+                    <img src="images/product1.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/product.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/product2.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/product.jpg" alt="" />
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="b-slider hidden">
+            <div id="slider" class="nivoSlider">
+                <img src="images/product.jpg" alt="" />
+                <img src="images/product1.jpg" alt="" />
+                <img src="images/product2.jpg" alt="" />
+                <img src="images/product1.jpg" alt="" />
+            </div>
+        </div>
+
+        <div class="b-product">
+            <div class="b-product__description">
+                <div class="b-product__name">Подвесной унитаз<br><span>Gessi GOCCIA</span></div>
+                <div class="b-product__article">Art. 39113</div>
+                <div class="b-product__size">
+                    <label>Д х Ш х В:</label>
+                    <span>54.0 х 35.5 х 39.7 см</span>
+                </div>
+                <div class="b-product__color">
+                    <label>Цвет:</label>
+                    <span><img src="i/color1.gif">031 Chrome<br>
+                        <img src="i/color2.gif">147 Brushed chrome
+                    </span></div>
+            </div>
+            <div class="b-product__price">
+                Стоимость<br>
+                <span class="new">43 742.19 р.</span>
+                <span class="old">47 990.00 р.</span>
+            </div>
+            <div class="b-links">
+                <a href="#note" class="pop">Добавить в блокнот</a>
+                <a href="" class="spec">Спецификация</a>
+                <a href="" class="spec">Инструкция по установке</a>
+                <a href="">Связаться с менеджером</a>
+            </div>
+        </div>
+
+        <div class="b-components">
+            <div class="title">Монтажные элементы<br>и комплектующие</div>
+            <ul>
+                <li>
+                    <img src="i/component1.jpg">
+                    <div class="descr">
+                        <a href="">Внешние части со встроенным
+                        изливом. Длина 150 мм.</a>
+                        <span class="art">Art. 33682</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="i/component2.jpg">
+                    <div class="descr">
+                        <a href="">Внутренний элемент для смесителя
+                        с изливом.</a>
+                        <span class="art">Art. 33682</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="b-producer">
+            <div class="b-producer__wrap">
+                <div class="b-producer__image">
+                    <img src="images/producer1.jpg" alt="" />
+                 </div>
+                <div class="b-producer__descr">
+                    <div class="title">Goccia</div>
+                    <p>Gessi унитаз настенного монтажа (6 литров) из белой керамики Bianco Europa, интегрированный
+                        сифон. Сиденье Soft-close (плавное опускание), с боковыми заглушками отверстий, включены
+                        в 031 отделке, 147 отделка доступна по запросу.</p>
+                    <p>Сантехника для ванной Gessi предлагает вам уникальный ассортимент дизайнерских
+                        продуктов для эстетов. Современные решения для ванной на все "случаи жизни".</p>
+                </div>
+            </div>
+            <img src="images/producer2.jpg" class="img" alt="" />
+            <img src="images/producer3.jpg" class="img" alt="" />
+            <img src="images/producer4.jpg" class="img" alt="" />
+        </div>
+
+        <div class="b-carusel">
+            <div class="title">
+                Сопутствующие товары<br>
+                Goccia
+            </div>
+            <div class="gallery">
+                <ul>
+                    <li>
+                        <div class="image"><img src="images/carusel1.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel2.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel1.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel3.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel1.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel1.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                    <li>
+                        <div class="image"><img src="images/carusel1.png" alt=""/></div>
+                        <div class="descr">
+                            <span>Art. 37513</span>
+                            Gessi унитаз подвесной (6 литров)из белой керамики Bianco Europa
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav">
+                <button class="prev"></button>
+                <button class="next"></button>
+            </div>
+        </div>
+
+        <div class="b-services">
+            <ul class="b-services__items">
+                <li class="b-services__item">
+                    <div class="b-services__item__wrap">
+                        <div class="b-services__item__title">Дизайн<br>и&nbsp;проектирование</div>
+                        <div class="b-services__item__descr">Бесплатный замер и&nbsp;дизайн-проект ванной комнаты</div>
+                    </div>
+                </li>
+                <li class="b-services__item">
+                    <div class="b-services__item__wrap">
+                        <div class="b-services__item__title">Установка<br>и&nbsp;монтаж</div>
+                        <div class="b-services__item__descr">Бесплатная установка и&nbsp;монтаж с&nbsp;гарантией</div>
+                    </div>
+                </li>
+                <li class="b-services__item">
+                    <div class="b-services__item__wrap">
+                        <div class="b-services__item__title">Сервисное<br>обслуживание</div>
+                        <div class="b-services__item__descr">Гарантийное обслуживание сантехники и&nbsp;смесителей</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </main><!-- .content -->
+
+</div><!-- .wrapper -->
+
+<footer class="footer">
+    <div class="copy">© 2014 Gessi</div>
+    <ul class="b-menu-foot">
+        <li><a href="">О компании</a></li>
+        <li><a href="">Услуги и сервис</a></li>
+        <li><a href="">Коллекции</a></li>
+        <li><a href="">Дизайнерам</a></li>
+    </ul>
+</footer><!-- .footer -->
+
+<div class="hidden">
+    <div id="note" class="popup note">
+        <div class="title">Добавить в блокнот</div>
+        <p>Выберите категорию, в которую необходимо добавить продукцию.<br>
+            Продукт также может быть добавлен в новую категорию.</p>
+        <input type="checkbox" id="default">
+        <label for="default" class="check">Категория по умолчанию</label>
+        <div class="category">
+            <label class="text">Название категории</label>
+            <input type="text" placeholder="Название категории">
+            <a href=""></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

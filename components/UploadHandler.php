@@ -12,6 +12,7 @@ namespace app\components;
  * http://www.opensource.org/licenses/MIT
  */
 
+use app\models\Upload;
 use stdClass;
 
 class UploadHandler
@@ -147,7 +148,36 @@ class UploadHandler
                     // dimensions and e.g. create square thumbnails:
                     //'crop' => true,
                     'max_width' => 80,
-                    'max_height' => 80
+                    'max_height' => 80,
+                    'no_cache' => true,
+                    'crop' => true,
+                ),
+                /**
+                 * @TODO вынести в $options?
+                 */
+                Upload::SIZE_SQUARE_245 => array(
+                    'max_width' => 245,
+                    'max_height' => 245,
+                    'no_cache' => true,
+                    'crop' => true,
+                ),
+                Upload::SIZE_SQUARE_300 => array(
+                    'max_width' => 300,
+                    'max_height' => 300,
+                    'no_cache' => true,
+                    'crop' => true,
+                ),
+                Upload::SIZE_SQUARE_510 => array(
+                    'max_width' => 510,
+                    'max_height' => 510,
+                    'no_cache' => true,
+                    'crop' => true,
+                ),
+                Upload::SIZE_RECTANGLE_600_450 => array(
+                    'max_width' => 600,
+                    'max_height' => 450,
+                    'no_cache' => true,
+                    'crop' => true,
                 )
             )
         );
@@ -1347,6 +1377,19 @@ class UploadHandler
             $response[$file_name] = $success;
         }
         return $this->generate_response($response, $print_response);
+    }
+
+    /**
+     * Пересоздает миниатюры для указанного файла
+     * @param string $file
+     */
+    public  function recreate_images($file)
+    {
+        foreach ($this->options['image_versions'] as $version => $options) {
+            if (!empty($version)) {
+                $this->create_scaled_image($file, $version, $options);
+            }
+        }
     }
 
 }

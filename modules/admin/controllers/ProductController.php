@@ -210,4 +210,22 @@ class ProductController extends AdminController
         }
         return ['status' => 'error', 'message' => 'Не корректный запрос'];
     }
+
+    public function actionChangeIsPromotion()
+    {
+        Yii::$app->response->format = 'json';
+        if (isset($_POST['product_id'])) {
+            $is_promotion = isset($_POST['is_promotion']) ? $_POST['is_promotion'] : false;
+            $product = Product::findOne($_POST['product_id']);
+            if (!is_null($product)) {
+                $product->is_promotion = $is_promotion;
+                if ($product->save()) {
+                    return ['status' => 'success'];
+                } else {
+                    return ['status' => 'error', 'message' => 'Ошибка сохранения'];
+                }
+            }
+        }
+        return ['status' => 'error', 'message' => 'Не корректный запрос'];
+    }
 }

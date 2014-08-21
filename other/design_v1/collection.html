@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title></title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="style.css" rel="stylesheet">
+    <link href="css.css" rel="stylesheet">
+    <link rel="stylesheet" href="jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="demoStyleSheet.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+
+    <script type="text/javascript" src="js/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("a.pop").fancybox({
+                overlayColor : '#000'
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript" src="js/fadeSlideShow.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('#slideshow').fadeSlideShow({
+                interval: 9000,
+                autoplay: true
+            });
+        });
+    </script>
+
+
+
+</head>
+
+<body class="app-collection">
+
+<div class="wrapper">
+
+    <header class="header">
+        <span class="logo"></span>
+        <span class="dealer">Официальный дилер</span>
+        <div class="b-top-bar">
+            <a class="notepad" href="">Блокнот (21)</a>
+            <a class="menu" href="">меню</a>
+        </div>
+    </header><!-- .header-->
+
+    <div class="b-panel-r">
+        <ul class="b-menu-right">
+            <li><a href="">Компания</a></li>
+            <li><a href="">проекты</a>
+                <ul>
+                    <li><a href="">Goccia</a></li>
+                    <li><a href="">Rettangolo</a></li>
+                    <li><a href="">Ovale</a></li>
+                    <li><a href="">Riflessi e Trasparenze</a></li>
+                    <li><a href="">Mimi</a></li>
+                </ul>
+            </li>
+            <li><a href="">Линии</a></li>
+            <li><a href="">Услуги и сервис</a></li>
+            <li><a href="">Дизайнерам</a></li>
+            <li><a href="">Регистрация</a></li>
+        </ul>
+        <div class="contacts">
+            +7 (843) 524 71 76<br>
+            info@gessi-promo.ru
+        </div>
+    </div>
+
+    <main class="content">
+
+        <div id="slideshowWrapper"  class="slider">
+            <img src="images/collection1.jpg" class="tst">
+            <ul id="slideshow">
+               <li>
+                    <img src="images/collection1.jpg" alt="" />
+                    <a href="#quick" class="pop" style="left: 35%; top:45%"></a>
+               </li>
+                <li>
+                    <img src="images/collection1.jpg" alt="" />
+                    <a href="#quick" class="pop" style="left: 35%; top:45%"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="b-collection__descr">
+            <div class="title">Mimi</div>
+            <div class="text">
+                Специально для любителей утонченных вещей, фабрика Gessi выпустила серию
+                аксессуаров для ванной комнаты, в число которых входят несколько смесителей.
+                Любую деталь интерьера дизайнеры Gessi могут с легкостью переосмыслить
+                и вынести ее под таким углом, что невольно восхищаешься их творческим
+                потенциалом.
+            </div>
+            <div class="text right">
+                Смесители Gessi Mimi не исключение. Лишь посмотрев на один из них, можно прийти
+                в восторг от красоты, вроде совсем непримечательной и обыденной, на первый взгляд
+                вещи. Вся конструкция очень изящна, грани отточены и миниатюрны.
+            </div>
+            <div class="all">
+                <a href="rzd.html" class="btn">Посмотреть всю коллекцию</a>
+            </div>
+        </div>
+
+
+    </main><!-- .content -->
+
+</div><!-- .wrapper -->
+
+<footer class="footer">
+    <div class="copy">© 2014 Gessi</div>
+    <ul class="b-menu-foot">
+        <li><a href="">О компании</a></li>
+        <li><a href="">Услуги и сервис</a></li>
+        <li><a href="">Коллекции</a></li>
+        <li><a href="">Дизайнерам</a></li>
+    </ul>
+</footer><!-- .footer -->
+
+<div class="hidden">
+    <div id="quick" class="popup quick">
+        <img src="images/quick1.jpg">
+        <div class="name">Встраиваемая сверху
+            или снизу раковина
+            без переполнения
+            и слива
+        </div>
+        <div class="article">art. 37505</div>
+        <div class="descr">
+            <div><span>Д х Ш х В:</span> 54.0 х 35.5 х 39.7 см</div>
+            <div><span>Цвет:</span> 518 White Europe Ceramic</div>
+            <div><span>Страна:</span> Италия</div>
+            <div><span>Монтаж:</span> Врезная</div>
+        </div>
+        <div class="text">
+            Встраиваемая сверху или снизу раковина из белой керамики Bianco
+            Europa без переполнения и сливом.
+        </div>
+        <div class="price">Стоимость<span>29 533.10 р.</span></div>
+        <a href="tovar.html" class="add">Дополнительная информация</a>
+    </div>
+</div>
+
+</body>
+</html>

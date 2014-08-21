@@ -54,6 +54,7 @@ class ProductScope extends ActiveQuery
     public function promotion()
     {
         $this->andWhere(['is_promotion' => 1]);
+        $this->limit(10);
         return $this;
     }
 

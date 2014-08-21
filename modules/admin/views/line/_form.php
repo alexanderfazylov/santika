@@ -24,6 +24,15 @@ use yii\widgets\ActiveForm;
 
 <!--    --><?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
 
+    <?php
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'photo',
+        'accept' => 'image/*'
+    ]);
+    ?>
+
     <?= $form->field($model, 'sort')->textInput() ?>
 
     <?= $form->field($model, 'meta_title')->textInput(['maxlength' => 255]) ?>

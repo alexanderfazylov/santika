@@ -29,6 +29,8 @@ use yii\helpers\Url;
  */
 class Line extends \yii\db\ActiveRecord
 {
+    public $photo_tmp;
+    public $photo_name;
     /**
      * @inheritdoc
      */
@@ -44,7 +46,7 @@ class Line extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort'], 'integer'],
+            [['shop_id', 'sort', 'photo_id'], 'integer'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255]
         ];
     }
@@ -62,15 +64,27 @@ class Line extends \yii\db\ActiveRecord
             'description' => 'Описание', //Yii::t('app', 'Description'),
             'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
             'url' => Yii::t('app', 'Url'),
+            'photo.fileShowLink' => 'Фото',
+            'photo_id' => 'Фото',
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            'fileSaveBehavior' => [
+                'class' => 'app\behaviors\FileSaveBehavior',
+            ]
+        ];
+    }
+
     public function beforeValidate()
     {
         $this->url = Inflector::slug($this->name);
+        $this->saveFileFromAttribute('photo', Upload::TYPE_LINE);
         return parent::beforeValidate();
     }
 
@@ -155,5 +169,13 @@ class Line extends \yii\db\ActiveRecord
     public static function listData($shop_id)
     {
         return ArrayHelper::map(static::find()->byShop($shop_id)->all(), 'id', 'name');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhoto()
+    {
+        return $this->hasOne(Upload::className(), ['id' => 'photo_id']);
     }
 }

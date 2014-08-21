@@ -164,12 +164,13 @@ class Product extends \yii\db\ActiveRecord
         return new ProductScope(get_called_class());
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
         if ($this->use_related_ids) {
             $this->saveLines();
             $this->saveColors();
         }
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function beforeDelete()
@@ -415,7 +416,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getLwh()
     {
-        return $this->length . 'x' . $this->width . 'x' . $this->height;
+        return $this->length . ' x ' . $this->width . ' x ' . $this->height ;
     }
 
 

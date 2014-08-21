@@ -1,0 +1,134 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#slideshowWrapper{position:relative;width:100%;}
+#slideshowWrapper:hover #fssPrev, #slideshowWrapper:hover #fssNext{ display:block;}
+#fssPrev, #fssNext, #fssPlayPause{ display:none; position:absolute;
+    top:50%;
+    left:10px;
+    margin-top:-57px;
+    width:13px;
+    height:114px;
+    text-indent:-9999px;
+}
+#fssNext {
+    right:10px;
+    left:auto;
+    background-position:right top;
+}
+
+
+ul#slideshow {list-style:none;margin:0;width:1000px;height:264px;overflow:hidden;}
+ul#slideshow li {background-color:#ffffff; position:relative; zoom:1; width: 100% !important; text-align: center}
+#fssList{list-style:none;
+    position:absolute;
+    overflow: hidden;
+    z-index:1000;
+}
+#fssList li{display:inline-block;
+    zoom:1;
+    *display:inline;
+    vertical-align:middle;
+    position:relative;
+    margin-right:6px;
+}
+#fssList li a{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    position: relative;
+    margin-right: 3px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-indent: -1000px;
+    cursor:pointer;
+}
+#fssList li a:before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: #967b6a;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+
+}
+#fssList li.fssActive a{ border: #967b6a 1px solid; position:relative;
+}
+
+#top{background:#3b5998;width:100%;height:40px;margin-bottom:20px;}
+#top h1{color:#fff;font-weight:normal;font-size:18px;padding:7px 0 0 15px}
+#top h1 span{font-size:11px;}
+#top h1 a{text-decoration:underline;color:#fff;}
+#top h1 a:hover{text-decoration:none;}
+
+small a{color:#000;}
+
+
+.advant {
+    position:relative;
+    margin-bottom:40px;
+}
+.advant .im_adv {
+    display:block;
+    width:463px;
+    height:262px;
+    position:absolute;
+    left: 0;
+    top:0;
+    overflow:hidden;
+}
+.advant .im_adv span {
+    display:block;
+    width:463px;
+    height:262px;
+    position:absolute;
+    left: 0;
+    top:0;
+}
+.advant h4 {
+    font-size:30px;
+    position:absolute;
+    right:0;
+    top:15px;
+    z-index:1000;
+    color:#454545;
+    font-family:Trebuchet MS;
+}
+.advant li div {
+    width:440px;
+    position:absolute;
+    top:60px;
+    right:0;
+    background-color:#FFFFFF;
+    border:#c1c1c1 2px solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    behavior: url(PIE.htc);
+    padding:25px;
+    color:#292929;
+    font-size:20px;
+    line-height:1.2;
+}
+.advant li div img {
+    position:absolute;
+    bottom:0;
+    left:-28px;
+}
+.advant p.more {
+    border-bottom:#a0a0a0 1px solid;
+    text-align:right;
+    height:9px;
+    position:absolute;
+    width:490px;
+    right:0;
+    top:195px;
+}
+.advant p.more a {
+    padding:0 15px 0 8px;
+    font-size:13px;
+    color:#313131;
+}

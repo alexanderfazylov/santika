@@ -106,7 +106,7 @@ class Price extends \yii\db\ActiveRecord
         return parent::beforeValidate();
     }
 
-    public function afterSave($insert)
+    public function afterSave($insert, $changedAttributes)
     {
         /**
          * @TODO доп проверки на импорт
@@ -114,7 +114,7 @@ class Price extends \yii\db\ActiveRecord
         if ($this->type == static::TYPE_PRODUCT && !empty($this->import_id) && !empty($this->article_column) && !empty($this->cost_column)) {
             $this->importProductPrice();
         }
-        parent::afterSave($insert);
+        parent::afterSave($insert, $changedAttributes);
     }
 
     public function beforeDelete()
