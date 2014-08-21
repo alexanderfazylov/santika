@@ -52,26 +52,28 @@ $this->title = $shop->name;
         </div>
     </div>
 
-    <div class="b-carusel">
-        <div class="gallery">
-            <ul>
-                <?php foreach ($products as $product): ?>
-                    <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
-                    <li>
-                        <div class="image"> <?= Html::a(Html::img($src), $product->canonical); ?></div>
-                        <div class="descr">
-                            <span><?= 'Art. ' . $product->article; ?></span>
-                            <?= $product->name; ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <div class="nav">
-                <button class="prev"></button>
-                <button class="next"></button>
+    <?php if (count($products) > 0): ?>
+        <div class="b-carusel">
+            <div class="gallery">
+                <ul>
+                    <?php foreach ($products as $product): ?>
+                        <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
+                        <li>
+                            <div class="image"> <?= Html::a(Html::img($src), $product->canonical); ?></div>
+                            <div class="descr">
+                                <span><?= 'Art. ' . $product->article; ?></span>
+                                <?= $product->name; ?>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="nav">
+                    <button class="prev"></button>
+                    <button class="next"></button>
+                </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 
     <div class="b-gessi">
         <img class="b-gessi__image" src="/i/gessi1.jpg">

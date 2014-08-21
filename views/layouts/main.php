@@ -5,6 +5,7 @@ use app\models\Shop;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
@@ -56,7 +57,7 @@ $lines = Line::find()->byShop($shop_id)->all();
 <!--                    --><?php //endforeach; ?>
 <!--                </ul>-->
             </li>
-            <li><a href="">Линии</a>
+            <li><a href="<?= Url::to('/catalog')?>">Каталог</a>
                 <ul>
                     <?php foreach ($lines as $line): ?>
                         <li><a href="<?= $line->createUrl(); ?>"><?= $line->name; ?></a></li>
