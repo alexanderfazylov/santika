@@ -70,9 +70,8 @@ $(function () {
  * листалка товаров на главной странице
  */
 $(function () {
-    $(".app-index .b-carusel .gallery").each(function () {
-        $(this).jCarouselLite({
-            //mouseWheel: true,
+    $(".app-index .b-carusel").each(function () {
+        $(this).find('> .gallery').jCarouselLite({
             btnNext: $(this).find('> .nav .next')[0],
             btnPrev: $(this).find('> .nav .prev')[0],
             visible: 10
@@ -111,8 +110,8 @@ $(function () {
  *  листалка на странице товара
  */
 $(function () {
-    $(".app-product .b-carusel .gallery").each(function () {
-        $(this).jCarouselLite({
+    $(".app-product .b-carusel").each(function () {
+        $(this).find('> .gallery').jCarouselLite({
             btnNext: $(this).find('> .nav .next')[0],
             btnPrev: $(this).find('> .nav .prev')[0],
             visible: 5

@@ -28,8 +28,8 @@ use yii\widgets\ActiveForm;
         <?php echo Html::dropDownList('shop_id', $shop_id, $shops_array, ['id' => 'linecategory-shop_id', 'class' => 'form-control']) ?>
     </div>
 
-    <?= $form->field($model, 'line_id')->dropDownList($lines_array, ['promt' => 'Выберите линию', 'line_category_id' => $model->id]); ?>
-    <?= $form->field($model, 'category_id')->dropDownList($categories_array, ['promt' => 'Выберите категорию']); ?>
+    <?= $form->field($model, 'line_id')->dropDownList($lines_array, ['prompt' => 'Выберите линию', 'line_category_id' => $model->id]); ?>
+    <?= $form->field($model, 'category_id')->dropDownList($categories_array, ['prompt' => 'Выберите категорию']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

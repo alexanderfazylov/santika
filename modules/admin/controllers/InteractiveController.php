@@ -30,16 +30,19 @@ class InteractiveController extends AdminController
 
     /**
      * Lists all Interactive models.
+     * @param int $type
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type = Interactive::TYPE_LINE)
     {
         $searchModel = new InteractiveSearch;
+        $searchModel->type = $type;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'type' => $type,
         ]);
     }
 
@@ -58,12 +61,13 @@ class InteractiveController extends AdminController
     /**
      * Creates a new Interactive model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param int $type
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type = Interactive::TYPE_LINE)
     {
         $model = new Interactive;
-
+        $model->type = $type;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

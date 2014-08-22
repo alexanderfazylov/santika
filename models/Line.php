@@ -18,6 +18,8 @@ use yii\helpers\Url;
  * @property string $description
  * @property integer $sort
  * @property string $url
+ * @property integer $photo_id
+ * @property integer $catalog_photo_id
  * @property string $meta_title
  * @property string $meta_description
  * @property string $meta_keywords
@@ -26,11 +28,16 @@ use yii\helpers\Url;
  * @property Shop $shop
  * @property LineCategory[] $lineCategories
  * @property LineProduct[] $lineProducts
+ * @property Upload $photo
+ * @property Upload $catalog_photo
  */
 class Line extends \yii\db\ActiveRecord
 {
     public $photo_tmp;
     public $photo_name;
+    public $catalog_photo_tmp;
+    public $catalog_photo_name;
+
     /**
      * @inheritdoc
      */
@@ -46,8 +53,9 @@ class Line extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort', 'photo_id'], 'integer'],
-            [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255]
+            [['shop_id', 'sort', 'photo_id', 'catalog_photo_id'], 'integer'],
+            [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [['photo_tmp', 'photo_name', 'catalog_photo_tmp', 'catalog_photo_name'], 'safe']
         ];
     }
 
@@ -66,6 +74,8 @@ class Line extends \yii\db\ActiveRecord
             'url' => Yii::t('app', 'Url'),
             'photo.fileShowLink' => 'Фото',
             'photo_id' => 'Фото',
+            'catalog_photo.fileShowLink' => 'Фото (каталог)',
+            'catalog_photo_id' => 'Фото (каталог)',
             'meta_title' => Yii::t('app', 'Meta Title'),
             'meta_description' => Yii::t('app', 'Meta Description'),
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
@@ -85,6 +95,7 @@ class Line extends \yii\db\ActiveRecord
     {
         $this->url = Inflector::slug($this->name);
         $this->saveFileFromAttribute('photo', Upload::TYPE_LINE);
+        $this->saveFileFromAttribute('catalog_photo', Upload::TYPE_LINE);
         return parent::beforeValidate();
     }
 
@@ -125,7 +136,7 @@ class Line extends \yii\db\ActiveRecord
      */
     public function getInteractives()
     {
-        return $this->hasMany(Interactive::className(), ['line_id' => 'id']);
+        return $this->hasMany(Interactive::className(), ['object_id' => 'id'])->onCondition('type = ' . Interactive::TYPE_LINE);
     }
 
     /**
@@ -177,5 +188,13 @@ class Line extends \yii\db\ActiveRecord
     public function getPhoto()
     {
         return $this->hasOne(Upload::className(), ['id' => 'photo_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCatalog_photo()
+    {
+        return $this->hasOne(Upload::className(), ['id' => 'catalog_photo_id']);
     }
 }

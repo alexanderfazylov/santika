@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
  */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Интерьерные фотографии', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Интерьерные фотографии ' . $model->lcTextAlter(), 'url' => ['index', 'type' => $model->type]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="interactive-view">
@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Отметить товары', ['product', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+        <?=
+        Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
@@ -28,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',

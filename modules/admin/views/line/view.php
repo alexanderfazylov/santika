@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description',
             'photo.fileShowLink:raw',
+            'catalog_photo.fileShowLink:raw',
             'sort',
             'url',
             'meta_title',

@@ -29,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::button('Сохранить', ['class' => 'btn btn-primary save-interactive-product', 'type' => 'button']) ?>
         <br/>
         <br/>
-        <?php $products_array = ArrayHelper::map(Product::find()->byShop($shop_id)->byLine($interactive->line_id)->all(), 'id', 'name'); ?>
+        <?php
+        $products = $interactive->type == Interactive::TYPE_LINE ?
+            Product::find()->byShop($shop_id)->byLine($interactive->object_id)->all()
+            :
+            Product::find()->byShop($shop_id)->byCollection($interactive->object_id)->all();
+        $products_array = ArrayHelper::map($products, 'id', 'name');
+        ?>
 
         <?php echo Html::activeHiddenInput($interactive, 'id'); ?>
         <div class="row">

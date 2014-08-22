@@ -22,13 +22,22 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
-<!--    --><?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
+    <!--    --><?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
 
     <?php
     echo $this->render('/default/_file_upload.php', [
         'form' => $form,
         'model' => $model,
         'attribute' => 'photo',
+        'accept' => 'image/*'
+    ]);
+    ?>
+
+    <?php
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'catalog_photo',
         'accept' => 'image/*'
     ]);
     ?>

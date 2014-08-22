@@ -8,8 +8,8 @@ use yii\helpers\Html;
  * @var int $shop_id
  */
 
-$this->title = 'Создание интерьерной фотографии';
-$this->params['breadcrumbs'][] = ['label' => 'Интерьерные фотографии', 'url' => ['index']];
+$this->title = 'Создание интерьерной фотографии ' . $model->lcText();
+$this->params['breadcrumbs'][] = ['label' => 'Интерьерные фотографии ' . $model->lcTextAlter(), 'url' => ['index', 'type' => $model->type]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="interactive-create">

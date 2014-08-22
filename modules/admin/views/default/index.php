@@ -1,6 +1,5 @@
 <?php
-use yii\helpers\Html;
-use yii\helpers\Url;
+use app\models\Interactive;
 use yii\widgets\Menu;
 
 ?>
@@ -19,7 +18,8 @@ echo Menu::widget([
         ['label' => 'Покрытия', 'url' => ['/admin/color']],
         ['label' => 'Прайс листы', 'url' => ['/admin/price']],
         ['label' => 'Стоимость товаров', 'url' => ['/admin/price-product/product']],
-        ['label' => 'Интерактивные фото', 'url' => ['/admin/interactive']],
+        ['label' => 'Интерактивные фото линий', 'url' => ['/admin/interactive', 'type' => Interactive::TYPE_LINE]],
+        ['label' => 'Интерактивные фото коллекций', 'url' => ['/admin/interactive', 'type' => Interactive::TYPE_COLLECTION]],
         ['label' => 'Отображать на странице', 'url' => ['/admin/show-with/product']],
     ]
 ]);

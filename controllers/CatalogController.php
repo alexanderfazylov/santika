@@ -16,6 +16,7 @@ use app\models\Shop;
 use app\models\ShowWith;
 use app\models\Upload;
 use Yii;
+use yii\base\Exception;
 
 class CatalogController extends ThemedController
 {
@@ -35,7 +36,8 @@ class CatalogController extends ThemedController
         $intaractives = Interactive::find()
             ->joinWith(Upload::tableName())
             ->joinWith('interactiveProducts')
-            ->andWhere(['line_id' => $line->id])
+            ->andWhere(['object_id' => $line->id])
+            ->andWhere([Interactive::tableName() . '.type' => Interactive::TYPE_LINE])
             ->all();
         return $this->render('line', [
             'line' => $line,
@@ -144,6 +146,10 @@ class CatalogController extends ThemedController
             ->byUrl($url)
             ->one();
 
+        if (is_null($product)) {
+            throw new Exception('Товар не найден. Возможно он не опубликован');
+        }
+
         $shop_id = $line->shop_id;
         $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();
         /**
@@ -170,6 +176,9 @@ class CatalogController extends ThemedController
         $other_products = Product::find()
             ->published()
             ->joinWith('photo')
+            /**
+             * @TODO раскомментировать
+             */
 //            ->joinWith(['showWith' => function ($q) use ($product) {
 //                    $q->andWhere([
 //                        'object_id' => $product->id,

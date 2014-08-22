@@ -8,17 +8,21 @@ use Yii;
  * This is the model class for table "interactive".
  *
  * @property integer $id
- * @property integer $line_id
+ * @property integer $object_id
  * @property integer $upload_id
  * @property string $name
+ * @property integer $type
  *
  * @property Upload $upload
  * @property Line $line
+ * @property Collection $collection
  * @property InteractiveProduct[] $interactiveProducts
  */
 class Interactive extends \yii\db\ActiveRecord
 {
-    public $line_name;
+    const TYPE_LINE = 1;
+    const TYPE_COLLECTION = 2;
+    public $object_name;
     public $upload_tmp;
     public $upload_name;
 
@@ -36,8 +40,8 @@ class Interactive extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['line_id'], 'required'],
-            [['line_id', 'upload_id'], 'integer'],
+            [['object_id'], 'required'],
+            [['object_id', 'upload_id'], 'integer'],
             /**
              * @TODO сделать проверку на наличие файла в других моделях
              */
@@ -61,14 +65,14 @@ class Interactive extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'line_id' => 'Линия',
+            'object_id' => $this->lcTextUpper(),
             'name' => 'Наименование',
             'upload_id' => 'Изображение',
             'upload.name' => 'Изображение',
             'upload_name' => 'Изображение',
             'upload.fileShowLink' => 'Изображение',
-            'line.name' => Yii::t('app', 'Линия'),
-            'line_name' => Yii::t('app', 'Линия'),
+            'object.name' => $this->lcTextUpper(),
+            'objec_name' => $this->lcTextUpper(),
         ];
     }
 
@@ -105,6 +109,7 @@ class Interactive extends \yii\db\ActiveRecord
 
         return parent::beforeDelete();
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -126,6 +131,50 @@ class Interactive extends \yii\db\ActiveRecord
      */
     public function getLine()
     {
-        return $this->hasOne(Line::className(), ['id' => 'line_id']);
+        return $this->hasOne(Line::className(), ['id' => 'object_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCollection()
+    {
+        return $this->hasOne(Collection::className(), ['id' => 'object_id']);
+    }
+
+    /**
+     * Возвращает текст в зависимости от типа интерактивного фото
+     * @return string
+     */
+    public function lcText()
+    {
+        return $this->type == Interactive::TYPE_LINE ? 'линии' : 'коллекции';
+    }
+
+    /**
+     * Возвращает текст в зависимости от типа интерактивного фото
+     * @return string
+     */
+    public function lcTextUpper()
+    {
+        return $this->type == Interactive::TYPE_LINE ? 'Линия' : 'Коллекция';
+    }
+
+    /**
+     * Возвращает текст в зависимости от типа интерактивного фото
+     * @return string
+     */
+    public function lcTextAlter()
+    {
+        return $this->type == Interactive::TYPE_LINE ? 'линий' : 'коллекций';
+    }
+
+    /**
+     * Возвращает текст в зависимости от типа интерактивного фото
+     * @return string
+     */
+    public function lcTextSelect()
+    {
+        return $this->type == Interactive::TYPE_LINE ? 'линию' : 'коллекцию';
     }
 }

@@ -39,6 +39,16 @@ class ProductScope extends ActiveQuery
     }
 
     /**
+     * @param $collection_id
+     * @return $this
+     */
+    public function byCollection($collection_id)
+    {
+        $this->andWhere(['collection_id' => $collection_id]);
+        return $this;
+    }
+
+    /**
      * @param $url
      * @return $this
      */

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Interactive;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -7,9 +8,10 @@ use yii\grid\GridView;
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var app\models\search\InteractiveSearch $searchModel
+ * @var int $type
  */
 
-$this->title = 'Интерьерные фотографии';
+$this->title = 'Интерьерные фотографии ' . $searchModel->lcTextAlter();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="interactive-index">
@@ -19,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=
-        Html::a('Создать интерьерную фотографию', ['create'], ['class' => 'btn btn-success']) ?>
+        Html::a('Создать интерьерную фотографию ' . $searchModel->lcText(), ['create', 'type' => $type], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?=
@@ -32,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
-                'attribute' => 'line_name',
-                'value' => 'line.name'
+                'attribute' => 'object_name',
+                'value' => $type == Interactive::TYPE_LINE ? 'line.name' : 'collection.name'
             ],
             'upload.fileShowLink:raw',
 

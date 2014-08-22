@@ -5,6 +5,7 @@ namespace app\models;
 use app\models\scopes\CategoryScope;
 use app\models\scopes\CollectionScope;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
 
@@ -22,17 +23,21 @@ use yii\helpers\Url;
  * @property string $meta_keywords
  * @property integer $parent_id
  * @property integer $photo_id
+ * @property integer $catalog_photo_id
  *
  * @property Collection $parent
  * @property Collection[] $childs
  * @property Shop $shop
  * @property Product[] $products
  * @property Upload $photo
+ * @property Upload $catalog_photo
  */
 class Collection extends \yii\db\ActiveRecord
 {
     public $photo_tmp;
     public $photo_name;
+    public $catalog_photo_tmp;
+    public $catalog_photo_name;
 
     /**
      * @inheritdoc
@@ -49,10 +54,10 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort', 'parent_id', 'photo_id'], 'integer'],
+            [['shop_id', 'sort', 'parent_id', 'photo_id', 'catalog_photo_id'], 'integer'],
             [['parent_id'], 'checkParentId'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
-            [['photo_tmp', 'photo_name'], 'safe']
+            [['photo_tmp', 'photo_name', 'catalog_photo_tmp', 'catalog_photo_name'], 'safe']
         ];
     }
 
@@ -91,6 +96,8 @@ class Collection extends \yii\db\ActiveRecord
             'meta_keywords' => Yii::t('app', 'Meta Keywords'),
             'photo.fileShowLink' => 'Фото',
             'photo_id' => 'Фото',
+            'catalog_photo.fileShowLink' => 'Фото (каталог)',
+            'catalog_photo_id' => 'Фото (каталог)',
         ];
     }
 
@@ -109,6 +116,7 @@ class Collection extends \yii\db\ActiveRecord
          * @TODO при поиске в админке выполняются эти функции., мб придумать что то другое?
          */
         $this->saveFileFromAttribute('photo', Upload::TYPE_PRODUCT);
+        $this->saveFileFromAttribute('catalog_photo', Upload::TYPE_PRODUCT);
         $this->url = Inflector::slug($this->name);
         return parent::beforeValidate();
     }
@@ -184,11 +192,37 @@ class Collection extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCatalog_photo()
+    {
+        return $this->hasOne(Upload::className(), ['id' => 'catalog_photo_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInteractives()
+    {
+        return $this->hasMany(Interactive::className(), ['object_id' => 'id'])->onCondition('type = ' . Interactive::TYPE_COLLECTION);
+    }
+
+    /**
      * Возвращает ссылку на коллекцию
      * @return string
      */
     public function createUrl()
     {
         return Url::to(['/catalog/collection/', 'url' => $this->url, 'parent_url' => !empty($this->parent_id) ? $this->parent->url : null]);
+    }
+
+    /**
+     * Массив коллекций по магазину
+     * @param $shop_id
+     * @return array
+     */
+    public static function listData($shop_id)
+    {
+        return ArrayHelper::map(static::find()->byShop($shop_id)->all(), 'id', 'name');
     }
 }

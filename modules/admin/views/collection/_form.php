@@ -55,6 +55,15 @@ $collections_array = ArrayHelper::map($collections, 'id', 'name');
     ]);
     ?>
 
+    <?php
+    echo $this->render('/default/_file_upload.php', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'catalog_photo',
+        'accept' => 'image/*'
+    ]);
+    ?>
+
     <!--    <?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>-->
 
     <!--    --><?php //= $form->field($model, 'sort')->textInput() ?>

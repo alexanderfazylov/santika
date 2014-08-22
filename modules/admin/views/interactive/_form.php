@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Collection;
+use app\models\Interactive;
 use app\models\Line;
 use app\models\Shop;
 use yii\helpers\ArrayHelper;
@@ -17,7 +19,7 @@ use yii\widgets\ActiveForm;
 <div class="interactive-form">
 
     <?php $shops_array = Shop::listData(); ?>
-    <?php $lines_array = Line::listData($shop_id); ?>
+    <?php $objects_array = $model->type == Interactive::TYPE_LINE ? Line::listData($shop_id) : Collection::listData($shop_id); ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -27,7 +29,7 @@ use yii\widgets\ActiveForm;
     </div>
 
 
-    <?= $form->field($model, 'line_id')->dropDownList($lines_array, ['promt' => 'Выберите линию']); ?>
+    <?= $form->field($model, 'object_id')->dropDownList($objects_array, ['prompt' => 'Выберите ' . $model->lcTextSelect()]); ?>
 
     <?php
     echo $this->render('/default/_file_upload.php', [
