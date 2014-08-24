@@ -42,6 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'description' => $ip->product->description,
                 'article' => $ip->product->article,
                 'lwh' => $ip->product->getLwh(),
+                /**
+                 * @TODO сделать несколько покрытий
+                 */
                 'color' => !empty($ip->product->color_id) ? $ip->product->color->name : '',
                 'photo' => !empty($ip->product->photo) ? $ip->product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : '',
                 'link' => $ip->product->createUrlByLine($line->url),
@@ -119,8 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
             вещи. Вся конструкция очень изящна, грани отточены и миниатюрны.
         </div>
         <div class="all">
-            <a href="<?= Url::to(['/catalog/line-product/', 'line_url' => $line->url]); ?>" class="btn">Перейти к
-                коллекции ??? линии</a>
+            <a href="<?= Url::to(['/catalog/line-product/', 'line_url' => $line->url]); ?>" class="btn">Перейти к линии</a>
         </div>
     </div>
 </div>

@@ -24,6 +24,7 @@ use yii\helpers\Url;
  * @property integer $parent_id
  * @property integer $photo_id
  * @property integer $catalog_photo_id
+ * @property integer $show_in_catalog
  *
  * @property Collection $parent
  * @property Collection[] $childs
@@ -54,7 +55,7 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             [['shop_id', 'name', 'description', 'url'], 'required'],
-            [['shop_id', 'sort', 'parent_id', 'photo_id', 'catalog_photo_id'], 'integer'],
+            [['shop_id', 'sort', 'parent_id', 'photo_id', 'catalog_photo_id', 'show_in_catalog'], 'integer'],
             [['parent_id'], 'checkParentId'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
             [['photo_tmp', 'photo_name', 'catalog_photo_tmp', 'catalog_photo_name'], 'safe']
@@ -98,6 +99,7 @@ class Collection extends \yii\db\ActiveRecord
             'photo_id' => 'Фото',
             'catalog_photo.fileShowLink' => 'Фото (каталог)',
             'catalog_photo_id' => 'Фото (каталог)',
+            'show_in_catalog' => 'Отображать на главной странице каталога',
         ];
     }
 

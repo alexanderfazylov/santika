@@ -36,6 +36,8 @@ $collections_array = ArrayHelper::map($collections, 'id', 'name');
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'show_in_catalog')->checkbox() ?>
+
     <?php
     $options = ['prompt' => ''];
     if ($model->getChilds()->count() != 0) {

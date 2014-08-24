@@ -24,8 +24,10 @@ class CatalogController extends ThemedController
     {
         $shop_id = Shop::getIdFromUrl();
         $lines = Line::find()->byShop($shop_id)->all();
+        $collections = Collection::find()->byShop($shop_id)->andWhere(['show_in_catalog' => true])->all();
         return $this->render('index', [
             'lines' => $lines,
+            'collections' => $collections,
             'shop_id' => $shop_id,
         ]);
     }
@@ -114,8 +116,18 @@ class CatalogController extends ThemedController
     public function actionCollection($url, $parent_url = null)
     {
         $collection = Collection::find()->byUrl($url)->one();
-        return $this->render('collection', [
+        $intaractives = Interactive::find()
+            ->joinWith(Upload::tableName())
+            ->joinWith('interactiveProducts')
+            ->andWhere(['object_id' => $collection->id])
+            ->andWhere([Interactive::tableName() . '.type' => Interactive::TYPE_COLLECTION])
+            ->all();
+        /**
+         * @TODO это copy -> paste стреницы actionLine
+         */
+        return $this->render('collection',[
             'collection' => $collection,
+            'intaractives' => $intaractives,
         ]);
     }
 

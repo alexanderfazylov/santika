@@ -5,6 +5,7 @@
  * Date: 04.06.14
  * Time: 10:10
  * @var Line[] $lines
+ * @var Collection[] $collections
  * @var int $shop_id
  * @var yii\web\View $this
  */
@@ -19,8 +20,8 @@ use yii\helpers\Url;
 
 $this->title = 'Каталог';
 $this->params['breadcrumbs'][] = $this->title;
-$categories = Category::find()->byShop($shop_id)->all();
-$collections = Collection::find()->byShop($shop_id)->all();
+$search_categories = Category::find()->byShop($shop_id)->all();
+$search_collections = Collection::find()->byShop($shop_id)->all();
 ?>
 <div style="display: none;">
     <?php
@@ -75,7 +76,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
                     /**
                      * @TODO подгрузка данных ajax-ом по линии
                      */
-                    Html::dropDownList('category_url', null, ArrayHelper::map($categories, 'url', 'name'), [
+                    Html::dropDownList('category_url', null, ArrayHelper::map($search_categories, 'url', 'name'), [
                         'prompt' => 'Все категории',
                         'class' => 'form-control',
                         'id' => 'category_url'
@@ -83,7 +84,7 @@ $collections = Collection::find()->byShop($shop_id)->all();
                 </div>
                 <div class="b-catalog__filter__select">
                     <?=
-                    Html::dropDownList('collection_url', null, ArrayHelper::map($collections, 'url', 'name'), [
+                    Html::dropDownList('collection_url', null, ArrayHelper::map($search_collections, 'url', 'name'), [
                         'prompt' => 'Все коллекции',
                         'class' => 'form-control',
                         'id' => 'collection_url'
@@ -122,6 +123,20 @@ $collections = Collection::find()->byShop($shop_id)->all();
             <div class="descr">
                 <div class="title"><?= $line->name ?></div>
                 <div class="text"><?= nl2br($line->description) ?></div>
+            </div>
+        </a>
+    <?php endforeach; ?>
+    <?php foreach ($collections as $key => $collection): ?>
+        <a href="<?= $collection->createUrl(); ?>"
+           class="<?= ($key % 2 == 0) ? 'b-catalog__item--left' : 'b-catalog__item--right'; ?>">
+            <div class="b-catalog__item__image">
+                <?php $src = !empty($collection->catalog_photo_id) ? $collection->catalog_photo->getFileShowUrl(Upload::SIZE_RECTANGLE_600_450) : Upload::defaultFileUrl(Upload::SIZE_RECTANGLE_600_450) ?>
+                <img src="<?= $src; ?>">
+            </div>
+
+            <div class="descr">
+                <div class="title"><?= $collection->name ?></div>
+                <div class="text"><?= nl2br($collection->description) ?></div>
             </div>
         </a>
     <?php endforeach; ?>
