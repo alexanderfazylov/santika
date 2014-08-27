@@ -227,4 +227,13 @@ class Collection extends \yii\db\ActiveRecord
     {
         return ArrayHelper::map(static::find()->byShop($shop_id)->all(), 'id', 'name');
     }
+
+    /**
+     * Ссылка на страницу фильтра  с товарами
+     * @return string
+     */
+    public function urlToFilter()
+    {
+        return Url::to(['filter', 'collection_url' => $this->url]);
+    }
 }

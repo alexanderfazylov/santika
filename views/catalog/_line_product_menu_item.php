@@ -28,7 +28,7 @@ use app\models\Upload;
                         object_id="<?= $model->id ?>"
                         hide_level="<?= 'level' . ($level + 1) ?>"
                         >
-                        <a href="">
+                        <a href="<?= $model->urlToFilter();  ?>">
                             <?php $src = !empty($model->photo_id) ? $model->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
                             <div><img src="<?= $src; ?>"></div>
                             <?= $model->name; ?>

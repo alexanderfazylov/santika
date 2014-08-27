@@ -91,8 +91,8 @@ $this->params['breadcrumbs'][] = $this->title;
             вещи. Вся конструкция очень изящна, грани отточены и миниатюрны.
         </div>
         <div class="all">
-            <a href="<?= Url::to(['#', 'line_url' => $collection->url]); ?>" class="btn">Перейти к
-                коллекции (куда?)</a>
+            <a href="<?= Url::to(['filter','collection_url' => $collection->url]); ?>"
+               class="btn">Перейти к коллекции</a>
         </div>
     </div>
 </div>

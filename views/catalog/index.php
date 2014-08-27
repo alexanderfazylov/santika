@@ -58,7 +58,7 @@ $search_collections = Collection::find()->byShop($shop_id)->all();
 
         <p>Купить сантехнику и смесители Gessi вы можете с фирменной гарантией и доставкой в любой город России.</p>
     </div>
-    <form method="get" action="<?= Url::to('/catalog/line') ?>">
+    <form method="get" action="<?= Url::to('/catalog/filter') ?>">
 
         <div class="b-catalog__filter">
             <div class="b-catalog__filter__wrap">
@@ -92,22 +92,12 @@ $search_collections = Collection::find()->byShop($shop_id)->all();
                 </div>
                 <div class="b-catalog__filter__select">
                     <div>
-                        <input type="text" placeholder="Артикул">
+                        <input name="article" type="text" placeholder="Артикул">
                     </div>
                 </div>
                 <?=
-                Html::a('Найти', '#', [
-                    'type' => 'button',
-                    'class' => 'btn',
-                    'onClick' => '
-        var line_url= $("#line_url").val();
-        if(line_url ==""){
-            return false;
-        }
-        var category_url= $("#category_url").val();
-        var collection_url = $("#collection_url").val();
-        window.location = "' . Url::to(['/catalog/line/']) . '/" + line_url + "' . '?category_url=" + category_url + "&collection_url=" + collection_url;
-            ']) ?>
+                Html::button('Найти',['class' => 'btn']);
+                ?>
             </div>
         </div>
 

@@ -6,11 +6,13 @@
  * Time: 10:11
  * @var yii\web\View $this
  * @var Line $line
+ * @var Category $category
+ * @var Collection $collection
  * @var Product[] $products
  * @var Category[] $categories
- * @var int $category_url
+ * @var string $category_url
  * @var Collection[] $collections
- * @var int $collection_url
+ * @var string $collection_url
  */
 use app\models\Category;
 use app\models\Collection;
@@ -21,55 +23,29 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Линия ' . $line->name;
+$type = '';
+$name = '';
+if (!is_null($line)) {
+    $type = 'Линия';
+    $name = 'GESSI ' . $line->name;
+} elseif (!is_null($collection)) {
+    $type = 'Коллекция';
+    $name = $collection->name;
+} elseif (!is_null($category)) {
+    $type = 'Категория';
+    $name = $category->name;
+}
+$this->title = $type . ' ' . $name;
 $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['/catalog']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="app-rzd">
-    <div style="display: none;">
-        <h1><?= Html::encode($this->title) ?></h1>
-
-        <div class="row">
-            <div class="col-md-4">
-                <?= Html::a('Назад к интерьерным фото', $line->createUrl()); ?>
-            </div>
-            <div class="col-md-4">
-                <?=
-                Html::dropDownList('Product[category_url]', $category_url, ArrayHelper::map($categories, 'url', 'name'), [
-                    'prompt' => 'Категории',
-                    'class' => 'form-control',
-                    'id' => 'product-category_url'
-                ]); ?>
-            </div>
-            <div class="col-md-4">
-                <?=
-                Html::dropDownList('Product[collection_url]', $collection_url, ArrayHelper::map($collections, 'url', 'name'), [
-                    'prompt' => 'Коллекции',
-                    'class' => 'form-control',
-                    'id' => 'product-collection_url'
-                ]); ?>
-            </div>
-        </div>
-
-        <?php
-        $this->registerJs(
-            '
-            $(document).on("change", "#product-category_url, #product-collection_url", function () {
-                var category_url= $("#product-category_url").val();
-                var collection_url = $("#product-collection_url").val();
-                window.location = "' . Url::to(['/catalog/line-product/', 'line_url' => $line->url]) . '?category_url=" + category_url + "&collection_url=" + collection_url;
-    });'
-
-        );
-        ?>
-    </div>
     <div class="b-rzd__title">
         <img src="/images/rzd1.jpg" alt=""/>
 
-        <div>линия <span>Gessi Mimi</span></div>
+        <div><?= $type ?> <span><?= $name ?></span></div>
     </div>
-
 
     <?php
     echo $this->render('/catalog/_line_product_menu', array(
@@ -99,7 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <li class="b-rzd__item <?= $big ? 'big' : '' ?>">
                 <?php $size = ($big ? Upload::SIZE_SQUARE_510 : Upload::SIZE_SQUARE_245); ?>
                 <?php $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl($size) : Upload::defaultFileUrl($size) ?>
-                <div class="image"> <?= Html::a(Html::img($src), $product->createUrlByLine($line->url)); ?></div>
+                <?php $product_url = is_null($line) ? $product->canonical : $product->createUrlByLine($line->url) ?>
+                <div class="image"> <?= Html::a(Html::img($src), $product_url); ?></div>
                 <div class="descr">
                     <span><?= 'Art. ' . $product->article; ?></span>
                     <?= $product->name; ?>

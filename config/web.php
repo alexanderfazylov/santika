@@ -50,6 +50,7 @@ $config = [
                 /**
                  * url для каталога во frond-end'e
                  */
+                'catalog/filter' => '/catalog/line-product',
                 'catalog/<url:([-]*\w+)+>' => '/catalog/line',
                 'catalog/collection/<url:([-]*\w+)+>' => '/catalog/collection',
                 'catalog/collection/<parent_url:([-]*\w+)+>/<url:([-]*\w+)+>' => '/catalog/collection', //мб не нужно?

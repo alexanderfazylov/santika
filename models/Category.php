@@ -9,6 +9,7 @@ use yii\db\BaseActiveRecord;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "category".
@@ -300,5 +301,14 @@ class Category extends \yii\db\ActiveRecord
         $query_for_line_id = (new Query)->select('line_id')->from('line_product')->where(['product_id' => $product_id]);
         return self::byLineIds($shop_id, $query_for_line_id);
 
+    }
+
+    /**
+     * Ссылка на страницу фильтра  с товарами
+     * @return string
+     */
+    public function urlToFilter()
+    {
+        return Url::to(['filter', 'category_url' => $this->url]);
     }
 }

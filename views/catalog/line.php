@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
             вещи. Вся конструкция очень изящна, грани отточены и миниатюрны.
         </div>
         <div class="all">
-            <a href="<?= Url::to(['/catalog/line-product/', 'line_url' => $line->url]); ?>" class="btn">Перейти к линии</a>
+            <a href="<?= Url::to(['/catalog/filter/', 'line_url' => $line->url]); ?>" class="btn">Перейти к линии</a>
         </div>
     </div>
 </div>

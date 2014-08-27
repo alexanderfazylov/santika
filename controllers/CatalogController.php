@@ -48,50 +48,50 @@ class CatalogController extends ThemedController
     }
 
 
-    public function actionLineProduct($line_url, $category_url = null, $collection_url = null)
+    public function actionLineProduct($line_url = null, $category_url = null, $collection_url = null, $article = null)
     {
-        $line = Line::find()->byUrl($line_url)->one();
-        $shop_id = $line->shop_id;
+        $shop_id = Shop::getIdFromUrl();
 
         $query = Product::find()
             ->published()
-            ->joinWith('photo')
-            ->joinWith('lineProducts')
-//            ->andWhere(['line_id' => $line->id])
-            ->limit(20);
+            ->joinWith('photo');
+
+        $line = null;
+        $category = null;
+        $collection = null;
+        if (!empty($line_url)) {
+            $line = Line::find()->byUrl($line_url)->one();
+            $query->joinWith('lineProducts')
+                ->andWhere(['line_id' => $line->id]);
+        }
 
 
         if (!empty($category_url)) {
-            /**
-             * @TODO переделать на join?
-             */
             $category = Category::findOne(['url' => $category_url]);
             $query->andWhere(['category_id' => $category->id]);
         }
 
         if (!empty($collection_url)) {
-            /**
-             * @TODO переделать на join?
-             */
             $collection = Collection::findOne(['url' => $collection_url]);
             $query->andWhere(['collection_id' => $collection->id]);
         }
         $products = $query->all();
 
-        $category_ids = LineCategory::categoryIdsByLine($line->id);
+//        $category_ids = LineCategory::categoryIdsByLine($line->id);
         /**
          * @TODO проверить рекурсию в категориях
          */
         $categories = Category::find()
-            ->joinWith(['childs' => function ($q) use ($category_ids) {
-                    //т.к. условие добавляется в общее where, то выберем детей из категорий в линии
-                    //и родителей без детей
-                    $q->orWhere(['childs.id' => $category_ids]);
-                    $q->orWhere(['childs.id' => null]);
-                },
+            ->joinWith(['childs'
+//            => function ($q) use ($category_ids) {
+//                    //т.к. условие добавляется в общее where, то выберем детей из категорий в линии
+//                    //и родителей без детей
+////                    $q->orWhere(['childs.id' => $category_ids]);
+////                    $q->orWhere(['childs.id' => null]);
+//                },
             ])
             ->isParent()
-            ->andWhere([Category::tableName() . '.id' => $category_ids])
+//            ->andWhere([Category::tableName() . '.id' => $category_ids])
             ->all();
 
         $collections = Collection::find()
@@ -106,9 +106,11 @@ class CatalogController extends ThemedController
         return $this->render('line_product', [
             'products' => $products,
             'line' => $line,
+            'category' => $category,
+            'collection' => $collection,
             'categories' => $categories,
-            'category_url' => $category_url,
             'collections' => $collections,
+            'category_url' => $category_url,
             'collection_url' => $collection_url,
         ]);
     }
@@ -125,7 +127,7 @@ class CatalogController extends ThemedController
         /**
          * @TODO это copy -> paste стреницы actionLine
          */
-        return $this->render('collection',[
+        return $this->render('collection', [
             'collection' => $collection,
             'intaractives' => $intaractives,
         ]);
