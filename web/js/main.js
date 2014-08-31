@@ -31,9 +31,15 @@ function InteractivePoint(options, data_index) {
      */
     $div.data('fancybox-href', '#quick');
     $div.hover(function () {
-        showProductInfo(options);
+        updateFancyBox(options.product_id, options.line_url);
     });
     $div.fancybox({
+        beforeShow: function () {
+            $('#blueimp-gallery').find('.play-pause')[0].click();
+        },
+        afterClose: function () {
+            $('#blueimp-gallery').find('.play-pause')[0].click();
+        },
         overlayColor: '#000'
     });
     $owner.append($div);
@@ -42,7 +48,32 @@ function InteractivePoint(options, data_index) {
  * Отображение инфы о товаре на интерактивной фотографии
  * @param product
  */
-function showProductInfo(product) {
+var product_info_cache = [];
+
+function updateFancyBox(product_id, line_url) {
+    if (product_id in product_info_cache) {
+        setFancyBoxData(product_info_cache[product_id]);
+    } else {
+        $.ajax({
+            url: '/catalog/product-info',
+            type: "GET",
+            dataType: "json",
+            data: {
+                product_id: product_id,
+                line_url: line_url
+            },
+            success: function (data) {
+                if (data.status == 'success') {
+                    product_info_cache[product_id] = data.product;
+                    setFancyBoxData(data.product);
+                } else {
+
+                }
+            }
+        });
+    }
+}
+function setFancyBoxData(product) {
     var $owner = $('.product-info');
     $owner.find('.product-photo').attr('src', product.photo);
     $owner.find('.product-link').attr('href', product.link);
@@ -52,7 +83,7 @@ function showProductInfo(product) {
     $owner.find('.product-color').text(product.color);
     $owner.find('.product-description').text(product.description);
     $owner.find('.product-price').text(product.price);
-//    $('#quick').removeClass('hidden');
+    $owner.find('.product-country').text(product.country);
 }
 
 /**

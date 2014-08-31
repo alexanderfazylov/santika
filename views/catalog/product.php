@@ -15,35 +15,30 @@
  */
 use app\models\Category;
 use app\models\Line;
-use app\models\PhotoGallery;
 use app\models\PriceProduct;
 use app\models\Product;
 use app\models\Upload;
 use dosamigos\gallery\Carousel;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\JsExpression;
 
 
 $this->title = 'Товар ' . $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['/catalog']];
-$this->params['breadcrumbs'][] = ['label' => $line->name, 'url' => $line->createUrl()];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="app-product">
     <div class="b-navigation">
-        <a href="<?= $line->createUrl(); ?>" class="back">Вернуться назад<span>к коллекции</span></a>
+        <a href="/catalog" class="back">Вернуться назад<span>в каталог</span></a>
         <?php
         if (!is_null($next_product)) {
             $next = Html::tag('span', $next_product->name);
-            echo Html::a('Следующий товар' . $next, $next_product->createUrlByLine($line->url), ['class' => 'next']);
+            echo Html::a('Следующий товар' . $next, $next_product->canonical, ['class' => 'next']);
         }
         ?>
         <?php
         if (!is_null($prev_product)) {
             $prev = Html::tag('span', $prev_product->name);
-            echo Html::a('Предыдущий товар' . $prev, $prev_product->createUrlByLine($line->url), ['class' => 'prev']);
+            echo Html::a('Предыдущий товар' . $prev, $prev_product->canonical, ['class' => 'prev']);
         }
         ?>
     </div>
@@ -169,8 +164,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="b-carusel">
         <div class="title">
             Сопутствующие товары
-            <br>
-            <?= $line->name ?>
         </div>
         <div class="gallery">
             <ul>

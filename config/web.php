@@ -49,8 +49,11 @@ $config = [
 
                 /**
                  * url для каталога во frond-end'e
+                 * @TODO разобраться, когда существующе action парсится не правильно
                  */
+                'catalog/product/<url:([-]*\w+)+>' => '/catalog/product',
                 'catalog/filter' => '/catalog/line-product',
+                'catalog/product-info' => '/catalog/product-info',
                 'catalog/<url:([-]*\w+)+>' => '/catalog/line',
                 'catalog/collection/<url:([-]*\w+)+>' => '/catalog/collection',
                 'catalog/collection/<parent_url:([-]*\w+)+>/<url:([-]*\w+)+>' => '/catalog/collection', //мб не нужно?

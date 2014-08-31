@@ -231,3 +231,22 @@ a.desc:after {
 /**
 * Общийе стили для листалки КОНЕЦ
 */
+
+/**
+* инфо о товаре на странице интерьерного фото начало
+*/
+
+.quick .descr span {
+    display: inline-block;
+    width: auto;
+    color: inherit;
+}
+
+.quick .descr span.attribute {
+    display: inline-block;
+    width: 105px;
+    color: #000;
+}
+/**
+* инфо о товаре на странице интерьерного фото конец
+*/

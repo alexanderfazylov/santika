@@ -35,16 +35,7 @@ class CatalogController extends ThemedController
     public function actionLine($url)
     {
         $line = Line::find()->byUrl($url)->one();
-        $intaractives = Interactive::find()
-            ->joinWith(Upload::tableName())
-            ->joinWith('interactiveProducts')
-            ->andWhere(['object_id' => $line->id])
-            ->andWhere([Interactive::tableName() . '.type' => Interactive::TYPE_LINE])
-            ->all();
-        return $this->render('line', [
-            'line' => $line,
-            'intaractives' => $intaractives,
-        ]);
+        return $this->interactive($line, Interactive::TYPE_LINE);
     }
 
 
@@ -118,17 +109,26 @@ class CatalogController extends ThemedController
     public function actionCollection($url, $parent_url = null)
     {
         $collection = Collection::find()->byUrl($url)->one();
+        return $this->interactive($collection, Interactive::TYPE_COLLECTION);
+    }
+
+    /**
+     * Рисует страницу с интерактивными фото для линии или коллекции
+     * @param $model
+     * @param $type
+     * @return string
+     */
+    public function interactive($model, $type)
+    {
         $intaractives = Interactive::find()
             ->joinWith(Upload::tableName())
-            ->joinWith('interactiveProducts')
-            ->andWhere(['object_id' => $collection->id])
-            ->andWhere([Interactive::tableName() . '.type' => Interactive::TYPE_COLLECTION])
+            ->joinWith('interactiveProducts.product')
+            ->andWhere(['object_id' => $model->id])
+            ->andWhere([Interactive::tableName() . '.type' => $type])
             ->all();
-        /**
-         * @TODO это copy -> paste стреницы actionLine
-         */
-        return $this->render('collection', [
-            'collection' => $collection,
+        return $this->render('interactive', [
+            'model' => $model,
+            'type' => $type,
             'intaractives' => $intaractives,
         ]);
     }
@@ -143,9 +143,10 @@ class CatalogController extends ThemedController
         ]);
     }
 
-    public function actionProduct($line_url, $url, $category_url = null, $color_id = null)
+    public function actionProduct($url, $line_url = null, $category_url = null, $color_id = null)
     {
         $line = Line::find()->byUrl($line_url)->one();
+        $shop_id = Shop::getIdFromUrl();
         $category = Category::find()->byUrl($category_url)->one();
         $product = Product::find()
             ->published()
@@ -164,7 +165,6 @@ class CatalogController extends ThemedController
             throw new Exception('Товар не найден. Возможно он не опубликован');
         }
 
-        $shop_id = $line->shop_id;
         $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();
         /**
          * @todo пернести в with?
@@ -178,28 +178,24 @@ class CatalogController extends ThemedController
         $next_product = Product::find()
             ->published()
             ->joinWith('lineProducts')
-            ->andWhere(['line_id' => $line->id])
+//            ->andWhere(['line_id' => $line->id])
             ->andWhere('product.id > ' . $product->id)
             ->one();
         $prev_product = Product::find()
             ->published()
             ->joinWith('lineProducts')
-            ->andWhere(['line_id' => $line->id])
+//            ->andWhere(['line_id' => $line->id])
             ->andWhere('product.id < ' . $product->id)
             ->one();
         $other_products = Product::find()
             ->published()
             ->joinWith('photo')
-            /**
-             * @TODO раскомментировать
-             */
-//            ->joinWith(['showWith' => function ($q) use ($product) {
-//                    $q->andWhere([
-//                        'object_id' => $product->id,
-//                    ]);
-//                }
-//            ])
-            ->limit(10)
+            ->joinWith(['showWith' => function ($q) use ($product) {
+                    $q->andWhere([
+                        'object_id' => $product->id,
+                    ]);
+                }
+            ])
             ->all();
 
         return $this->render('product', [
@@ -212,5 +208,48 @@ class CatalogController extends ThemedController
             'next_product' => $next_product,
             'color_id' => $color_id,
         ]);
+    }
+
+    public function actionProductInfo($product_id, $line_url = null)
+    {
+        Yii::$app->response->format = 'json';
+        /**
+         * @var Product $product
+         */
+        $product = Product::find()
+            ->with(['photo', 'productColors.photo'])
+            ->andWhere([Product::tableName() . '.id' => $product_id])
+            ->one();
+        if (!is_null($product)) {
+
+            $colors = [];
+            foreach ($product->productColors as $pc) {
+                $colors[$pc->color_id] = $pc->color->name;
+            }
+
+            $shop_id = Shop::getIdFromUrl();
+            $price = Price::find()->active($shop_id, Price::TYPE_PRODUCT)->one();
+            $price_product = PriceProduct::findOne([
+                'price_id' => $price->id,
+                'product_id' => $product->id,
+                'color_id' => key($colors) ? key($colors) : null, //@TODO берет цену первого покрытия
+            ]);
+
+            $product_info = [
+                'name' => $product->name,
+                'description' => $product->description,
+                'article' => $product->article,
+                'lwh' => $product->getLwh(),
+                'color' => implode(', ', $colors),
+                'photo' => !empty($product->photo) ? $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : '',
+                'link' => (!empty($line_url) ? $product->createUrlByLine($line_url) : $product->canonical),
+                'price' => !is_null($price_product) ? $price_product->cost_rub . ' р.' : '',
+                'country' => 'Италия', //@TODO сделать через Shop
+            ];
+            $result = ['status' => 'success', 'product' => $product_info];
+        } else {
+            $result = ['status' => 'error', 'message' => 'Товар не найден'];
+        }
+        return $result;
     }
 }
