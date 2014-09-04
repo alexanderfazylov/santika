@@ -74,10 +74,27 @@ body {
 .b-top-bar .menu:hover:after {
     background-position: -86px -18px;
 }
-.b-panel-r {
+.menu-visible:before {
+    display: block !important;
+}
+.menu-visible .b-panel-r__wrap {
+    right: 0;
+    top: 80px;
+}
+.b-panel-r:before {
+    content: "";
+    display: none;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.b-panel-r__wrap {
     width: 370px;
     position: absolute;
-    padding-top: 80px;
     z-index: 5000;
     right: -370px;
     top: 0;
@@ -240,7 +257,7 @@ body {
 }
 .b-services__item__wrap {
     width: 300px;
-    margin: 50px 0 0 90px;
+    padding: 50px 0 0 90px;
     padding-bottom: 30px;
 }
 .b-services__item__wrap:after {
@@ -453,7 +470,6 @@ body {
     padding-top: 50px;
 }
 .app-product .b-services__item__wrap {
-    margin-top: 0;
     padding-top: 50px;
 }
 .app-product .b-navigation {
@@ -783,6 +799,67 @@ body {
     width: 100%;
     height: 125px;
 }
+.app-rzd .b-rzd__menu .b-carusel .gallery {
+    height: auto !important;
+}
+.app-rzd .b-rzd__menu .b-carusel .gallery ul {
+    overflow: hidden;
+}
+.app-rzd .b-rzd__menu .b-carusel .gallery a,
+.app-rzd .b-rzd__menu .b-carusel .gallery span {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: #52443b;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-family: georgia;
+    text-transform: none;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 30px 70px;
+}
+.app-rzd .b-rzd__menu .b-carusel .gallery a:hover,
+.app-rzd .b-rzd__menu .b-carusel .gallery span:hover {
+    color: #967b6a;
+}
+.app-rzd .b-rzd__menu .b-carusel .nav {
+    right: 0 !important;
+    bottom: 0 !important;
+    position: relative !important;
+}
+.app-rzd .b-rzd__menu .b-carusel .nav button {
+    margin: 0 !important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-shadow: none !important;
+    vertical-align: middle;
+    position: relative;
+    margin-right: 3px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    text-indent: -1000px;
+    cursor: pointer;
+}
+.app-rzd .b-rzd__menu .b-carusel .nav button:before {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: #967b6a;
+    border: none;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+}
+.app-rzd .b-rzd__menu .b-carusel .nav button.hover {
+    border: #967b6a 1px solid;
+}
 .app-rzd .b-rzd__menu li.parent {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1011,7 +1088,6 @@ body {
     color: #967b6a;
 }
 .app-catalog .b-services__item__wrap {
-    margin-top: 0;
     padding-top: 50px;
 }
 .app-catalog .b-catalog__desription {
@@ -1338,6 +1414,39 @@ body {
     top: 50%;
     margin-top: -1px;
 }
+.app-collection .blueimp-gallery .prev,
+.app-collection .blueimp-gallery .next {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    display: block !important;
+    background-color: #000 !important;
+    color: #fff;
+    text-indent: 0;
+    width: auto;
+    height: auto;
+    padding: 0 30px;
+    line-height: 70px;
+    margin-top: -35px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    opacity: 1 !important;
+}
+.app-collection .blueimp-gallery .prev:hover,
+.app-collection .blueimp-gallery .next:hover {
+    background-color: #52443b;
+}
+.app-collection .blueimp-gallery .prev {
+    padding-left: 70px;
+    left: 0;
+}
+.app-collection .blueimp-gallery .next {
+    padding-right: 70px;
+    right: 0;
+}
 /* Footer
 -----------------------------------------------------------------------------*/
 .footer {
@@ -1395,7 +1504,8 @@ body {
         margin-top: -20px;
     }
     .b-services__item__wrap {
-        margin: 50px auto 0;
+        margin: 0 auto 0;
+        padding-left: 0;
     }
 }
 @media only screen and (max-width: 1024px) {

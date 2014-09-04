@@ -48,29 +48,32 @@ $lines = Line::find()->byShop($shop_id)->all();
     <!-- .header-->
 
     <div class="b-panel-r">
-        <ul class="b-menu-right">
-            <li><a href="">Компания</a></li>
-            <li><a href="">проекты</a>
-<!--                <ul>-->
-<!--                    --><?php //foreach ($collections as $collection): ?>
-<!--                        <li><a href="--><?php //= $collection->createUrl(); ?><!--">--><?php //= $collection->name; ?><!--</a></li>-->
-<!--                    --><?php //endforeach; ?>
-<!--                </ul>-->
-            </li>
-            <li><a href="<?= Url::to('/catalog')?>">Каталог</a>
-                <ul>
-                    <?php foreach ($lines as $line): ?>
-                        <li><a href="<?= $line->createUrl(); ?>"><?= $line->name; ?></a></li>
-                    <?php endforeach; ?>
-                </ul>
-            </li>
-            <li><a href="">Услуги и сервис</a></li>
-            <li><a href="">Дизайнерам</a></li>
-            <li><a href="">Регистрация</a></li>
-        </ul>
-        <div class="contacts">
-            +7 (843) 524 71 76<br>
-            info@gessi-promo.ru
+        <div class="b-panel-r__wrap">
+            <ul class="b-menu-right">
+                <li><a href="">Компания</a></li>
+                <li><a href="">проекты</a>
+                    <!--                <ul>-->
+                    <!--                    --><?php //foreach ($collections as $collection): ?>
+                    <!--                        <li><a href="--><?php //= $collection->createUrl(); ?><!--">-->
+                    <?php //= $collection->name; ?><!--</a></li>-->
+                    <!--                    --><?php //endforeach; ?>
+                    <!--                </ul>-->
+                </li>
+                <li><a href="<?= Url::to('/catalog') ?>">Каталог</a>
+                    <ul>
+                        <?php foreach ($lines as $line): ?>
+                            <li><a href="<?= $line->createUrl(); ?>"><?= $line->name; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <li><a href="">Услуги и сервис</a></li>
+                <li><a href="">Дизайнерам</a></li>
+                <li><a href="">Регистрация</a></li>
+            </ul>
+            <div class="contacts">
+                +7 (843) 524 71 76<br>
+                info@gessi-promo.ru
+            </div>
         </div>
     </div>
 
