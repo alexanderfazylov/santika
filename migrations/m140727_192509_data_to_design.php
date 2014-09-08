@@ -87,7 +87,7 @@ class m140727_192509_data_to_design extends Migration
             }
             $line = Line::findOne(['name' => $line_name]);
             if (is_null($line)) {
-                var_dump($line_name);
+                continue;
             }
             $line->photo_tmp = $photo_tmp;
             $line->photo_name = $photo_tmp;
