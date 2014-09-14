@@ -37,6 +37,10 @@ use yii\helpers\Url;
  * @property integer[] $old_line_ids
  * @property integer[] $color_ids
  * @property integer[] $old_color_ids
+ * @property integer[] $installation_ids
+ * @property integer[] $old_installation_ids
+ * @property integer[] $installation_product_ids
+ * @property integer[] $old_installation_product_ids
  *
  * @property InteractiveProduct[] $interactiveProducts
  * @property LineProduct[] $lineProducts
@@ -50,6 +54,8 @@ use yii\helpers\Url;
  * @property Shop $shop
  * @property PhotoGallery[] $photoGalleries
  * @property ProductColor[] $productColors
+ * @property ProductInstallation[] $productInstallations
+ * @property ProductInstallationProduct[] $productInstallationProducts
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -58,6 +64,10 @@ class Product extends \yii\db\ActiveRecord
     public $old_line_ids = [];
     public $color_ids = [];
     public $old_color_ids = [];
+    public $installation_ids = [];
+    public $old_installation_ids = [];
+    public $installation_product_ids = [];
+    public $old_installation_product_ids = [];
     public $photo_tmp;
     public $photo_name;
     public $manual_tmp;
@@ -84,7 +94,7 @@ class Product extends \yii\db\ActiveRecord
 
             [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion', 'is_published'], 'integer'],
             [['article', 'name', 'description', 'canonical', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
-            [['line_ids', 'color_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
+            [['line_ids', 'color_ids', 'installation_ids', 'installation_product_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
             [['article'], 'unique', 'targetAttribute' => ['shop_id', 'article'], 'message' => 'Товар с указанным артикулом уже существует.']
 
         ];
@@ -107,6 +117,8 @@ class Product extends \yii\db\ActiveRecord
             'category_name' => 'Категория', //Yii::t('app', 'Category ID'),
             'line_ids' => 'Линии',
             'color_ids' => 'Покрытия',
+            'installation_ids' => 'Способ монтажа',
+            'installation_product_ids' => 'Монтажные элементы и комплектующие',
             'photo.fileShowLink' => 'Фото',
             'photo_id' => 'Фото',
             'manual.fileShowLink' => 'Инструкция',
@@ -169,6 +181,8 @@ class Product extends \yii\db\ActiveRecord
         if ($this->use_related_ids) {
             $this->saveLines();
             $this->saveColors();
+            $this->saveInstallations();
+            $this->saveInstallationProducts();
         }
         parent::afterSave($insert, $changedAttributes);
     }
@@ -194,6 +208,12 @@ class Product extends \yii\db\ActiveRecord
         if ($this->getPriceProduct()->count() != 0) {
             $errors[] = 'Стоимость товара';
         }
+        if ($this->getProductInstallations()->count() != 0) {
+            $errors[] = 'Способы монтажа';
+        }
+        if ($this->getProductInstallationProducts()->count() != 0) {
+            $errors[] = 'Монтажные элементы и комплектующие';
+        }
         if (!empty($errors)) {
             $this->addError('id', 'Нельзя удалить, т.к. есть закрепленные ' . implode(', ', $errors));
             return false;
@@ -209,6 +229,8 @@ class Product extends \yii\db\ActiveRecord
         $this->use_related_ids = 1;
         $this->prepareLines();
         $this->prepareColors();
+        $this->prepareInstallations();
+        $this->prepareInstallationProducts();
     }
 
 
@@ -276,6 +298,68 @@ class Product extends \yii\db\ActiveRecord
 
 
     /**
+     * Вытаскивает все способы монтажа товара
+     */
+    public function prepareInstallations()
+    {
+        $product_installations = ProductInstallation::findAll(['product_id' => $this->id]);
+        $installation_ids = [];
+        foreach ($product_installations as $product_installation) {
+            $installation_ids[] = $product_installation->installation_id;
+        }
+        $this->installation_ids = $installation_ids;
+        $this->old_installation_ids = $installation_ids;
+    }
+
+    /**
+     * Сохраняет разницу в выбранных способах монтажа
+     */
+    public function saveInstallations()
+    {
+        $installation_ids = $this->installation_ids == "" ? [] : $this->installation_ids;
+        $diff_delete = array_diff($this->old_installation_ids, $installation_ids);
+        $diff_insert = array_diff($installation_ids, $this->old_installation_ids);
+        Productinstallation::deleteAll(['product_id' => $this->id, 'installation_id' => $diff_delete]);
+        foreach ($diff_insert as $installation_id) {
+            $pi = new Productinstallation();
+            $pi->product_id = $this->id;
+            $pi->installation_id = $installation_id;
+            $pi->save();
+        }
+    }
+
+    /**
+     * Вытаскивает все Монтажные элементы и комплектующие товара
+     */
+    public function prepareInstallationProducts()
+    {
+        $product_installation_products = ProductInstallationProduct::findAll(['product_id' => $this->id]);
+        $installation_product_ids = [];
+        foreach ($product_installation_products as $product_installation_product) {
+            $installation_product_ids[] = $product_installation_product->installation_product_id;
+        }
+        $this->installation_product_ids = $installation_product_ids;
+        $this->old_installation_product_ids = $installation_product_ids;
+    }
+
+    /**
+     * Сохраняет разницу в выбранных Монтажных элементах и комплектующих
+     */
+    public function saveInstallationProducts()
+    {
+        $installation_product_ids = $this->installation_product_ids == "" ? [] : $this->installation_product_ids;
+        $diff_delete = array_diff($this->old_installation_product_ids, $installation_product_ids);
+        $diff_insert = array_diff($installation_product_ids, $this->old_installation_product_ids);
+        ProductInstallationProduct::deleteAll(['product_id' => $this->id, 'installation_product_id' => $diff_delete]);
+        foreach ($diff_insert as $installation_product_id) {
+            $pip = new ProductInstallationProduct();
+            $pip->product_id = $this->id;
+            $pip->installation_product_id = $installation_product_id;
+            $pip->save();
+        }
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getInteractiveProducts()
@@ -305,6 +389,14 @@ class Product extends \yii\db\ActiveRecord
     public function getProductColors()
     {
         return $this->hasMany(ProductColor::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductInstallations()
+    {
+        return $this->hasMany(ProductInstallation::className(), ['product_id' => 'id']);
     }
 
     /**
@@ -379,6 +471,7 @@ class Product extends \yii\db\ActiveRecord
     {
         /**
          * @TODO нет связи в БД
+         * @TODO добавить type?
          */
         return $this->hasMany(PhotoGallery::className(), ['object_id' => 'id']);
     }
@@ -410,13 +503,22 @@ class Product extends \yii\db\ActiveRecord
             ->andWhere([ShowWith::tableName() . '.type' => ShowWith::TYPE_PRODUCT]);
     }
 
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductInstallationProducts()
+    {
+        return $this->hasMany(ProductInstallationProduct::className(), ['product_id' => 'id']);
+    }
+
     /**
      * Возвращает ДхШхВ товара
      * @return string
      */
     public function getLwh()
     {
-        return $this->length . ' x ' . $this->width . ' x ' . $this->height ;
+        return $this->length . ' x ' . $this->width . ' x ' . $this->height;
     }
 
 

@@ -3,15 +3,14 @@
 use app\models\Category;
 use app\models\Collection;
 use app\models\Color;
+use app\models\Installation;
 use app\models\Line;
 use app\models\LineProduct;
+use app\models\Product;
 use app\models\Shop;
-use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadUI;
 use yii\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /**
@@ -30,6 +29,17 @@ use yii\widgets\ActiveForm;
     $selected_lines = ArrayHelper::map(LineProduct::find()->andWhere(['product_id' => $model->id])->all(), 'id', 'line_id');
     $category_array = ArrayHelper::map(Category::byLineIds($model->shop_id, $selected_lines), 'id', 'name');
     $colors_array = ArrayHelper::map(Color::find()->all(), 'id', 'name');
+    $installations_array = ArrayHelper::map(Installation::find()->all(), 'id', 'name');
+
+    $name_article = function ($product, $defaultValue) {
+        return $product->article . ' ' . $product->name;
+    };
+    $ip_query = Product::find()->byShop($model->shop_id);
+    if (!$model->isNewRecord) {
+        $ip_query->andWhere(['not in', 'id', [$model->id]]);
+    }
+    $installation_products = $ip_query->all();
+    $installation_products_array = ArrayHelper::map($installation_products, 'id', $name_article);
     ?>
     <?php ?>
 
@@ -64,6 +74,26 @@ use yii\widgets\ActiveForm;
         'options' => [
             'class' => 'form-control',
             'data-placeholder' => 'Выберите покрытия',
+        ]
+    ]) ?>
+
+    <?=
+    $form->field($model, 'installation_ids')->widget(Chosen::className(), [
+        'multiple' => true,
+        'items' => $installations_array,
+        'options' => [
+            'class' => 'form-control',
+            'data-placeholder' => 'Выберите способы монтажа',
+        ]
+    ]) ?>
+
+    <?=
+    $form->field($model, 'installation_product_ids')->widget(Chosen::className(), [
+        'multiple' => true,
+        'items' => $installation_products_array,
+        'options' => [
+            'class' => 'form-control',
+            'data-placeholder' => 'Выберите монтажные элементы и комплектующие',
         ]
     ]) ?>
 

@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div><span class="attribute">Д х Ш х В:</span><span class="product-lwh"></span></div>
             <div><span class="attribute">Цвет:</span> <span class="product-color"></span></div>
             <div><span class="attribute">Страна:</span> <span class="product-country"></span></div>
-            <div><span class="attribute">Монтаж:</span> ????</div>
+            <div><span class="attribute">Монтаж:</span> <span class="product-installation"></span></div>
         </div>
         <div class="text product-description"></div>
         <div class="price">Стоимость<span class="product-price">???</span></div>

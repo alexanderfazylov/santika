@@ -84,6 +84,7 @@ function setFancyBoxData(product) {
     $owner.find('.product-description').text(product.description);
     $owner.find('.product-price').text(product.price);
     $owner.find('.product-country').text(product.country);
+    $owner.find('.product-installation').text(product.installation);
 }
 
 /**

@@ -89,6 +89,20 @@ $this->title = $shop->name;
         </div>
     </div>
 
+    <div class="b-services">
+        <ul class="b-services__items">
+            <li class="b-services__item">
+                <img class="b-services__image" src="i/serv1.jpg">
+            </li>
+            <li class="b-services__item">
+                <img class="b-services__image" src="i/serv2.jpg">
+            </li>
+            <li class="b-services__item">
+                <img class="b-services__image" src="i/serv3.jpg">
+            </li>
+        </ul>
+    </div>
+
     <?= $this->render('/site/_services'); ?>
 
 </div>

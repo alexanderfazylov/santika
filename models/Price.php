@@ -193,8 +193,8 @@ class Price extends \yii\db\ActiveRecord
                     if (is_null($product)) {
                         $product = new Product();
                         $product->shop_id = $this->shop_id;
-                        $product->name = 'Новый покрыттовар';
-                        $product->description = 'Новый покрыттовар';
+                        $product->name = 'Новый товар';
+                        $product->description = 'Новый товар';
                         $product->article = $product_article;
                         $product->is_published = 0;
                         if ($product->save()) {

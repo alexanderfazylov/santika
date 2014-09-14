@@ -152,6 +152,8 @@ class CatalogController extends ThemedController
             ->published()
             ->with([
                 'productColors.color',
+                'productInstallationProducts.installationProduct',
+                'productInstallationProducts.installationProduct.photo',
                 'photoGalleries' => function ($q) use ($color_id) {
                         $q->andWhere(['type' => PhotoGallery::TYPE_PRODUCT]);
                         $q->andWhere(['color_id' => $color_id]);
@@ -217,7 +219,7 @@ class CatalogController extends ThemedController
          * @var Product $product
          */
         $product = Product::find()
-            ->with(['photo', 'productColors.photo'])
+            ->with(['photo', 'productColors.photo', 'productInstallations'])
             ->andWhere([Product::tableName() . '.id' => $product_id])
             ->one();
         if (!is_null($product)) {
@@ -225,6 +227,11 @@ class CatalogController extends ThemedController
             $colors = [];
             foreach ($product->productColors as $pc) {
                 $colors[$pc->color_id] = $pc->color->name;
+            }
+
+            $installations = [];
+            foreach ($product->productInstallations as $pi) {
+                $installations[$pi->installation_id] = $pi->installation->name;
             }
 
             $shop_id = Shop::getIdFromUrl();
@@ -245,6 +252,7 @@ class CatalogController extends ThemedController
                 'link' => (!empty($line_url) ? $product->createUrlByLine($line_url) : $product->canonical),
                 'price' => !is_null($price_product) ? $price_product->cost_rub . ' р.' : '',
                 'country' => 'Италия', //@TODO сделать через Shop
+                'installation' => implode(', ', $installations)
             ];
             $result = ['status' => 'success', 'product' => $product_info];
         } else {

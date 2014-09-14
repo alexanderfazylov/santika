@@ -117,29 +117,24 @@ $this->params['breadcrumbs'][] = $this->title;
             <a href="">Связаться с менеджером</a>
         </div>
     </div>
-    <div class="b-components">
-        <div class="title">Монтажные элементы<br>и комплектующие</div>
-        <ul>
-            <li>
-                <img src="/i/component1.jpg">
+    <?php if ($product->getProductInstallationProducts()->count()): ?>
+        <div class="b-components">
+            <div class="title">Монтажные элементы<br>и комплектующие</div>
+            <ul>
+                <?php foreach ($product->productInstallationProducts as $pip): ?>
+                    <li>
+                        <?php $installation_product = $pip->installationProduct; ?>
+                        <img src="<?= $installation_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"/>
 
-                <div class="descr">
-                    <a href="">Внешние части со встроенным
-                        изливом. Длина 150 мм.</a>
-                    <span class="art">Art. 33682</span>
-                </div>
-            </li>
-            <li>
-                <img src="/i/component2.jpg">
-
-                <div class="descr">
-                    <a href="">Внутренний элемент для смесителя
-                        с изливом.</a>
-                    <span class="art">Art. 33682</span>
-                </div>
-            </li>
-        </ul>
-    </div>
+                        <div class="descr">
+                            <a href="<?= $installation_product->canonical; ?> "><?= $installation_product->name; ?></a>
+                            <span class="art">Art. <?= $installation_product->article; ?></span>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
     <div class="b-producer">
         <div class="b-producer__wrap">
@@ -161,31 +156,33 @@ $this->params['breadcrumbs'][] = $this->title;
         <img src="/images/producer3.jpg" class="img" alt=""/>
         <img src="/images/producer4.jpg" class="img" alt=""/>
     </div>
-    <div class="b-carusel">
-        <div class="title">
-            Сопутствующие товары
+    <?php if (count($other_products)): ?>
+        <div class="b-carusel">
+            <div class="title">
+                Сопутствующие товары
+            </div>
+            <div class="gallery">
+                <ul>
+                    <?php foreach ($other_products as $other_product) : ?>
+                        <li>
+                            <div class="image">
+                                <img src="<?= $other_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"
+                                     alt=""/>
+                            </div>
+                            <div class="descr">
+                                <span><?= 'ART. ' . $other_product->article; ?></span>
+                                <?= $other_product->description; ?>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="nav">
+                <button class="prev"></button>
+                <button class="next"></button>
+            </div>
         </div>
-        <div class="gallery">
-            <ul>
-                <?php foreach ($other_products as $other_product) : ?>
-                    <li>
-                        <div class="image">
-                            <img src="<?= $other_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>" alt=""/>
-                        </div>
-                        <div class="descr">
-                            <span><?= 'ART. ' . $other_product->article; ?></span>
-                            <?= $other_product->description; ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <div class="nav">
-            <button class="prev"></button>
-            <button class="next"></button>
-        </div>
-    </div>
-
+    <?php endif; ?>
     <?= $this->render('/site/_services'); ?>
 
 </div>

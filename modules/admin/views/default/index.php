@@ -21,5 +21,6 @@ echo Menu::widget([
         ['label' => 'Интерактивные фото линий', 'url' => ['/admin/interactive', 'type' => Interactive::TYPE_LINE]],
         ['label' => 'Интерактивные фото коллекций', 'url' => ['/admin/interactive', 'type' => Interactive::TYPE_COLLECTION]],
         ['label' => 'Отображать на странице', 'url' => ['/admin/show-with/product']],
+        ['label' => 'Способ монтажа', 'url' => ['/admin/installation']],
     ]
 ]);
