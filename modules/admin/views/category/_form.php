@@ -4,7 +4,7 @@ use app\models\Category;
 use app\models\Line;
 use app\models\LineCategory;
 use app\models\Shop;
-use yii\chosen\Chosen;
+use nex\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

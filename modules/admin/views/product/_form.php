@@ -8,7 +8,7 @@ use app\models\Line;
 use app\models\LineProduct;
 use app\models\Product;
 use app\models\Shop;
-use yii\chosen\Chosen;
+use nex\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
