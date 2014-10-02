@@ -250,3 +250,8 @@ a.desc:after {
 /**
 * инфо о товаре на странице интерьерного фото конец
 */
+
+
+.blueimp-gallery-carousel{
+    box-shadow: none !important;
+}

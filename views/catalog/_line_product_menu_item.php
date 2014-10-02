@@ -20,7 +20,7 @@ use app\models\Upload;
      parent_type="<?= $parent_type; ?>"
      parent_id="<?= $parent_id ?>">
     <?php if (count($models) > 0) : ?>
-        <div class="gallery">
+        <div class="gallery catalog-gallery">
             <ul>
                 <?php foreach ($models as $model): ?>
                     <li class="<?= $model->getChilds()->count() > 0 ? 'has_childs' : ''; ?>"
@@ -28,18 +28,46 @@ use app\models\Upload;
                         object_id="<?= $model->id ?>"
                         hide_level="<?= 'level' . ($level + 1) ?>"
                         >
-                        <a href="<?= $model->urlToFilter();  ?>">
+                        <a href="<?= $model->urlToFilter(); ?>">
                             <?php $src = !empty($model->photo_id) ? $model->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
                             <div><img src="<?= $src; ?>"></div>
                             <?= $model->name; ?>
                         </a>
+
+
+                        <?
+                        //Oksana, добавила вложенный список, в нем дб элементы этой коллекции
+                        ?>
+
+                        <div class="subgallery">
+                            <ul>
+
+                                <?php foreach ($models as $model): ?>
+                                    <li class="<?= $model->getChilds()->count() > 0 ? 'has_childs' : ''; ?>"
+                                        object_type="<?= $object_type ?>"
+                                        object_id="<?= $model->id ?>"
+                                        hide_level="<?= 'level' . ($level + 1) ?>"
+                                        >
+                                        <a href="<?= $model->urlToFilter(); ?>">
+                                            <?php $src = !empty($model->photo_id) ? $model->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
+                                            <div><img src="<?= $src; ?>"></div>
+                                            <?= $model->name; ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+
+                            </ul>
+
+                        </div>
+
+
                     </li>
                 <?php endforeach; ?>
-            </ul>
-            <div class="nav">
-                <button class="prev"></button>
-                <button class="next"></button>
-            </div>
+<!--            </ul>-->
+<!--            <div class="nav">-->
+<!--                <button class="prev"></button>-->
+<!--                <button class="next"></button>-->
+<!--            </div>-->
         </div>
         <div>
             <?php foreach ($models as $model): ?>

@@ -47,7 +47,7 @@ $lines = Line::find()->byShop($shop_id)->all();
     </header>
     <!-- .header-->
 
-    <div class="b-panel-r">
+    <div class="b-panel-r" style="display: none">
         <div class="b-panel-r__wrap">
             <ul class="b-menu-right">
                 <li><a href="">Компания</a></li>

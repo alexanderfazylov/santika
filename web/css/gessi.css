@@ -83,7 +83,6 @@ body {
 }
 .b-panel-r:before {
     content: "";
-    display: none;
     position: absolute;
     z-index: 100;
     top: 0;
@@ -93,11 +92,11 @@ body {
     background-color: rgba(0, 0, 0, 0.25);
 }
 .b-panel-r__wrap {
-    width: 370px;
+    width: 75%;
     position: absolute;
     z-index: 5000;
-    right: -370px;
-    top: 0;
+    right: -75%;
+    top: 80px;
     bottom: 0;
     background-color: #000;
 }
@@ -257,12 +256,12 @@ body {
 }
 .b-services__item__wrap {
     width: 300px;
-    padding: 50px 0 0 90px;
-    padding-bottom: 30px;
+    padding: 50px 0 50px 90px;
+    display: block;
 }
 .b-services__item__wrap:after {
     content: "";
-    display: block;
+    display: none;
     position: absolute;
     width: 15px;
     height: 15px;
@@ -484,6 +483,11 @@ body {
     text-decoration: none;
     color: #000;
     float: right;
+}
+@media screen and (max-width: 1130px) {
+    .app-product .b-navigation a {
+        width: 200px;
+    }
 }
 .app-product .b-navigation a.back {
     float: left;
@@ -1109,6 +1113,7 @@ body {
     border-bottom: #fff 1px solid;
     position: relative;
     overflow: hidden;
+    height: 360px;
 }
 .app-catalog .b-catalog__item--left:after {
     content: "";
@@ -1133,6 +1138,7 @@ body {
     width: 45%;
     max-height: 100%;
     border-left: #fff 1px solid;
+    max-width: 800px;
 }
 .app-catalog .b-catalog__item--left .b-catalog__item__image img {
     float: none;
@@ -1151,6 +1157,7 @@ body {
     border-bottom: #fff 1px solid;
     position: relative;
     overflow: hidden;
+    height: 360px;
 }
 .app-catalog .b-catalog__item--right:after {
     content: "";
@@ -1175,6 +1182,7 @@ body {
     width: 45%;
     max-height: 100%;
     border-right: #fff 1px solid;
+    max-width: 800px;
 }
 .app-catalog .b-catalog__item--right .b-catalog__item__image img {
     float: none;
@@ -1183,7 +1191,7 @@ body {
 }
 .app-catalog .b-catalog__item--right .descr {
     margin-left: 45%;
-    padding: 50px 90px 30px 120px;
+    padding: 50px 90px 30px 80px;
     color: #fff;
 }
 .app-catalog .b-catalog__item--left .title,
@@ -1265,7 +1273,7 @@ body {
     text-align: center;
     width: 135px;
     text-transform: uppercase;
-    height: 38px;
+    height: 44px;
     line-height: 38px;
 }
 .app-catalog .b-catalog__filter .btn:hover {
@@ -1413,6 +1421,10 @@ body {
     margin-left: -15px;
     top: 50%;
     margin-top: -1px;
+}
+
+.blueimp-gallery{
+    box-shadow: none;
 }
 .app-collection .blueimp-gallery .prev,
 .app-collection .blueimp-gallery .next {
@@ -1877,4 +1889,60 @@ body {
 #fancybox-close:hover:before,
 #fancybox-close:hover:after {
     border-color: #52443b;
+}
+
+
+/*  Oksana  */
+
+.b-carusel .subgallery{
+    display: none;
+}
+
+.catalog-gallery li{
+    padding-bottom: 10px;
+    z-index: 10;
+    border-color: #52443b;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+
+}
+
+.catalog-gallery li a {
+    display: block;
+    height: 180px;
+}
+
+
+.catalog-gallery li:hover{
+    top: 10px;
+    margin: 0 0 0 -1px;
+    border-bottom: red;
+    border-width: 0 1px 0 1px;
+    border-color: #52443b;
+    border-style: solid;
+
+}
+
+
+.catalog-gallery{
+    top: 10px
+}
+
+.b-carusel li:hover .subgallery{
+    display: block;
+    position: absolute;
+    width: 40000px;
+    border-width: 0 0 1px 0;
+    border-color: #52443b;
+    border-style: solid;
+    left: 0;
+    top: 180px;
+    height: 190px;
+    overflow: hidden;
+    overflow: hidden;
+}
+
+.catalog-gallery .subgallery li{
+    float: left;
+    border: none;
 }

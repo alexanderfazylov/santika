@@ -17,7 +17,7 @@ function InteractivePoint(options, data_index) {
     that.top_percent = options.top_percent;
     that.top = image_position.top + $image.height() * that.top_percent / 100;
     /**
-     * @TODO обьновлять положение точек при изменении размера окна
+     * @TODO обновлять положение точек при изменении размера окна
      */
     var $div = $('<div></div>')
             .attr('id', 'point_' + that.id)
@@ -166,8 +166,34 @@ $(function () {
  */
 $(function () {
     $('.menu').click(function () {
-        $('.b-panel-r').toggleClass('menu-visible');
+
+        $('.b-panel-r').show();
+
+        $('.b-panel-r__wrap').animate({
+            "right": 0
+        });
+
+
+        $('.content').animate({
+            "left":"-30%"
+        })
+
         return false;
+    });
+});
+
+
+$(function () {
+    $('.b-panel-r').click(function () {
+
+        $('.b-panel-r__wrap').animate({
+            "right": "-75%"
+        }, 500, function(){$('.b-panel-r').hide()});
+
+        $('.content').animate({
+            "left":"0"
+        })
+
     });
 });
 

@@ -46,10 +46,6 @@ $this->title = $shop->name;
                 <?= $shop->short_about; ?>
             </div>
         </div>
-        <div class="b-about__reg">
-            Зарегистрируйтесь, чтобы получать уникальные предложения на покупку сантехники
-            <a class="b-about__reg__link" href="">Связаться с менеджером</a>
-        </div>
     </div>
 
     <?php if (count($products) > 0): ?>
