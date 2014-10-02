@@ -258,6 +258,7 @@ body {
     width: 300px;
     padding: 50px 0 50px 90px;
     display: block;
+    text-decoration: none;
 }
 .b-services__item__wrap:after {
     content: "";
