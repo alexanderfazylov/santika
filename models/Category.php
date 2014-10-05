@@ -106,7 +106,7 @@ class Category extends \yii\db\ActiveRecord
         /**
          * @TODO при поиске в админке выполняются эти функции., мб придумать что то другое?
          */
-        $this->saveFileFromAttribute('photo', Upload::TYPE_PRODUCT);
+        $this->saveFileFromAttribute('photo', Upload::TYPE_CATEGORY);
         $this->url = Inflector::slug($this->name);
         return parent::beforeValidate();
     }

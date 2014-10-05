@@ -26,6 +26,8 @@ class Upload extends \yii\db\ActiveRecord
     const TYPE_INTERACTIVE = 3;
     const TYPE_PRICE = 4;
     const TYPE_LINE = 5;
+    const TYPE_CATEGORY = 6;
+    const TYPE_COLLECTION = 7;
 
     const SIZE_ORIGIN = '';
     const SIZE_SQUARE_245 = 'square_245';
@@ -177,6 +179,12 @@ class Upload extends \yii\db\ActiveRecord
             case static::TYPE_LINE:
                 $dir = 'line';
                 break;
+            case static::TYPE_COLLECTION:
+                $dir = 'collection';
+                break;
+            case static::TYPE_CATEGORY:
+                $dir = 'category';
+                break;
         }
         return $dir;
     }
@@ -259,6 +267,8 @@ class Upload extends \yii\db\ActiveRecord
             static::TYPE_PRICE,
             static::TYPE_COLOR,
             static::TYPE_INTERACTIVE,
+            static::TYPE_COLLECTION,
+            static::TYPE_CATEGORY,
         ];
     }
 

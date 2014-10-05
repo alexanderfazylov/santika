@@ -34,3 +34,5 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
+#github auth
+auth.json
