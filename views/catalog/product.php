@@ -43,26 +43,35 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 
-    <div class="blueimp-gallery-container">
-        <?php
-        $items = [];
-        foreach ($product->photoGalleries as $photo_gallery) {
-            $items[] = [
-//                'title' => $product->name,
-                'href' => $photo_gallery->upload->getFileShowUrl(Upload::SIZE_SQUARE_510),
-            ];
-        }
-        ?>
-        <?=
-        Carousel::widget([
-            'items' => $items,
-            'json' => true,
-            'clientOptions' => [
-
-            ]
-        ]);?>
-    </div>
-
+    <?php
+    $photos = [];
+    foreach ($product->photoGalleries as $photo_gallery) {
+        $photos[] = [
+            $photo_gallery->upload->getFileShowUrl(Upload::SIZE_SQUARE_510),
+        ];
+    }
+    ?>
+    <?php if (count($photos) > 0): ?>
+        <div class="b-carusel">
+            <div class="gallery">
+                <ul>
+                    <?php foreach ($photos as $photo): ?>
+                        <li>
+                            <div class="image"> <?= Html::a(Html::img($photo), $product->canonical); ?></div>
+                            <div class="descr">
+                                <span><?= 'Art. ' . $product->article; ?></span>
+                                <?= $product->name; ?>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+            <div class="nav">
+                <button class="prev"></button>
+                <button class="next"></button>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="b-product">
         <div class="b-product__description">
             <div class="b-product__name">
