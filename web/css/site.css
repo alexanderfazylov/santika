@@ -190,7 +190,6 @@ a.desc:after {
 .app-rzd .b-rzd__menu .gallery {
     overflow: unset !important;
     height: 129px;
-    border-bottom: 1px solid #000;
 }
 
 .app-rzd .b-rzd__menu .gallery li.active {
@@ -198,9 +197,10 @@ a.desc:after {
 
 .app-rzd .b-rzd__menu .gallery li.active.has_childs {
     background-color: #fff;
-    height: 230px !important;
+    height: 204px !important;
     border-left: 1px solid #967b6a;
     border-right: 1px solid #967b6a;
+    border-bottom: none;
     box-sizing: border-box;
 }
 
@@ -221,7 +221,6 @@ a.desc:after {
 }
 
 .b-rzd__menu .b-carusel .gallery {
-    padding: 0 0 100px;
 }
 
 .b-rzd__menu .b-carusel li {
