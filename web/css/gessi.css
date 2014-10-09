@@ -1957,6 +1957,7 @@ body {
     box-shadow: none;
     width: 4px;
     height: 4px;
+    margin: 6px 5px 0;
     border: 0;
     background-color: #967b6a;
 }
@@ -1964,8 +1965,13 @@ body {
 .blueimp-gallery>.indicator>li.active:after {
     content: " ";
     display: block;
-    width: 6px;
-    height: 6px;
+    width: 14px;
+    height: 14px;
     outline: 1px solid #967b6a;
-    margin-left: -6;
+    margin: -2px;
+}
+
+.blueimp-gallery>.indicator>li.active {
+    background-color: #967b6a;
+
 }
