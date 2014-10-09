@@ -1946,3 +1946,26 @@ body {
     float: left;
     border: none;
 }
+
+.blueimp-gallery>.play-pause {
+    display: none;
+}
+
+.blueimp-gallery>.indicator>li {
+    opacity: 1;
+    border-radius: 0;
+    box-shadow: none;
+    width: 4px;
+    height: 4px;
+    border: 0;
+    background-color: #967b6a;
+}
+
+.blueimp-gallery>.indicator>li.active:after {
+    content: " ";
+    display: block;
+    width: 6px;
+    height: 6px;
+    outline: 1px solid #967b6a;
+    margin-left: -6;
+}
