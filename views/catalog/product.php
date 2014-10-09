@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($product->productInstallationProducts as $pip): ?>
                     <li>
                         <?php $installation_product = $pip->installationProduct; ?>
-                        <img src="<?= $installation_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"/>
+                        <a href="<?= $installation_product->canonical; ?> "><img src="<?= $installation_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"/></a>
 
                         <div class="descr">
                             <a href="<?= $installation_product->canonical; ?> "><?= $installation_product->name; ?></a>
