@@ -1955,8 +1955,8 @@ body {
     opacity: 1;
     border-radius: 0;
     box-shadow: none;
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
     margin: 6px 5px 0;
     border: 0;
     background-color: #967b6a;
@@ -1966,8 +1966,8 @@ body {
     content: " ";
 
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 10px;
+    height: 10px;
     outline: 1px solid #967b6a;
     margin: -2px;
 }
