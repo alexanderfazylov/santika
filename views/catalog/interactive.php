@@ -7,11 +7,11 @@
  * @var Line|Collection $model
  * @var Interactive[] $intaractives
  */
+use app\components\SantikaCarousel;
 use app\models\Collection;
 use app\models\Interactive;
 use app\models\Line;
 use app\models\Upload;
-use dosamigos\gallery\Carousel;
 use newerton\fancybox\FancyBoxAsset;
 use yii\helpers\Url;
 use yii\web\JsExpression;
@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
     <?=
-    Carousel::widget([
+    SantikaCarousel::widget([
         'items' => $items,
         'json' => true,
         'clientOptions' => [
@@ -64,23 +64,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="b-collection__descr">
         <div class="title"><?= $model->name; ?></div>
         <div class="text">
-            ??? Специально для любителей утонченных вещей, фабрика Gessi выпустила серию
-            аксессуаров для ванной комнаты, в число которых входят несколько смесителей.
-            Любую деталь интерьера дизайнеры Gessi могут с легкостью переосмыслить
-            и вынести ее под таким углом, что невольно восхищаешься их творческим
-            потенциалом.
+            <?= $model->left_description; ?>
         </div>
         <div class="text right">
-            ??? Смесители Gessi Mimi не исключение. Лишь посмотрев на один из них, можно прийти
-            в восторг от красоты, вроде совсем непримечательной и обыденной, на первый взгляд
-            вещи. Вся конструкция очень изящна, грани отточены и миниатюрны.
+            <?= $model->right_description; ?>
         </div>
         <div class="all">
             <?php if ($type == Interactive::TYPE_LINE): ?>
-                <a href="<?= Url::to(['/catalog/filter/', 'line_url' => $model->url]); ?>" class="btn">Перейти к
-                    линии</a>
+                <a href="<?= Url::to(['/catalog/filter/', 'line_url' => $model->url]); ?>"
+                   class="btn">Перейти к линии</a>
             <?php else: ?>
-                <a href="<?= Url::to(['filter', 'collection_url' => $model->url]); ?>"
+                <a href="<?= Url::to(['/catalog/filter', 'collection_url' => $model->url]); ?>"
                    class="btn">Перейти к коллекции</a>
             <?php endif ?>
         </div>
@@ -102,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div><span class="attribute">Монтаж:</span> <span class="product-installation"></span></div>
         </div>
         <div class="text product-description"></div>
-        <div class="price">Стоимость<span class="product-price">???</span></div>
+        <div class="price">Стоимость<span class="product-price"></span></div>
         <a href="" class="add product-link">Дополнительная информация</a>
     </div>
 </div>

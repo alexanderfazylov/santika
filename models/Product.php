@@ -68,6 +68,9 @@ class Product extends \yii\db\ActiveRecord
     public $old_installation_ids = [];
     public $installation_product_ids = [];
     public $old_installation_product_ids = [];
+    /**
+     * @TODO Сделать обертку над $src = !empty($product->photo_id) ? $product->photo->getFileShowUrl($size) : Upload::defaultFileUrl($size)
+     */
     public $photo_tmp;
     public $photo_name;
     public $manual_tmp;

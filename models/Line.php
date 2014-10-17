@@ -16,6 +16,8 @@ use yii\helpers\Url;
  * @property integer $shop_id
  * @property string $name
  * @property string $description
+ * @property string $left_description
+ * @property string $right_description
  * @property integer $sort
  * @property string $url
  * @property integer $photo_id
@@ -52,9 +54,10 @@ class Line extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shop_id', 'name', 'description', 'url'], 'required'],
+            [['shop_id', 'name', 'url'], 'required'],
             [['shop_id', 'sort', 'photo_id', 'catalog_photo_id'], 'integer'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [[ 'left_description', 'right_description', ], 'string', 'max' => 1000],
             [['photo_tmp', 'photo_name', 'catalog_photo_tmp', 'catalog_photo_name'], 'safe']
         ];
     }
@@ -66,11 +69,13 @@ class Line extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'shop_id' => 'Салон',
             'shop.name' => 'Салон',
-            'name' => 'Название', //Yii::t('app', 'Name'),
-            'description' => 'Описание', //Yii::t('app', 'Description'),
-            'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
+            'name' => 'Название',
+            'description' => 'Описание',
+            'left_description' => 'Описание (левый столбец)',
+            'right_description' => 'Описание (правый столбец)',
+            'sort' => 'Сортировка',
             'url' => Yii::t('app', 'Url'),
             'photo.fileShowLink' => 'Фото',
             'photo_id' => 'Фото',

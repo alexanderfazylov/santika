@@ -20,7 +20,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'description')->textarea(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'left_description')->textarea(['maxlength' => 1000]) ?>
+
+    <?= $form->field($model, 'right_description')->textarea(['maxlength' => 1000]) ?>
 
     <!--    --><?php //= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
 

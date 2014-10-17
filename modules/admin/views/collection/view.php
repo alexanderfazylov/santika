@@ -37,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'parent.name',
             'description',
+            'left_description',
+            'right_description',
             'show_in_catalog',
             'photo.fileShowLink:raw',
             'catalog_photo.fileShowLink:raw',

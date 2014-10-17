@@ -16,6 +16,8 @@ use yii\helpers\Url;
  * @property integer $shop_id
  * @property string $name
  * @property string $description
+ * @property string $left_description
+ * @property string $right_description
  * @property integer $sort
  * @property string $url
  * @property string $meta_title
@@ -54,10 +56,11 @@ class Collection extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shop_id', 'name', 'description', 'url'], 'required'],
+            [['shop_id', 'name', 'url'], 'required'],
             [['shop_id', 'sort', 'parent_id', 'photo_id', 'catalog_photo_id', 'show_in_catalog'], 'integer'],
             [['parent_id'], 'checkParentId'],
             [['name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
+            [[ 'left_description', 'right_description', ], 'string', 'max' => 1000],
             [['photo_tmp', 'photo_name', 'catalog_photo_tmp', 'catalog_photo_name'], 'safe']
         ];
     }
@@ -83,11 +86,13 @@ class Collection extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'shop_id' => 'Салон', //Yii::t('app', 'Shop ID'),
+            'shop_id' => 'Салон',
             'shop.name' => 'Салон',
-            'name' => 'Название', //Yii::t('app', 'Name'),
-            'description' => 'Описание', //Yii::t('app', 'Description'),
-            'sort' => 'Сортировка', //Yii::t('app', 'Sort'),
+            'name' => 'Название',
+            'description' => 'Описание',
+            'left_description' => 'Описание (левый столбец)',
+            'right_description' => 'Описание (правый столбец)',
+            'sort' => 'Сортировка',
             'parent_id' => 'Родительская коллекция',
             'parent_name' => 'Родительская коллекция',
             'parent.name' => 'Родительская коллекция',

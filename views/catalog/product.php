@@ -13,12 +13,12 @@
  * @var PriceProduct $price_product
  * @var integer $color_id
  */
+use app\components\SantikaCarousel;
 use app\models\Category;
 use app\models\Line;
 use app\models\PriceProduct;
 use app\models\Product;
 use app\models\Upload;
-use dosamigos\gallery\Carousel;
 use yii\helpers\Html;
 
 
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         ?>
         <?=
-        Carousel::widget([
+        SantikaCarousel::widget([
             'items' => $items,
             'json' => true,
             'clientOptions' => [
@@ -124,7 +124,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php foreach ($product->productInstallationProducts as $pip): ?>
                     <li>
                         <?php $installation_product = $pip->installationProduct; ?>
-                        <a href="<?= $installation_product->canonical; ?> "><img src="<?= $installation_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"/></a>
+                        <?php $src = !empty($installation_product->photo_id) ? $installation_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
+                        <a href="<?= $installation_product->canonical; ?> ">
+                            <img src="<?= $src; ?>" alt=""/>
+                        </a>
 
                         <div class="descr">
                             <a href="<?= $installation_product->canonical; ?> "><?= $installation_product->name; ?></a>
@@ -143,13 +146,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="b-producer__descr">
-                <div class="title">Goccia</div>
-                <p>Gessi унитаз настенного монтажа (6 литров) из белой керамики Bianco Europa, интегрированный
-                    сифон. Сиденье Soft-close (плавное опускание), с боковыми заглушками отверстий, включены
-                    в 031 отделке, 147 отделка доступна по запросу.</p>
-
-                <p>Сантехника для ванной Gessi предлагает вам уникальный ассортимент дизайнерских
-                    продуктов для эстетов. Современные решения для ванной на все "случаи жизни".</p>
+                <div class="title"><?= nl2br($product->collection->name); ?></div>
+                <p><?= nl2br($product->description); ?></p>
             </div>
         </div>
         <img src="/images/producer2.jpg" class="img" alt=""/>
@@ -166,12 +164,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach ($other_products as $other_product) : ?>
                         <li>
                             <div class="image">
-                                <img src="<?= $other_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245); ?>"
-                                     alt=""/>
+                                <?php $src = !empty($other_product->photo_id) ? $other_product->photo->getFileShowUrl(Upload::SIZE_SQUARE_245) : Upload::defaultFileUrl(Upload::SIZE_SQUARE_245) ?>
+                                <img src="<?= $src; ?>" alt=""/>
                             </div>
                             <div class="descr">
                                 <span><?= 'ART. ' . $other_product->article; ?></span>
-                                <?= $other_product->description; ?>
+                                <?= $other_product->name; ?>
                             </div>
                         </li>
                     <?php endforeach; ?>

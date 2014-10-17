@@ -34,7 +34,11 @@ $collections_array = ArrayHelper::map($collections, 'id', 'name');
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'description')->textarea(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'left_description')->textarea(['maxlength' => 1000]) ?>
+
+    <?= $form->field($model, 'right_description')->textarea(['maxlength' => 1000]) ?>
 
     <?= $form->field($model, 'show_in_catalog')->checkbox() ?>
 
