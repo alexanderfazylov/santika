@@ -7,14 +7,15 @@ use yii\helpers\Html;
 /* @var $model app\models\Installation */
 
 $this->title = 'Способ монтажа';
-$this->params['breadcrumbs'][] = ['label' =>'Способы монтажа', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Способы монтажа', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="installation-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
     ]) ?>
 

@@ -9,7 +9,7 @@ use yii\grid\GridView;
  * @var app\models\search\LineCategorySearch $searchModel
  */
 
-$this->title ='Связь линия-категория';
+$this->title = 'Связь линия-категория';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="line-category-index">

@@ -52,7 +52,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     /**
      * Finds user by username
      *
-     * @param  string      $username
+     * @param  string $username
      * @return static|null
      */
     public static function findByUsername($username)
@@ -93,7 +93,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     /**
      * Validates password
      *
-     * @param  string  $password password to validate
+     * @param  string $password password to validate
      * @return boolean if password provided is valid for current user
      */
     public function validatePassword($password)

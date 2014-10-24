@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\db\BaseActiveRecord;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -67,6 +68,13 @@ class Upload extends \yii\db\ActiveRecord
             'ext' => Yii::t('app', 'Ext'),
             'thumbnail' => Yii::t('app', 'Thumbnail'),
             'type' => Yii::t('app', 'Type'),
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
         ];
     }
 
@@ -251,7 +259,9 @@ class Upload extends \yii\db\ActiveRecord
     {
         return Url::toRoute(['/default/file-show', 'id' => 0, 'size' => $size]);
     }
-    public function isFileExist(){
+
+    public function isFileExist()
+    {
         $file_path = $this->getFilePath();
         return file_exists($file_path);
     }

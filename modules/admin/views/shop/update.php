@@ -7,7 +7,7 @@ use yii\helpers\Html;
  * @var app\models\Shop $model
  */
 
-$this->title =  'Редактирование ' . $model->name;
+$this->title = 'Редактирование ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Салоны', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
     ]) ?>
 

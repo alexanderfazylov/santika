@@ -7,6 +7,7 @@ use app\modules\admin\components\AdminController;
 use Yii;
 use app\models\Category;
 use app\models\search\CategorySearch;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -108,7 +109,7 @@ class CategoryController extends AdminController
         Yii::$app->response->format = 'json';
         $model = $this->findModel($id);
         if ($model->delete()) {
-            return ['status' => 'success'];
+            return ['status' => 'success', 'location' => Url::to(['index'])];
         } else {
             return ['status' => 'error', 'messages' => $model->getErrors()];
         }

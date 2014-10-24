@@ -155,10 +155,13 @@ class PriceProductController extends AdminController
             $array = [];
         } else {
             if ($price->type == Price::TYPE_PRODUCT) {
+                /**
+                 * @TODO разобраться  PriceProduct в 2х моделях
+                 */
                 $query = Product::find()
                     ->byShop($shop_id)
                     ->with([
-                        'priceProduct' => function ($q) use ($price_id) {
+                        'priceProducts' => function ($q) use ($price_id) {
                                 //что бы выбрать только из нужного прайс-листа
                                 $q->andWhere(['price_id' => $price_id, 'color_id' => null]);
                             },
@@ -198,7 +201,7 @@ class PriceProductController extends AdminController
                         }
                     } else {
                         //у товара нет покрытий, поэтому цена берется из товара
-                        $price_exist = !empty($product->priceProduct);
+                        $price_exist = !empty($product->priceProducts);
                         /** @var PriceProduct $price_product */
                         $price_product = ($price_exist) ? $product->priceProduct[0] : null;
 

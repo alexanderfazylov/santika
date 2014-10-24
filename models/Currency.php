@@ -52,6 +52,13 @@ class Currency extends \yii\db\ActiveRecord
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
+
     public static function getEurValue($cdate = null)
     {
         if (is_null($cdate)) {

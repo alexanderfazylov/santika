@@ -16,7 +16,7 @@ class PriceSearch extends Price
     {
         return [
             [['id', 'shop_id', 'type'], 'integer'],
-            [['start_date','typeText'], 'safe'],
+            [['start_date', 'typeText'], 'safe'],
         ];
     }
 

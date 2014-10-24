@@ -54,6 +54,13 @@ class ShowWith extends \yii\db\ActiveRecord
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
+
     /**
      * Возвращает массив названий для типов
      * @return array
@@ -73,6 +80,9 @@ class ShowWith extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
+        /**
+         * @TODO добавить type? ->onCondition(['type' => PhotoGallery::TYPE_PRODUCT])
+         */
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

@@ -263,27 +263,55 @@ $(document).on('click', '.delete-uploaded-file', function () {
 
 
 /**
- * Специальное удаление, с провкеркой ajax ответа НАЧАЛО
+ * Специальное удаление, с провкеркой ajax ответа в GridView НАЧАЛО
  */
-$(document).on('click', '.custom-delete', function () {
-    var url = $(this).attr('href');
-    $.ajax({
-        url: url,
-        dataType: 'json',
-        type: 'post',
-        data: {},
-        success: function (data) {
-            if (data.status == 'success') {
-                window.location.reload();
-            } else {
-                alertMessages(data);
+$(document).on('click', '.delete-from-gridview', function () {
+    if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            data: {},
+            success: function (data) {
+                if (data.status == 'success') {
+                    window.location.reload();
+                } else {
+                    alertMessages(data);
+                }
             }
-        }
-    });
+        });
+    }
     return false;
 });
 /**
- * Специальное удаление, с провкеркой ajax ответа КОНЕЦ
+ * Специальное удаление, с провкеркой ajax ответа в GridView  КОНЕЦ
+ */
+
+/**
+ * Специальное удаление, с провкеркой ajax ответа при просмотре бъекта (view) НАЧАЛО
+ */
+$(document).on('click', '.ajax-delete', function () {
+    if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+        var url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            data: {},
+            success: function (data) {
+                if (data.status == 'success') {
+                    window.location = data.location;
+                } else {
+                    alertMessages(data);
+                }
+            }
+        });
+    }
+    return false;
+});
+/**
+ * Специальное удаление, с провкеркой ajax ответа при просмотре бъекта (view) КОНЕЦ
  */
 
 /**

@@ -42,4 +42,11 @@ class Migration extends \yii\db\ActiveRecord
             'apply_time' => Yii::t('app', 'Apply Time'),
         ];
     }
+
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
 }

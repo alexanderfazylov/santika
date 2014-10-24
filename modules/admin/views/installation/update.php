@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Installation */
 
-$this->title =  'Редактирование ' . $model->name;
+$this->title = 'Редактирование ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Способы монтажа', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование';
@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = 'Редактирование';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
     ]) ?>
 

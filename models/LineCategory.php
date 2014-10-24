@@ -58,6 +58,13 @@ class LineCategory extends \yii\db\ActiveRecord
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -22,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать прайс лист', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'type',
                 'value' => 'typeText',
-                'filter'=> Price::getTypesText(),
+                'filter' => Price::getTypesText(),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'delete' => function ($url, $model) {
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                 'title' => Yii::t('yii', 'Delete'),
-                                'class' => 'custom-delete',
+                                'class' => 'delete-from-gridview',
                                 'data-pjax' => '0',
                             ]);
                         }

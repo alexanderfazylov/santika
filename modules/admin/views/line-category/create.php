@@ -8,7 +8,7 @@ use yii\helpers\Html;
  * @var app\models\LineCategory $model
  */
 
-$this->title ='Создание связи линия-категория';
+$this->title = 'Создание связи линия-категория';
 $this->params['breadcrumbs'][] = ['label' => 'Связь линия-категория', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

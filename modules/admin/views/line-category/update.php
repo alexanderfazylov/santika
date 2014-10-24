@@ -7,7 +7,7 @@ use yii\helpers\Html;
  * @var app\models\LineCategory $model
  */
 
-$this->title = 'Редактирование '. $model->id;
+$this->title = 'Редактирование ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Связь линия-категория', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактирование';
@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = 'Редактирование';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
         'shop_id' => $shop_id,
     ]) ?>

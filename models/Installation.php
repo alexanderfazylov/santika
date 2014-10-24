@@ -44,11 +44,36 @@ class Installation extends \yii\db\ActiveRecord
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getProductInstallations()
     {
         return $this->hasMany(ProductInstallation::className(), ['installation_id' => 'id']);
+    }
+
+    public function beforeDelete()
+    {
+        /**
+         * Проверка на существование связанных записей, что бы не было ошибок по FK
+         */
+        $errors = [];
+        if ($this->getProductInstallations()->count() != 0) {
+            $errors[] = 'Товары';
+        }
+
+        if (!empty($errors)) {
+            $this->addError('id', 'Нельзя удалить, т.к. есть закрепленные ' . implode(', ', $errors));
+            return false;
+        }
+
+        return parent::beforeDelete();
     }
 }

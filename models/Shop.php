@@ -52,6 +52,13 @@ class Shop extends \yii\db\ActiveRecord
         ];
     }
 
+    public function transactions()
+    {
+        return [
+            'default' => self::OP_DELETE,
+        ];
+    }
+
     public function beforeDelete()
     {
         /**
@@ -122,7 +129,8 @@ class Shop extends \yii\db\ActiveRecord
      * Возвращает id салона по url.
      * @return int
      */
-    public static function getIdFromUrl(){
+    public static function getIdFromUrl()
+    {
         return 1;
     }
 }
