@@ -130,7 +130,7 @@ use yii\widgets\ActiveForm;
         'form' => $form,
         'model' => $model,
         'attribute' => 'drawing',
-        'accept' => 'image/*'
+        'accept' => '*'
     ]);
     ?>
 
