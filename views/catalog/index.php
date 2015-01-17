@@ -71,7 +71,7 @@ $search_collections = Collection::find()->byShop($shop_id)->all();
                     </div>
                 </div>
                 <?=
-                Html::button('Найти',['class' => 'btn']);
+                Html::submitButton('Найти',['class' => 'btn']);
                 ?>
             </div>
         </div>

@@ -103,6 +103,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'height')->textInput() ?>
 
+    <?= $form->field($model, 'diameter')->textInput() ?>
+
     <?= $form->field($model, 'is_promotion')->checkbox() ?>
 
     <?= $form->field($model, 'is_published')->checkbox() ?>

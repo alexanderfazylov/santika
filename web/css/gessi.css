@@ -165,7 +165,7 @@ body {
     width: 260px;
     min-height: 320px;
     height: auto !important;
-    margin: 0 230px 0 -130px;
+    margin: 0 100px 0 0;
     text-align: center;
 }
 .b-carusel li .image {

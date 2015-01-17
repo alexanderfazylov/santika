@@ -27,6 +27,7 @@ use yii\helpers\Url;
  * @property integer $length
  * @property integer $width
  * @property integer $height
+ * @property integer $diameter
  * @property integer $is_promotion
  * @property integer $is_published
  * @property string $url
@@ -96,7 +97,7 @@ class Product extends \yii\db\ActiveRecord
             [['shop_id', 'article', 'name', 'description', 'url'], 'required'],
             [['shop_id', 'article', 'name', 'description', 'url', 'line_ids', 'color_ids', 'collection_id', 'category_id'], 'required', 'on' => 'admin'],
 
-            [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'is_promotion', 'is_published'], 'integer'],
+            [['shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'photo_id', 'length', 'width', 'height', 'diameter', 'is_promotion', 'is_published'], 'integer'],
             [['article', 'name', 'description', 'canonical', 'url', 'meta_title', 'meta_description', 'meta_keywords'], 'string', 'max' => 255],
             [['line_ids', 'color_ids', 'installation_ids', 'installation_product_ids', 'photo_tmp', 'manual_tmp', 'drawing_tmp', 'photo_name', 'manual_name', 'drawing_name'], 'safe'],
             [['article'], 'unique', 'targetAttribute' => ['shop_id', 'article'], 'message' => 'Товар с указанным артикулом уже существует.']
@@ -137,6 +138,7 @@ class Product extends \yii\db\ActiveRecord
             'length' => 'Длина', // Yii::t('app', 'Length'),
             'width' => 'Ширина', // Yii::t('app', 'Width'),
             'height' => 'Высота', // Yii::t('app', 'Height'),
+            'diameter' => 'Диаметр', // Yii::t('app', 'Height'),
             'is_promotion' => 'Отображать на главной странице', //Yii::t('app', 'Is Promotion'),
             'is_published' => 'Опубликовано',
             'canonical' => 'Canonical',
@@ -566,7 +568,40 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getLwh()
     {
-        return $this->length . ' x ' . $this->width . ' x ' . $this->height;
+        $array = [];
+        if (!is_null($this->length)) {
+            $array[] = $this->length;
+        }
+        if (!is_null($this->width)) {
+            $array[] = $this->width;
+        }
+        if (!is_null($this->height)) {
+            $array[] = $this->height;
+        }
+        return implode(' x ', $array);
+    }
+
+    /**
+     * Возвращает строку с ДхШхВ товара
+     * @return string
+     */
+    public function getLwhString()
+    {
+        $array = [];
+        if (!is_null($this->length)) {
+            $array[] = 'Д';
+        }
+        if (!is_null($this->width)) {
+            $array[] = 'Ш';
+        }
+        if (!is_null($this->height)) {
+            $array[] = 'В';
+        }
+        $result = implode(' x ', $array);
+        if ($result) {
+            $result .= ':';
+        }
+        return $result;
     }
 
 

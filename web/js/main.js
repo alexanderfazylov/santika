@@ -79,7 +79,19 @@ function setFancyBoxData(product) {
     $owner.find('.product-link').attr('href', product.link);
     $owner.find('.product-name').text(product.name);
     $owner.find('.product-article').text(product.article);
-    $owner.find('.product-lwh').text(product.lwh);
+    if (product.lwh) {
+        $owner.find('.product-lwh').parent().removeClass('hidden');
+        $owner.find('.product-lwh').text(product.lwh);
+        $owner.find('.product-lwh-string').text(product.lwhString);
+    } else {
+        $owner.find('.product-lwh').parent().addClass('hidden');
+    }
+    if (product.diameter) {
+        $owner.find('.product-diameter').parent().removeClass('hidden');
+        $owner.find('.product-diameter').text(product.diameter);
+    } else {
+        $owner.find('.product-diameter').parent().addClass('hidden');
+    }
     $owner.find('.product-color').text(product.color);
     $owner.find('.product-description').text(product.description);
     $owner.find('.product-price').text(product.price);
@@ -103,10 +115,18 @@ $(function () {
  */
 $(function () {
     $(".app-index .b-carusel").each(function () {
+        var visible = 7;
+        var circular = true;
+        if ($(this).find('li').size() < visible) {
+            visible = $(this).find('li').size();
+            circular = false;
+            $(this).find('> .nav').addClass('hidden');
+        }
         $(this).find('> .gallery').jCarouselLite({
             btnNext: $(this).find('> .nav .next')[0],
             btnPrev: $(this).find('> .nav .prev')[0],
-            visible: 10
+            visible: visible,
+            circular: circular
         });
     });
 });
@@ -175,7 +195,7 @@ $(function () {
 
 
         $('.content').animate({
-            "left":"-30%"
+            "left": "-30%"
         })
 
         return false;
@@ -188,10 +208,12 @@ $(function () {
 
         $('.b-panel-r__wrap').animate({
             "right": "-75%"
-        }, 500, function(){$('.b-panel-r').hide()});
+        }, 500, function () {
+            $('.b-panel-r').hide()
+        });
 
         $('.content').animate({
-            "left":"0"
+            "left": "0"
         })
 
     });

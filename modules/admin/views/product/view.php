@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'length',
             'width',
             'height',
+            'diameter',
             'is_promotion',
             'is_published',
             'canonical',

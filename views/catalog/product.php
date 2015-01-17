@@ -75,10 +75,18 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <div class="b-product__article"> <?= 'ART. ' . $product->article; ?></div>
-            <div class="b-product__size">
-                <label>Д х Ш х В:</label>
-                <span><?= $product->getLwh(); ?></span>
-            </div>
+            <?php if ($lwhString = $product->getLwhString()): ?>
+                <div class="b-product__size">
+                    <label><?= $lwhString; ?></label>
+                    <span><?= $product->getLwh(); ?></span>
+                </div>
+            <?php endif; ?>
+            <?php if (!is_null($product->diameter)): ?>
+                <div class="b-product__size">
+                    <label>Диаметр:</label>
+                    <span><?= $product->diameter; ?></span>
+                </div>
+            <?php endif; ?>
             <div class="b-product__color">
                 <label>Цвет:</label>
                 <span>
@@ -112,8 +120,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="b-links">
             <a href="#note" class="pop">Добавить в блокнот</a>
-            <a href="" class="spec">Спецификация</a>
-            <a href="" class="spec">Инструкция по установке</a>
+            <?php
+            if (!empty($product->drawing_id)) {
+                echo Html::a('Спецификация', $product->drawing->getFileShowUrl(), ['target' => '_blank']);
+            } else {
+                echo Html::a('Спецификация', '#', ['class' => 'spec']);
+            } ?>
+            <?php
+            if (!empty($product->manual_id)) {
+                echo Html::a('Инструкция по установке', $product->manual->getFileShowUrl(), ['target' => '_blank']);
+            } else {
+                echo Html::a('Инструкция по установке', '#', ['class' => 'spec']);
+            } ?>
             <a href="">Связаться с менеджером</a>
         </div>
     </div>

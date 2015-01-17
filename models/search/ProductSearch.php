@@ -19,7 +19,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'length', 'width', 'height', 'is_promotion', 'is_published'], 'integer'],
+            [['id', 'shop_id', 'collection_id', 'category_id', 'manual_id', 'color_id', 'drawing_id', 'length', 'width', 'height', 'diameter', 'is_promotion', 'is_published'], 'integer'],
             [['article', 'name', 'description', 'url', 'meta_title', 'meta_description', 'meta_keywords', 'shop_name', 'category_name', 'collection_name',], 'safe'],
         ];
     }
@@ -70,6 +70,7 @@ class ProductSearch extends Product
             'length' => $this->length,
             'width' => $this->width,
             'height' => $this->height,
+            'diameter' => $this->diameter,
             'is_promotion' => $this->is_promotion,
             'is_published' => $this->is_published,
         ]);
