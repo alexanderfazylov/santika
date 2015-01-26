@@ -46,9 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="blueimp-gallery-container">
         <?php
         $items = [];
+        if (!empty($product->photo_id)) {
+            $items[] = [
+                'href' => $product->photo->getFileShowUrl(Upload::SIZE_SQUARE_510),
+            ];
+        }
         foreach ($product->photoGalleries as $photo_gallery) {
             $items[] = [
-//                'title' => $product->name,
                 'href' => $photo_gallery->upload->getFileShowUrl(Upload::SIZE_SQUARE_510),
             ];
         }

@@ -66,6 +66,10 @@ class CatalogController extends ThemedController
             $collection = Collection::findOne(['url' => $collection_url]);
             $query->andWhere(['collection_id' => $collection->id]);
         }
+
+        if (!empty($article)) {
+            $query->andWhere(['article' => $article]);
+        }
         $products = $query->all();
 
 //        $category_ids = LineCategory::categoryIdsByLine($line->id);

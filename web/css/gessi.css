@@ -828,7 +828,7 @@ body {
 }
 .app-rzd .b-rzd__menu .b-carusel .nav {
     right: 0 !important;
-    bottom: 0 !important;
+    /*bottom: 0 !important;*/
     position: relative !important;
 }
 .app-rzd .b-rzd__menu .b-carusel .nav button {
@@ -1915,7 +1915,7 @@ body {
 
 .catalog-gallery li:hover{
     top: 10px;
-    margin: 0 0 0 -1px;
+    margin:  0 -1px 0 -1px !important;
     border-bottom: red;
     border-width: 0 1px 0 1px;
     border-color: #52443b;
